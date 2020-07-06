@@ -1,0 +1,7 @@
+{
+  "name": "drawing-app-client",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
