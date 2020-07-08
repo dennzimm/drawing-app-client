@@ -14,7 +14,7 @@ export type ToolModel = ToolState & ToolActions & ToolComputedItems;
 const state: ToolState = {
   currentTool: tools['pencil'],
   color: '#000000',
-  width: 6,
+  width: 3,
 };
 
 const toolModel: ToolModel = {

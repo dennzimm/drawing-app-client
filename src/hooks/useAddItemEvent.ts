@@ -1,4 +1,4 @@
-import throttle from 'lodash.throttle';
+import { throttle } from 'lodash-es';
 import { useEffect, useRef } from 'react';
 import { AddItemEvent, registerViewEvent } from '../helper/event.helper';
 import { CustomViewEventsHookProps } from './useCustomViewEvents';

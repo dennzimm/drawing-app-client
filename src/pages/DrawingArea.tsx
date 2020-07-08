@@ -12,7 +12,6 @@ import {
 import { colorPalette } from 'ionicons/icons';
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
-import Canvas from '../components/Canvas';
 import PaperCanvas from '../components/PaperCanvas';
 
 interface DrawingAreaPageProps

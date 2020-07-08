@@ -24,14 +24,6 @@ export function useCustomViewEvents(props: CustomViewEventsHookProps) {
     addItemRegistered.current && addSegmentRegistered.current
   );
 
-  // const userID = useStoreState((state) => state.user.id);
-
-  // const [updateLayer] = useMutation(UPDATE_LAYER, {
-  //   onError(error) {
-  //     // console.log(error);
-  //   },
-  // });
-
   return {
     eventsRegistered,
   };

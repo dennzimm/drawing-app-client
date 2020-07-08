@@ -1,3 +1,4 @@
+import { ApolloProvider } from '@apollo/client';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import '@ionic/react/css/core.css';
@@ -10,11 +11,13 @@ import '@ionic/react/css/structure.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/typography.css';
+import { StoreProvider } from 'easy-peasy';
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { ApolloContext } from './graphql/apollo/ApolloContext';
+import client from './graphql/apollo/apollo.client';
 import DrawingArea from './pages/DrawingArea';
 import Home from './pages/Home';
+import store from './store';
 import './theme/variables.css';
 
 const IonicApp: React.FC = () => (
@@ -31,9 +34,11 @@ const IonicApp: React.FC = () => (
 
 const App: React.FC = () => {
   return (
-    <ApolloContext>
-      <IonicApp />
-    </ApolloContext>
+    <StoreProvider store={store}>
+      <ApolloProvider client={client}>
+        <IonicApp />
+      </ApolloProvider>
+    </StoreProvider>
   );
 };
 

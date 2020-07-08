@@ -12,7 +12,7 @@ class PaperProvider {
 
   cleanup() {
     delete window.paper;
-    this._paperScope.projects.splice(0, this._paperScope.projects.length);
+    this._paperScope.projects = [];
   }
 
   get paperScope() {
