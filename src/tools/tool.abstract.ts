@@ -1,4 +1,4 @@
-import paper from 'paper';
+import paperProvider from '../providers/paper.provider';
 
 export interface ToolStructure {
   tool: paper.Tool;
@@ -15,14 +15,14 @@ export abstract class Tool implements ToolStructure {
   abstract onMouseUp(event: paper.ToolEvent): void;
 
   constructor() {
-    this.tool = new paper.Tool();
+    this.tool = new paperProvider.scope.Tool();
 
     this.setToolDefaults();
     this.setToolFunctions();
   }
 
   deselectAll() {
-    paper.project.deselectAll();
+    paperProvider.scope.project.deselectAll();
   }
 
   private setToolDefaults() {
