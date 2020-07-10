@@ -1,26 +1,55 @@
-import paper from 'paper';
 import { nanoid } from 'nanoid';
+import paper from 'paper';
+import { get } from 'lodash-es';
 
 class PaperProvider {
-  private _paperScope: paper.PaperScope = new paper.PaperScope();
+  private _scope: paper.PaperScope;
+
+  constructor() {
+    this._scope = new paper.PaperScope();
+  }
 
   setup(id: string) {
-    window.paper = this._paperScope;
-    this._paperScope.setup(id);
-    this.createActiveLayer();
+    window.paper = this._scope;
+    this._scope.setup(id);
+    this.createInitialLayer();
   }
 
   cleanup() {
     delete window.paper;
-    this._paperScope.projects = [];
+    this._scope.projects = [];
   }
 
-  get paperScope() {
-    return this._paperScope;
+  clearProject() {
+    this._scope.project.clear();
   }
 
-  private createActiveLayer() {
-    const layer = new this._paperScope.Layer({ name: nanoid() });
+  getChildById(id: string): paper.Item {
+    return get(this.activeLayer.children, [id])
+  }
+
+  get scope() {
+    return this._scope;
+  }
+
+  get project() {
+    return this.scope.project;
+  }
+
+  get activeLayer() {
+    return this.project.activeLayer;
+  }
+
+  get childsCount() {
+    return this.activeLayer.children.length;
+  }
+
+  get lastChild() {
+    return this.activeLayer.children[this.childsCount - 1];
+  }
+
+  private createInitialLayer() {
+    const layer = new this._scope.Layer({ name: nanoid() });
     layer.activate();
   }
 }
