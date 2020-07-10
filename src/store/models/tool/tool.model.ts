@@ -1,4 +1,5 @@
-import { tools } from '../../../tools';
+import { colors } from '../../../config/color-palette.config';
+import paperToolProvider from '../../../providers/paper-tool.provider';
 import { Tool } from '../../../tools/tool.abstract';
 import actions, { ToolActions } from './tool.actions';
 import computed, { ToolComputedItems } from './tool.computed';
@@ -12,8 +13,8 @@ export interface ToolState {
 export type ToolModel = ToolState & ToolActions & ToolComputedItems;
 
 const state: ToolState = {
-  currentTool: tools['pencil'],
-  color: '#000000',
+  currentTool: paperToolProvider.tools.pencil,
+  color: colors[Math.floor(Math.random() * colors.length)],
   width: 3,
 };
 
