@@ -1,11 +1,4 @@
-import {
-  IonButton,
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/react';
+import { IonButton, IonContent, IonPage } from '@ionic/react';
 import { nanoid } from 'nanoid';
 import React from 'react';
 import { RouteComponentProps, useHistory } from 'react-router';
@@ -29,18 +22,7 @@ const Home: React.FC<HomePageProps> = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
         <IonButton onClick={startNewDrawing}>Start new drawing!</IonButton>
       </IonContent>
     </IonPage>
