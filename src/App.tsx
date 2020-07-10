@@ -19,6 +19,7 @@ import DrawingArea from './pages/DrawingArea';
 import Home from './pages/Home';
 import store from './store';
 import './theme/variables.css';
+import './theme/global.css';
 
 const IonicApp: React.FC = () => (
   <IonApp>
