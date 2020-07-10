@@ -1,24 +1,21 @@
-import paper from 'paper';
 import { nanoid } from 'nanoid';
+import paperProvider from '../providers/paper.provider';
 
 export interface RoundLinecapOptions {
   id?: string;
   point: paper.Point;
-  color: paper.Color;
+  color: paper.Color | string;
   width: number;
-  layer?: Nullable<paper.Layer>;
-  group?: Nullable<paper.Group>;
+  layer?: paper.Layer;
+  group?: paper.Group;
 }
 
-export const addRoundLinecap = ({
-  id = nanoid(),
-  point,
-  color,
-  width,
-  layer,
-  group,
-}: RoundLinecapOptions): paper.Shape.Ellipse => {
-  const ellipse = new paper.Shape.Ellipse({
+export const addRoundLinecap = (
+  props: RoundLinecapOptions
+): paper.Shape.Ellipse => {
+  const { id = nanoid(), point, color, width, layer, group } = props;
+
+  const ellipse = new paperProvider.scope.Shape.Ellipse({
     id,
     name: id,
     strokeColor: color,
