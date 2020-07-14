@@ -1,11 +1,11 @@
 import React from 'react';
-import { colors } from '../../config/color-palette.config';
 import styled from 'styled-components';
 
 const ColorsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  max-height: 50vh;
 `;
 
 interface ColorProps {
@@ -20,18 +20,25 @@ const Color = styled.div<ColorProps>`
   margin: 0.35rem;
 `;
 
-interface ColorPaletteProps extends React.HTMLAttributes<HTMLDivElement> {
-  onColorClick: (color: string) => void;
+export interface ColorPaletteProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  handleColorSelect: (color: string) => void;
+  colors: string[];
 }
 
 const ColorPalette: React.FC<ColorPaletteProps> = ({
-  onColorClick,
+  handleColorSelect,
+  colors,
   className,
 }) => {
   return (
     <ColorsWrapper className={className}>
       {colors.map((color) => (
-        <Color key={color} onClick={() => onColorClick(color)} color={color} />
+        <Color
+          key={color}
+          onClick={() => handleColorSelect(color)}
+          color={color}
+        />
       ))}
     </ColorsWrapper>
   );

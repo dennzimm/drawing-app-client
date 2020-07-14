@@ -9,14 +9,14 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
-import ColorSelectButton from '../components/ColorSelectButton';
-import DeleteButton from '../components/DeleteButton';
 import NetworkIndicator from '../components/NetworkIndicator';
-import PaperCanvas from '../components/PaperCanvas';
-import RedoButton from '../components/RedoButton';
-import UndoButton from '../components/UndoButton';
-import paperProvider from '../providers/paper.provider';
-import { useStoreActions } from '../store/hooks';
+
+import UndoButton from '../containers/UndoButton.container';
+import RedoButton from '../containers/RedoButton.container';
+import DeleteButton from '../containers/DeleteButton.container';
+import ColorButton from '../containers/ColorButton.container';
+import PaperCanvas from '../containers/PaperCanvas.container';
+import SizeSelectButton from '../containers/SizeSelectButton.container';
 
 interface DrawingAreaPageProps
   extends RouteComponentProps<{
@@ -24,16 +24,6 @@ interface DrawingAreaPageProps
   }> {}
 
 const DrawingArea: React.FC<DrawingAreaPageProps> = ({ match }) => {
-  const setColor = useStoreActions((actions) => actions.tool.setColor);
-
-  function handleOnDelete() {
-    paperProvider.clearProject();
-  }
-
-  function handleOnColorClick(color: string) {
-    setColor(color);
-  }
-
   return (
     <IonPage>
       <IonHeader>
@@ -58,11 +48,12 @@ const DrawingArea: React.FC<DrawingAreaPageProps> = ({ match }) => {
       <IonFooter>
         <IonToolbar>
           <IonButtons slot="start">
-            <DeleteButton handleOnDelete={handleOnDelete} />
+            <DeleteButton />
           </IonButtons>
 
           <IonButtons slot="primary">
-            <ColorSelectButton handleOnColorClick={handleOnColorClick} />
+            <SizeSelectButton />
+            <ColorButton />
           </IonButtons>
         </IonToolbar>
       </IonFooter>
