@@ -39,8 +39,9 @@ const splitLink = split(
 const cache = new InMemoryCache();
 
 const client = new ApolloClient({
-  link: splitLink,
   cache,
+  link: splitLink,
+  connectToDevTools: process.env.NODE_ENV === 'development',
 });
 
 export default client;
