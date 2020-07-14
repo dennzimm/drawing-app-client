@@ -25,7 +25,11 @@ class PaperProvider {
   }
 
   getChildById(id: string): paper.Item {
-    return get(this.activeLayer.children, [id])
+    return get(this.activeLayer.children, [id]);
+  }
+
+  getLayerById(id: string): paper.Layer {
+    return get(this.project.layers, [id]);
   }
 
   get scope() {

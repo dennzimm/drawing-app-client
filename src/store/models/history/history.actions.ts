@@ -8,6 +8,7 @@ export enum HistoryAction {
   removeFromIndex = 'removeFromIndex',
   setCurrent = 'setCurrent',
   setCurrentToLast = 'setCurrentToLast',
+  setCurrentToFirst = 'setCurrentToFirst',
   incCurrent = 'incCurrent',
   decCurrent = 'decCurrent',
   setLimit = 'setLimit',
@@ -20,6 +21,7 @@ export interface HistoryActions {
   [HistoryAction.removeFromIndex]: Action<HistoryModel, number>;
   [HistoryAction.setCurrent]: Action<HistoryModel, number>;
   [HistoryAction.setCurrentToLast]: Action<HistoryModel>;
+  [HistoryAction.setCurrentToFirst]: Action<HistoryModel>;
   [HistoryAction.incCurrent]: Action<HistoryModel>;
   [HistoryAction.decCurrent]: Action<HistoryModel>;
   [HistoryAction.setLimit]: Action<HistoryModel, number>;
@@ -47,6 +49,9 @@ const historyActions: HistoryActions = {
   }),
   [HistoryAction.setCurrentToLast]: action((state) => {
     state.current = state.items.length - 1;
+  }),
+  [HistoryAction.setCurrentToFirst]: action((state) => {
+    state.current = -1;
   }),
   [HistoryAction.incCurrent]: action((state) => {
     state.current = state.current + 1;

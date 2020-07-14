@@ -33,7 +33,8 @@ export function usePaperHistory({
 
   function undo() {
     if (canUndo) {
-      const item = paperProvider.getChildById(items[current].id);
+      // const item = paperProvider.getChildById(items[current].id);
+      const item = paperProvider.getLayerById(items[current].id);
       item && item.remove();
       decCurrent();
     }
@@ -43,7 +44,8 @@ export function usePaperHistory({
     if (canRedo) {
       const decompressedData = decompress(items[current + 1].data);
       decompressedData &&
-        paperProvider.activeLayer.importJSON(decompressedData);
+        // paperProvider.activeLayer.importJSON(decompressedData);
+        paperProvider.project.importJSON(decompressedData);
       incCurrent();
     }
   }

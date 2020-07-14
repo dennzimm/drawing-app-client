@@ -1,17 +1,20 @@
 import { addRoundLinecap } from '../helper/linecap.helper';
-import { createGroup, createPath } from '../helper/project.helper';
+import { createGroup, createLayer, createPath } from '../helper/project.helper';
 import store from '../store';
 import { Tool } from './tool.abstract';
 
 class PencilTool extends Tool {
+  private layer: Nullable<paper.Layer> = null;
   private path: Nullable<paper.Path> = null;
   private group: Nullable<paper.Group> = null;
 
   onMouseDown(event: paper.ToolEvent) {
+    this.layer = createLayer();
     this.newPath();
     this.addPoint(event.point);
     this.setNewGroup();
     this.addLinecap(event.point);
+    this.layer.addChild(this.group!);
   }
 
   onMouseDrag(event: paper.ToolEvent) {
@@ -29,13 +32,15 @@ class PencilTool extends Tool {
       this.simplify();
       this.deselectAll();
 
-      addToHistory({ id: this.group!.name, data: this.group!.exportJSON() });
+      addToHistory({ id: this.layer!.name, data: this.layer!.exportJSON() });
     }
   }
 
   private setNewGroup() {
     this.group = createGroup({
-      options: {},
+      options: {
+        layer: this.layer,
+      },
     });
 
     this.path && this.group.addChild(this.path);

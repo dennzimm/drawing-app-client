@@ -15,7 +15,7 @@ export type ToolModel = ToolState & ToolActions & ToolComputedItems;
 const state: ToolState = {
   currentTool: paperToolProvider.tools.pencil,
   color: colors[Math.floor(Math.random() * colors.length)],
-  width: 3,
+  width: 2,
 };
 
 const toolModel: ToolModel = {
