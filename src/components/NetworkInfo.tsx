@@ -41,6 +41,7 @@ const NetworkInfo: React.FC = () => {
 
   return (
     <IonToast
+      position="top"
       isOpen={showNetworkInfo}
       onDidDismiss={() => setShowNetworkInfo(false)}
       message={options.message}
