@@ -1233,6 +1233,13 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@ionic-native/core@^5.27.0":
+  version "5.27.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/core/-/core-5.27.0.tgz#2821f751992aaf9f4b8c5635d88d6718cba32074"
+  integrity sha512-qJcZJtXaXUpwKTMzLc6tGitHJVYQCcSlx2XNQUiKyck47g98Xxo8D0zgHoRiCQvApOqw1iEKzh6xs5PLkmcXqw==
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic/core@5.2.3":
   version "5.2.3"
   resolved "https://registry.yarnpkg.com/@ionic/core/-/core-5.2.3.tgz#37cd991c1e4dab7b7a34956b3212a37cf757cd21"
@@ -1631,6 +1638,11 @@
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
+
+"@types/cordova@latest":
+  version "0.0.34"
+  resolved "https://registry.yarnpkg.com/@types/cordova/-/cordova-0.0.34.tgz#ea7addf74ecec3d7629827a0c39e2c9addc73d04"
+  integrity sha1-6nrd907Ow9dimCegw54smt3HPQQ=
 
 "@types/eslint-visitor-keys@^1.0.0":
   version "1.0.0"
