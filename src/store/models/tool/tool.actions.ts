@@ -3,20 +3,20 @@ import { ToolModel } from './tool.model';
 
 export enum ToolAction {
   setColor = 'setColor',
-  setWidth = 'setWidth',
+  setSize = 'setSize',
 }
 
 export interface ToolActions {
   [ToolAction.setColor]: Action<ToolModel, string>;
-  [ToolAction.setWidth]: Action<ToolModel, number>;
+  [ToolAction.setSize]: Action<ToolModel, number>;
 }
 
 const toolActions: ToolActions = {
   [ToolAction.setColor]: action((state, color) => {
     state.color = color;
   }),
-  [ToolAction.setWidth]: action((state, width) => {
-    state.width = width;
+  [ToolAction.setSize]: action((state, size) => {
+    state.size = size;
   }),
 };
 

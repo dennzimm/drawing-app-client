@@ -47,12 +47,12 @@ class PencilTool extends Tool {
   }
 
   private newPath() {
-    const { paperColor, width } = store.getState().tool;
+    const { paperColor, size } = store.getState().tool;
 
     this.path = createPath({
       options: {
         strokeColor: paperColor,
-        strokeWidth: width,
+        strokeWidth: size,
       },
     });
   }
@@ -64,12 +64,12 @@ class PencilTool extends Tool {
   }
 
   private addLinecap(point: paper.Point) {
-    const { paperColor, width } = store.getState().tool;
+    const { paperColor, size } = store.getState().tool;
 
     addRoundLinecap({
       point,
       color: paperColor,
-      width,
+      width: size,
       group: this.group!,
     });
   }

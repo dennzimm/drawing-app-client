@@ -7,7 +7,7 @@ import computed, { ToolComputedItems } from './tool.computed';
 export interface ToolState {
   currentTool: Tool;
   color: string;
-  width: number;
+  size: number;
 }
 
 export type ToolModel = ToolState & ToolActions & ToolComputedItems;
@@ -15,7 +15,7 @@ export type ToolModel = ToolState & ToolActions & ToolComputedItems;
 const state: ToolState = {
   currentTool: paperToolProvider.tools.pencil,
   color: colors[Math.floor(Math.random() * colors.length)],
-  width: 2,
+  size: 2,
 };
 
 const toolModel: ToolModel = {
