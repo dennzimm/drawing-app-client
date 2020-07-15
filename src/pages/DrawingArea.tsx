@@ -9,14 +9,14 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
-import NetworkIndicator from '../components/NetworkIndicator';
-
-import UndoButton from '../components/UndoButton';
-import RedoButton from '../components/RedoButton';
-import DeleteButton from '../components/DeleteButton';
 import ColorButton from '../components/ColorButton';
+import DeleteButton from '../components/DeleteButton';
+import NetworkIndicator from '../components/NetworkIndicator';
 import PaperCanvas from '../components/PaperCanvas';
+import RedoButton from '../components/RedoButton';
 import SizeSelectButton from '../components/SizeSelectButton';
+import UndoButton from '../components/UndoButton';
+import NetworkInfo from '../components/NetworkInfo';
 
 interface DrawingAreaPageProps
   extends RouteComponentProps<{
@@ -37,7 +37,7 @@ const DrawingArea: React.FC<DrawingAreaPageProps> = ({ match }) => {
             <RedoButton />
           </IonButtons>
 
-          <NetworkIndicator slot="end" />
+          <NetworkIndicator badgeProps={{ slot: 'end' }} />
         </IonToolbar>
       </IonHeader>
 
@@ -57,6 +57,8 @@ const DrawingArea: React.FC<DrawingAreaPageProps> = ({ match }) => {
           </IonButtons>
         </IonToolbar>
       </IonFooter>
+
+      <NetworkInfo />
     </IonPage>
   );
 };
