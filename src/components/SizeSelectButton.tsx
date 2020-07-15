@@ -1,8 +1,9 @@
 import { IonPopover, IonRange } from '@ionic/react';
 import { discOutline } from 'ionicons/icons';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import IconButton from '../shared/IconButton';
+import { useStoreActions, useStoreState } from '../store/hooks';
 
 interface SizePreviewProps {
   size: number;
@@ -27,21 +28,24 @@ const SizePreview = styled.div<SizePreviewProps>`
   border-radius: 100%;
 `;
 
-interface SizeSelectButtonProps {
-  handleSizeSelect: (value: number) => void;
-  handleSizeSelectClick: () => void;
-  handleCancel: () => void;
-  currentSize: number;
-  isSizeSelectVisible?: boolean;
-}
+const SizeSelectButton: React.FC = () => {
+  const currentSize = useStoreState((state) => state.tool.width);
+  const setSize = useStoreActions((actions) => actions.tool.setWidth);
 
-const SizeSelectButton: React.FC<SizeSelectButtonProps> = ({
-  handleSizeSelect,
-  handleSizeSelectClick,
-  handleCancel,
-  currentSize,
-  isSizeSelectVisible,
-}) => {
+  const [isSizeSelectVisible, setIsSizeSelectVisible] = useState(false);
+
+  function handleSizeSelectClick() {
+    setIsSizeSelectVisible(true);
+  }
+
+  function handleSizeSelect(value: number) {
+    setSize(value);
+  }
+
+  function handleCancel() {
+    setIsSizeSelectVisible(false);
+  }
+
   return (
     <>
       <IonPopover isOpen={!!isSizeSelectVisible} onDidDismiss={handleCancel}>

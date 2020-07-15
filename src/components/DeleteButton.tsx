@@ -1,21 +1,11 @@
 import { IonAlert } from '@ionic/react';
 import { trash } from 'ionicons/icons';
-import React from 'react';
+import React, { useState } from 'react';
+import paperProvider from '../providers/paper.provider';
 import IconButton from '../shared/IconButton';
+import { useStoreActions } from '../store/hooks';
 
-interface DeleteButtonProps {
-  handleDelete: () => void;
-  handleDeleteClick: () => void;
-  handleCancel: () => void;
-  isAlertVisible?: boolean;
-}
-
-const DeleteButton: React.FC<DeleteButtonProps> = ({
-  handleDelete,
-  handleDeleteClick,
-  handleCancel,
-  isAlertVisible,
-}) => {
+const DeleteButton: React.FC = () => {
   const headerText = 'Eigene Zeichnung löschen?';
   const messageText =
     'Willst du wirklich deine Zeichnung löschen? Alle anderen Zeichnungen werden nicht gelöscht.';
@@ -30,6 +20,25 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
       handler: handleDelete,
     },
   ];
+
+  const setHistoryToFirst = useStoreActions(
+    (actions) => actions.history.setCurrentToFirst
+  );
+
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+  function handleDelete() {
+    paperProvider.clearProject();
+    setHistoryToFirst();
+  }
+
+  function handleDeleteClick() {
+    setIsAlertVisible(true);
+  }
+
+  function handleCancel() {
+    setIsAlertVisible(false);
+  }
 
   return (
     <>

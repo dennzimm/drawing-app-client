@@ -1,16 +1,14 @@
 import { arrowUndoCircleOutline } from 'ionicons/icons';
 import React from 'react';
+import { usePaperHistory } from '../hooks/usePaperHistory.hook';
 import IconButton from '../shared/IconButton';
 
-interface UndoButtonProps {
-  handleUndo: () => void;
-  disabled?: boolean;
-}
+const UndoButton: React.FC = () => {
+  const { canUndo, undo } = usePaperHistory();
 
-const UndoButton: React.FC<UndoButtonProps> = ({ handleUndo, disabled }) => {
   return (
     <IconButton
-      buttonProps={{ onClick: handleUndo, disabled }}
+      buttonProps={{ onClick: undo, disabled: !canUndo }}
       iconProps={{ icon: arrowUndoCircleOutline }}
     />
   );

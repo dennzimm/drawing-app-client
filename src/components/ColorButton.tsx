@@ -1,8 +1,9 @@
 import { IonButton, IonIcon, IonPopover } from '@ionic/react';
 import { radioButtonOn } from 'ionicons/icons';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import ColorPalette from '../containers/ColorPalette.container';
+import { useStoreActions, useStoreState } from '../store/hooks';
+import ColorPalette from './ColorPalette';
 
 interface ColorSelectIconProps {
   currentColor: string;
@@ -21,21 +22,25 @@ const IconWrapper = styled.div`
   align-items: center;
 `;
 
-interface ColorButtonProps {
-  handleColorClick: () => void;
-  handleColorSelect: (color: string) => void;
-  handleCancel: () => void;
-  currentColor: string;
-  isColorSelectVisible?: boolean;
-}
+const ColorButton: React.FC = () => {
+  const currentColor = useStoreState((state) => state.tool.color);
+  const setColor = useStoreActions((actions) => actions.tool.setColor);
 
-const ColorButton: React.FC<ColorButtonProps> = ({
-  handleColorClick,
-  handleColorSelect,
-  handleCancel,
-  currentColor,
-  isColorSelectVisible,
-}) => {
+  const [isColorSelectVisible, setIsColorSelectVisible] = useState(false);
+
+  function handleColorClick() {
+    setIsColorSelectVisible(true);
+  }
+
+  function handleColorSelect(color: string) {
+    setColor(color);
+    setIsColorSelectVisible(false);
+  }
+
+  function handleCancel() {
+    setIsColorSelectVisible(false);
+  }
+
   return (
     <>
       <IonPopover isOpen={!!isColorSelectVisible} onDidDismiss={handleCancel}>

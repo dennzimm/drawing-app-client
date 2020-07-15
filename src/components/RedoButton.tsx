@@ -1,16 +1,14 @@
 import { arrowRedoCircleOutline } from 'ionicons/icons';
 import React from 'react';
+import { usePaperHistory } from '../hooks/usePaperHistory.hook';
 import IconButton from '../shared/IconButton';
 
-interface RedoButtonProps {
-  handleRedo: () => void;
-  disabled?: boolean;
-}
+const RedoButton: React.FC = () => {
+  const { canRedo, redo } = usePaperHistory();
 
-const RedoButton: React.FC<RedoButtonProps> = ({ handleRedo, disabled }) => {
   return (
     <IconButton
-      buttonProps={{ onClick: handleRedo, disabled }}
+      buttonProps={{ onClick: redo, disabled: !canRedo }}
       iconProps={{ icon: arrowRedoCircleOutline }}
     />
   );

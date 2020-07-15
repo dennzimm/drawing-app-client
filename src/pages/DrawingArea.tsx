@@ -11,12 +11,12 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import NetworkIndicator from '../components/NetworkIndicator';
 
-import UndoButton from '../containers/UndoButton.container';
-import RedoButton from '../containers/RedoButton.container';
-import DeleteButton from '../containers/DeleteButton.container';
-import ColorButton from '../containers/ColorButton.container';
-import PaperCanvas from '../containers/PaperCanvas.container';
-import SizeSelectButton from '../containers/SizeSelectButton.container';
+import UndoButton from '../components/UndoButton';
+import RedoButton from '../components/RedoButton';
+import DeleteButton from '../components/DeleteButton';
+import ColorButton from '../components/ColorButton';
+import PaperCanvas from '../components/PaperCanvas';
+import SizeSelectButton from '../components/SizeSelectButton';
 
 interface DrawingAreaPageProps
   extends RouteComponentProps<{

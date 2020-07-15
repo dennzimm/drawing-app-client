@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { colors } from '../config/color-palette.config';
 
 const ColorsWrapper = styled.div`
   display: flex;
@@ -23,12 +24,10 @@ const Color = styled.div<ColorProps>`
 export interface ColorPaletteProps
   extends React.HTMLAttributes<HTMLDivElement> {
   handleColorSelect: (color: string) => void;
-  colors: string[];
 }
 
 const ColorPalette: React.FC<ColorPaletteProps> = ({
   handleColorSelect,
-  colors,
   className,
 }) => {
   return (
