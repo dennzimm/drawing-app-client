@@ -3,6 +3,12 @@ import { cellular, cellularOutline } from 'ionicons/icons';
 import React, { useMemo } from 'react';
 import { useNetwork } from '../hooks/useNetwork.hook';
 import { NetworkInfoEvent } from './NetworkInfo';
+import styled from 'styled-components';
+
+const StyledNetworkIndicator = styled(IonBadge)`
+  border-radius: 100%;
+  padding: 0.3rem 0.35rem;
+`;
 
 interface NetworkIndicatorProps {
   badgeProps?: React.ComponentProps<typeof IonBadge>;
@@ -29,14 +35,14 @@ const NetworkIndicator: React.FC<NetworkIndicatorProps> = ({
   }
 
   return (
-    <IonBadge
+    <StyledNetworkIndicator
       onClick={showNetworkInfo}
       color={options.color}
       className="ion-margin-start ion-margin-end"
       {...badgeProps}
     >
       <IonIcon icon={options.icon} />
-    </IonBadge>
+    </StyledNetworkIndicator>
   );
 };
 
