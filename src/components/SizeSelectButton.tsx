@@ -29,26 +29,26 @@ const SizePreview = styled.div<SizePreviewProps>`
 `;
 
 const SizeSelectButton: React.FC = () => {
-  const currentSize = useStoreState((state) => state.tool.width);
-  const setSize = useStoreActions((actions) => actions.tool.setWidth);
+  const currentSize = useStoreState((state) => state.tool.size);
+  const setSize = useStoreActions((actions) => actions.tool.setSize);
 
-  const [isSizeSelectVisible, setIsSizeSelectVisible] = useState(false);
+  const [showSizeSelect, setShowSizeSelect] = useState(false);
 
-  function handleSizeSelectClick() {
-    setIsSizeSelectVisible(true);
+  function onSizeSelectClick() {
+    setShowSizeSelect(true);
   }
 
-  function handleSizeSelect(value: number) {
+  function onSizeChange(value: number) {
     setSize(value);
   }
 
-  function handleCancel() {
-    setIsSizeSelectVisible(false);
+  function onDidDismiss() {
+    setShowSizeSelect(false);
   }
 
   return (
     <>
-      <IonPopover isOpen={!!isSizeSelectVisible} onDidDismiss={handleCancel}>
+      <IonPopover isOpen={showSizeSelect} onDidDismiss={onDidDismiss}>
         <SizePreviewWrapper size={currentSize} className="ion-margin-top">
           <SizePreview size={currentSize} />
         </SizePreviewWrapper>
@@ -58,12 +58,12 @@ const SizeSelectButton: React.FC = () => {
           min={2}
           max={40}
           step={2}
-          onIonChange={(e) => handleSizeSelect(+e.detail.value)}
+          onIonChange={(e) => onSizeChange(+e.detail.value)}
         />
       </IonPopover>
 
       <IconButton
-        buttonProps={{ onClick: handleSizeSelectClick }}
+        buttonProps={{ onClick: onSizeSelectClick }}
         iconProps={{ icon: discOutline, color: 'dark' }}
       />
     </>

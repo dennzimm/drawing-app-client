@@ -26,28 +26,28 @@ const ColorButton: React.FC = () => {
   const currentColor = useStoreState((state) => state.tool.color);
   const setColor = useStoreActions((actions) => actions.tool.setColor);
 
-  const [isColorSelectVisible, setIsColorSelectVisible] = useState(false);
+  const [showColorSelect, setShowColorSelect] = useState(false);
 
-  function handleColorClick() {
-    setIsColorSelectVisible(true);
+  function onColorClick() {
+    setShowColorSelect(true);
   }
 
-  function handleColorSelect(color: string) {
+  function onColorSelect(color: string) {
     setColor(color);
-    setIsColorSelectVisible(false);
+    setShowColorSelect(false);
   }
 
-  function handleCancel() {
-    setIsColorSelectVisible(false);
+  function onDidDismiss() {
+    setShowColorSelect(false);
   }
 
   return (
     <>
-      <IonPopover isOpen={!!isColorSelectVisible} onDidDismiss={handleCancel}>
-        <ColorPalette handleColorSelect={handleColorSelect} />
+      <IonPopover isOpen={showColorSelect} onDidDismiss={onDidDismiss}>
+        <ColorPalette onColorSelect={onColorSelect} />
       </IonPopover>
 
-      <IonButton onClick={handleColorClick}>
+      <IonButton onClick={onColorClick}>
         <IconWrapper>
           <ColorSelectIcon
             slot="icon-only"

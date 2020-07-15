@@ -23,21 +23,17 @@ const Color = styled.div<ColorProps>`
 
 export interface ColorPaletteProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  handleColorSelect: (color: string) => void;
+  onColorSelect: (color: string) => void;
 }
 
 const ColorPalette: React.FC<ColorPaletteProps> = ({
-  handleColorSelect,
+  onColorSelect,
   className,
 }) => {
   return (
     <ColorsWrapper className={className}>
       {colors.map((color) => (
-        <Color
-          key={color}
-          onClick={() => handleColorSelect(color)}
-          color={color}
-        />
+        <Color key={color} onClick={() => onColorSelect(color)} color={color} />
       ))}
     </ColorsWrapper>
   );

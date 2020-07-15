@@ -6,6 +6,25 @@ import IconButton from '../shared/IconButton';
 import { useStoreActions } from '../store/hooks';
 
 const DeleteButton: React.FC = () => {
+  const setHistoryToFirst = useStoreActions(
+    (actions) => actions.history.setCurrentToFirst
+  );
+
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+  function handleDelete() {
+    paperProvider.clearProject();
+    setHistoryToFirst();
+  }
+
+  function onDeleteClick() {
+    setIsAlertVisible(true);
+  }
+
+  function onDidDismiss() {
+    setIsAlertVisible(false);
+  }
+
   const headerText = 'Eigene Zeichnung löschen?';
   const messageText =
     'Willst du wirklich deine Zeichnung löschen? Alle anderen Zeichnungen werden nicht gelöscht.';
@@ -21,37 +40,18 @@ const DeleteButton: React.FC = () => {
     },
   ];
 
-  const setHistoryToFirst = useStoreActions(
-    (actions) => actions.history.setCurrentToFirst
-  );
-
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
-
-  function handleDelete() {
-    paperProvider.clearProject();
-    setHistoryToFirst();
-  }
-
-  function handleDeleteClick() {
-    setIsAlertVisible(true);
-  }
-
-  function handleCancel() {
-    setIsAlertVisible(false);
-  }
-
   return (
     <>
       <IonAlert
         isOpen={!!isAlertVisible}
-        onDidDismiss={handleCancel}
+        onDidDismiss={onDidDismiss}
         header={headerText}
         message={messageText}
         buttons={alertButtons}
       />
 
       <IconButton
-        buttonProps={{ onClick: handleDeleteClick }}
+        buttonProps={{ onClick: onDeleteClick }}
         iconProps={{ icon: trash, color: 'danger' }}
       />
     </>

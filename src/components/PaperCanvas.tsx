@@ -19,7 +19,7 @@ const Canvas = styled.canvas`
 `;
 
 const PaperCanvas: React.FC<PaperCanvasProps> = (canvasProps) => {
-  const { currentTool } = useStoreState((state) => state.tool);
+  const currentTool = useStoreState((state) => state.tool.currentTool);
 
   const [canvasID] = useState(`paper-canvas-${nanoid()}`);
 
