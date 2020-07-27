@@ -1,11 +1,8 @@
-import { useQuery } from '@apollo/client';
 import styled from '@emotion/styled';
 import { IonButton, IonIcon, IonPopover } from '@ionic/react';
 import { radioButtonOn } from 'ionicons/icons';
 import React, { useState } from 'react';
-import { GET_TOOL_OPTIONS } from '../store/operations/queries/tool.queries';
-import ColorPalette from './ColorPalette';
-import { toolMutations } from '../store/operations/mutations';
+import ColorPalette from './ColorPalette.component';
 
 interface ColorSelectIconProps {
   currentColor: string;
@@ -24,10 +21,13 @@ const IconWrapper = styled.div`
   align-items: center;
 `;
 
-const ColorButton: React.FC = () => {
-  const { data: toolOptions } = useQuery(GET_TOOL_OPTIONS);
-  const currentColor = toolOptions.tool.color;
-  const { setColor } = toolMutations;
+export interface ColorButtonProps {
+  currentColor: string;
+  setColor: (color: string) => void;
+}
+
+const ColorButton: React.FC<ColorButtonProps> = (props) => {
+  const { currentColor, setColor } = props;
 
   const [showColorSelect, setShowColorSelect] = useState(false);
 

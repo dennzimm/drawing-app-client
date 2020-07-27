@@ -1,11 +1,8 @@
-import { useQuery } from '@apollo/client';
 import styled from '@emotion/styled';
 import { IonPopover, IonRange } from '@ionic/react';
 import { discOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
 import IconButton from '../../../components/IconButton';
-import { toolMutations } from '../store/operations/mutations';
-import { GET_TOOL_OPTIONS } from '../store/operations/queries/tool.queries';
 
 interface SizePreviewProps {
   size: number;
@@ -30,10 +27,13 @@ const SizePreview = styled.div<SizePreviewProps>`
   border-radius: 100%;
 `;
 
-const SizeSelectButton: React.FC = () => {
-  const { data: toolOptions } = useQuery(GET_TOOL_OPTIONS);
-  const currentSize = toolOptions.tool.size;
-  const { setSize } = toolMutations;
+interface SizeSelectButtonProps {
+  currentSize: number;
+  setSize: (size: number) => void;
+}
+
+const SizeSelectButton: React.FC<SizeSelectButtonProps> = (props) => {
+  const { currentSize, setSize } = props;
 
   const [showSizeSelect, setShowSizeSelect] = useState(false);
 

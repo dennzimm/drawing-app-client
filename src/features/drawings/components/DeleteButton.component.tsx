@@ -1,12 +1,16 @@
 import { IonAlert } from '@ionic/react';
 import { trash } from 'ionicons/icons';
+import paper from 'paper';
 import React, { useState } from 'react';
 // import paperProvider from '../providers/paper.provider';
 // import { useStoreActions } from '../store/hooks';
 import IconButton from '../../../components/IconButton';
-import paper from 'paper';
 
-const DeleteButton: React.FC = () => {
+interface DeleteButtonProps {}
+
+const DeleteButton: React.FC<DeleteButtonProps> = (props) => {
+  // const {} = props
+
   // const setHistoryToFirst = useStoreActions(
   //   (actions) => actions.history.setCurrentToFirst
   // );
