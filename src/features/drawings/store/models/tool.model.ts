@@ -1,6 +1,6 @@
 import { ToolName } from '../../providers/tool.provider';
 
-export interface Tool {
+export interface ToolState {
   toolName: ToolName;
   color: string;
   size: number;

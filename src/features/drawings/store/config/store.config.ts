@@ -1,22 +1,24 @@
 import { makeVar, ReactiveVar } from '@apollo/client';
 import { FeaturesCacheConfig } from '../../../../apollo/config/features.config';
 import { colors } from '../../config/color-palette.config';
-import { Tool } from '../models/tool.model';
+import { ToolState } from '../models/tool.model';
 
 export const drawingAreaCacheConfig: FeaturesCacheConfig = {
   queryFields: {
     tool: {
       read() {
-        return toolVar();
+        return toolStateVar();
       },
     },
   },
 };
 
-const toolInitialValue: Tool = {
+const toolStateInitialValue: ToolState = {
   toolName: 'pencil',
   color: colors[Math.floor(Math.random() * colors.length)],
   size: 2,
 };
 
-export const toolVar: ReactiveVar<Tool> = makeVar<Tool>(toolInitialValue);
+export const toolStateVar: ReactiveVar<ToolState> = makeVar<ToolState>(
+  toolStateInitialValue
+);

@@ -1,9 +1,9 @@
 import { ReactiveVar } from '@apollo/client';
-import { Tool } from '../../models/tool.model';
+import { ToolState } from '../../models/tool.model';
 
-export default (toolVar: ReactiveVar<Tool>) => {
+export default (toolStateVar: ReactiveVar<ToolState>) => {
   return (color: string) => {
-    const tool = toolVar();
-    toolVar({ ...tool, color });
+    const tool = toolStateVar();
+    toolStateVar({ ...tool, color });
   };
 };
