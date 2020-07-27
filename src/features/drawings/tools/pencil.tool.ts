@@ -1,15 +1,7 @@
-import {
-  emitOnView,
-  EmitOnViewEvent,
-  ItemAddedEvent,
-  LayerAddedEvent,
-  PathSimplifiedEvent,
-  SegmentAddedEvent,
-} from '../helper/event.helper';
-import { createRoundLinecap } from '../helper/linecap.helper';
-import { createGroup, createLayer, createPath } from '../helper/project.helper';
+import { createPath } from '../helper/project.helper';
+import { emitSegmentAdded } from '../helper/segment.helper';
 import paperProvider from '../providers/paper.provider';
-import { toolVar } from '../store/config/store.config';
+import { toolStateVar } from '../store/config/store.config';
 import { Tool } from './tool';
 
 class PencilTool extends Tool {
@@ -65,7 +57,7 @@ class PencilTool extends Tool {
   // }
 
   private setNewPath() {
-    const { color, size } = toolVar();
+    const { color, size } = toolStateVar();
 
     this.path = createPath({
       options: {
@@ -86,16 +78,16 @@ class PencilTool extends Tool {
       this.path.add(point);
 
       if (emit) {
-        const { color, size } = toolVar();
+        const { color, size } = toolStateVar();
 
-        emitOnView<SegmentAddedEvent>(EmitOnViewEvent.SEGMENT_ADDED, {
+        emitSegmentAdded({
           itemID: this.path!.name,
           strokeColor: color,
           strokeWidth: size,
-          segmentData: JSON.stringify({
+          segmentData: {
             x: point.x,
             y: point.y,
-          }),
+          },
         });
       }
     }
