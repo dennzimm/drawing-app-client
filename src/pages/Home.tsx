@@ -1,29 +1,27 @@
-import { IonButton, IonContent, IonPage } from '@ionic/react';
-import { nanoid } from 'nanoid';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 import React from 'react';
-import { RouteComponentProps, useHistory } from 'react-router';
+import './Home.css';
 
-interface HomePageProps extends RouteComponentProps<{}> {}
-
-const Home: React.FC<HomePageProps> = () => {
-  const history = useHistory();
-
-  async function generateNewDrawingID() {
-    const id = nanoid(10);
-    // TODO: Check if already exists
-
-    return id;
-  }
-
-  async function startNewDrawing() {
-    const id = await generateNewDrawingID();
-    history.push(`/drawing-area/${id}`);
-  }
-
+const Home: React.FC = () => {
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Blank</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
-        <IonButton onClick={startNewDrawing}>Start new drawing!</IonButton>
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">Blank</IonTitle>
+          </IonToolbar>
+        </IonHeader>
       </IonContent>
     </IonPage>
   );
