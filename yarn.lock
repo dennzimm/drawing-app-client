@@ -1301,27 +1301,27 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@ionic/core@5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-5.3.0.tgz#eea12d0edafdca7d8990aca4be34a004ffa3a58c"
-  integrity sha512-W6H5mL8N2HvjjGzRnIGE7dEa7itJ9qIw/IC2xExvAo806nULX2PfswLQw3qL09ZOS9OXqZpCDMzX79dEzGa6vg==
+"@ionic/core@5.3.1":
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-5.3.1.tgz#0b5852b0977063ab0c2a4d3da799fae7ff3d6228"
+  integrity sha512-psOiYZbpL5uGKi7MZ9BXCfQIdJVVVW1n8AvrWAiifFE/ebI1x0wbO+D5QLmF2Mc2t/d0nbk4N1V8XyF2bjjiLg==
   dependencies:
     ionicons "^5.1.2"
     tslib "^1.10.0"
 
-"@ionic/react-router@^5.0.7":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@ionic/react-router/-/react-router-5.3.0.tgz#4546760d370b8b2c99f216ae87f4f9e8a0e6c02a"
-  integrity sha512-0wN9Hy4PbhYCzT69OzLmLLro7Rj0f9yCufcdty0IeDPBuqvNf6y8+QMiajbEc+dumrptNVryql8LPAyvOMladw==
+"@ionic/react-router@^5.3.1":
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/@ionic/react-router/-/react-router-5.3.1.tgz#8be31459de157a7da0e4757f48febb88d470e9bd"
+  integrity sha512-pb61x4APPpH21OjNTUIWDMKVR91rX+io6+xvm9JDsawIwKlI0CfdUo0uAl54WumDQGdC1zc88c6LazwhNG7ojQ==
   dependencies:
     tslib "*"
 
-"@ionic/react@^5.0.7":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@ionic/react/-/react-5.3.0.tgz#a533bb384d3e5398a091ebe83424f6ed54724296"
-  integrity sha512-LhFy794HGFL1z95pWjfPWXhFbV7PJvxmTOvcup890z2wvY27E5wUlVkH1b1+xvdeGBPXjsHEfwT0tM8ibnd+XQ==
+"@ionic/react@^5.3.1":
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/@ionic/react/-/react-5.3.1.tgz#3fa16e9e418f128d7fc8ea62a92aa00305970bf7"
+  integrity sha512-G+giFkfWpc6idl7wvFMPX45NDxDZ6nbxXUfzA+bmHum3JZ6+B9rXJzvd8Cqco6DYLz3s7WP+UAvHGDg+MEWpAw==
   dependencies:
-    "@ionic/core" "5.3.0"
+    "@ionic/core" "5.3.1"
     ionicons "^5.1.2"
     tslib "*"
 
@@ -1634,10 +1634,10 @@
     "@babel/runtime" "^7.10.3"
     "@testing-library/dom" "^7.17.1"
 
-"@testing-library/user-event@^12.0.13":
-  version "12.0.13"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.0.13.tgz#585fbb1188df005d16eabd376c3f8e8eb2f2d35c"
-  integrity sha512-JvodPV7CGl2Izf/qWS+vAVKBB1ZNAPGEacabfEeLGfafLmiqXoGJCxNZC1ml3mNTj9tTsIjouHGc42gvlyRTtQ==
+"@testing-library/user-event@^12.0.15":
+  version "12.0.15"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.0.15.tgz#464e0478cbecf2059780c46f119e5ef49a1e07bf"
+  integrity sha512-B+f8lpty7Nnq0i06FBGPDWT+asnHaudpmYBKDw7wqIq5xpUdzfDBSOdlcwRNneM3XrD0RsOZE9BXuDwr5pwsvw==
   dependencies:
     "@babel/runtime" "^7.10.2"
 
@@ -1752,10 +1752,15 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
-"@types/node@*", "@types/node@^14.0.25":
+"@types/node@*":
   version "14.0.25"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.25.tgz#7ad8b00a1206d6c9e94810e49f3115f0bcc30456"
   integrity sha512-okMqUHqrMlGOxfDZliX1yFX5MV6qcd5PpRz96XYtjkM0Ws/hwg23FMUqt6pETrVRZS+EKUB5HY19mmo54EuQbA==
+
+"@types/node@^14.0.26":
+  version "14.0.26"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.26.tgz#22a3b8a46510da8944b67bfc27df02c34a35331c"
+  integrity sha512-W+fpe5s91FBGE0pEa0lnqGLL4USgpLgs4nokw16SrBBco/gQxuua7KnArSEOd5iaMqbbSHV10vUDkJYJJqpXKA==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
