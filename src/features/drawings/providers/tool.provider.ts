@@ -1,9 +1,9 @@
 import pencilTool from '../tools/pencil.tool';
 
 class ToolProvider {
-  private availableTools = <const>{
+  private availableTools = {
     pencil: pencilTool.tool,
-  };
+  } as const;
 
   getTool(name: ToolName) {
     return this.tools[name];
