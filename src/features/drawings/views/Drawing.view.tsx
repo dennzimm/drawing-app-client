@@ -1,17 +1,17 @@
-import React from 'react';
-import DrawingCanvas from '../components/DrawingCanvas';
 import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
   IonBackButton,
+  IonButtons,
   IonContent,
   IonFooter,
+  IonHeader,
+  IonPage,
+  IonToolbar,
 } from '@ionic/react';
-import DeleteButton from '../components/DeleteButton';
-import SizeSelectButton from '../components/SizeSelectButton';
-import ColorButton from '../components/ColorButton';
+import React from 'react';
+import ColorButton from '../containers/ColorButton.container';
+import DeleteButton from '../containers/DeleteButton.container';
+import DrawingCanvas from '../containers/DrawingCanvas.container';
+import SizeSelectButton from '../containers/SizeSelectButton.container';
 
 const DrawingView: React.FC = () => {
   return (
