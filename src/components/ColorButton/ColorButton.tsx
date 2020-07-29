@@ -11,7 +11,7 @@ interface ColorSelectIconProps {
 
 const ColorSelectIcon = styled(IonIcon)<ColorSelectIconProps>`
   fill: ${({ currentColor }) => currentColor ?? 'var(--primary)'};
-  color: var(--ion-color-light);
+  color: var(--ion-color-dark);
 `;
 
 const IconWrapper = styled.div`
