@@ -10,40 +10,69 @@ import '@ionic/react/css/structure.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/typography.css';
-import React from 'react';
-import { Redirect, Route, RouteProps } from 'react-router-dom';
-import ConfiguredApolloProvider from './apollo';
-import drawingsConfig from './features/drawings/config/drawings.config';
-import Home from './pages/Home';
-import './theme/global.css';
+import React, { useEffect } from 'react';
+import { Redirect, Route } from 'react-router-dom';
+import { AppApolloProvider } from './apollo';
+import Menu from './components/Menu';
+import Drawing from './pages/Drawing';
+import Drawings from './pages/Drawings';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
+import Signup from './pages/Signup';
+import { AppStoreProvider } from './store';
+import { useStoreActions } from './store/hooks';
 import './theme/variables.css';
 
-const routes: RouteProps[] = [
-  ...drawingsConfig.routes,
-  {
-    path: '/',
-    component: Home,
-    exact: true,
-  },
-];
-
-const IonicApp: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        {routes.map((route, index) => (
-          <Route key={index} {...route} />
-        ))}
-        <Redirect to="/" />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
-
 const App: React.FC = () => (
-  <ConfiguredApolloProvider>
-    <IonicApp />
-  </ConfiguredApolloProvider>
+  <AppStoreProvider>
+    <AppApolloProvider>
+      <IonicApp />
+    </AppApolloProvider>
+  </AppStoreProvider>
 );
+
+interface IonicAppProps {}
+
+const IonicApp: React.FC<IonicAppProps> = () => {
+  const loadUserData = useStoreActions((actions) => actions.user.loadUserData);
+
+  const setIsLoggedIn = useStoreActions(
+    (actions) => actions.user.setIsLoggedIn
+  );
+
+  const setUsername = useStoreActions((actions) => actions.user.setUsername);
+
+  useEffect(() => {
+    loadUserData();
+  }, [loadUserData]);
+
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <Menu />
+
+        <IonRouterOutlet id="main">
+          {/* <Route path="/tutorial" component={Tutorial} /> */}
+          <Route path="/login" component={Login} />
+          <Route
+            path="/logout"
+            render={() => {
+              setIsLoggedIn(false);
+              setUsername(undefined);
+              return <Redirect to="/tabs" />;
+            }}
+          />
+          <Route path="/signup" component={Signup} />
+
+          <Route path="/drawings/:drawingID" component={Drawing} exact />
+          <Route path="/drawings" component={Drawings} exact />
+
+          <Route path="/" component={Home} exact />
+          <Redirect to="/" />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;
