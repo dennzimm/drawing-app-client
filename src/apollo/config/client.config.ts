@@ -1,7 +1,7 @@
 import { ApolloClient, ApolloLink, HttpLink, split } from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
-// import { onError } from '@apollo/client/link/error';
 // import { RetryLink } from '@apollo/client/link/retry';
 import { cache } from './cache.config';
 
@@ -50,26 +50,26 @@ const splitLink = split(
 // //   },
 // // });
 
-// // const graphQLErrorHandler = onError(
-// //   ({ operation, graphQLErrors, networkError }) => {
-// //     if (graphQLErrors) {
-// //       console.error(
-// //         `[ERROR]: Error trying to execute ${operation.operationName}.`
-// //       );
-// //       console.error('Error log:', graphQLErrors);
-// //     }
-// //     if (networkError) {
-// //       console.error('Network Error:', networkError);
-// //     }
-// //   }
-// // );
+const graphQLErrorHandler = onError(
+  ({ operation, graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+      console.error(
+        `[ERROR]: Error trying to execute ${operation.operationName}.`
+      );
+      console.error('Error log:', graphQLErrors);
+    }
+    if (networkError) {
+      console.error('Network Error:', networkError);
+    }
+  }
+);
 
 export const client = new ApolloClient({
   cache,
   connectToDevTools: true,
   link: ApolloLink.from([
     // retryLink,
-    // graphQLErrorHandler,
+    graphQLErrorHandler,
     splitLink,
   ]),
 });
