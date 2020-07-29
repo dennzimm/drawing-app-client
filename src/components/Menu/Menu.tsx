@@ -9,12 +9,13 @@ import {
   IonMenuToggle,
 } from '@ionic/react';
 import {
-  hammer,
-  imageOutline,
-  logIn,
-  logOut,
-  person,
-  personAdd,
+  brushOutline,
+  homeOutline,
+  libraryOutline,
+  logInOutline,
+  logOutOutline,
+  personAddOutline,
+  personOutline,
 } from 'ionicons/icons';
 import React from 'react';
 import { useHistory, useLocation } from 'react-router';
@@ -22,14 +23,17 @@ import { useStoreState } from '../../store/hooks';
 import './Menu.scss';
 
 const routes = {
-  appPages: [{ title: 'Zeichnen!', path: '/drawings', icon: imageOutline }],
+  appPages: [
+    { title: 'Start', path: '/', icon: homeOutline },
+    { title: 'Etwas Zeichnen!', path: '/drawings', icon: brushOutline },
+  ],
   loggedInPages: [
-    { title: 'Account', path: '/account', icon: person },
-    { title: 'Logout', path: '/logout', icon: logOut },
+    { title: 'Mein Konto', path: '/account', icon: personOutline },
+    { title: 'Abmelden', path: '/logout', icon: logOutOutline },
   ],
   loggedOutPages: [
-    { title: 'Login', path: '/login', icon: logIn },
-    { title: 'Signup', path: '/signup', icon: personAdd },
+    { title: 'Anmelden', path: '/login', icon: logInOutline },
+    { title: 'Konto erstellen', path: '/signup', icon: personAddOutline },
   ],
 };
 
@@ -58,9 +62,7 @@ const Menu: React.FC<MenuProps> = () => {
             detail={false}
             routerLink={p.path}
             routerDirection="none"
-            className={
-              location.pathname.startsWith(p.path) ? 'selected' : undefined
-            }
+            className={location.pathname === p.path ? 'selected' : undefined}
           >
             <IonIcon slot="start" icon={p.icon} />
             <IonLabel>{p.title}</IonLabel>
@@ -75,7 +77,7 @@ const Menu: React.FC<MenuProps> = () => {
         <IonList lines="none">{renderListItems(routes.appPages)}</IonList>
 
         <IonList lines="none">
-          <IonListHeader>Account</IonListHeader>
+          <IonListHeader>Konto</IonListHeader>
           {isAuthenticated
             ? renderListItems(routes.loggedInPages)
             : renderListItems(routes.loggedOutPages)}
@@ -89,8 +91,8 @@ const Menu: React.FC<MenuProps> = () => {
               history.push('/tutorial');
             }}
           >
-            <IonIcon slot="start" icon={hammer} />
-            Show Tutorial
+            <IonIcon slot="start" icon={libraryOutline} />
+            Tutorial zeigen
           </IonItem>
         </IonList>
       </IonContent>
