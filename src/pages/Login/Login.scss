@@ -1,0 +1,20 @@
+#login-page,
+#signup-page,
+#support-page {
+  .login-logo {
+    padding: 20px 0;
+    min-height: 200px;
+    text-align: center;
+  }
+
+  .login-logo img {
+    max-width: 400px;
+    max-height: 300px;
+    width: 100%;
+    object-fit: contain;
+  }
+
+  .list {
+    margin-bottom: 0;
+  }
+}

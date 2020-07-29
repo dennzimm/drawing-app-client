@@ -6,16 +6,14 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import React from 'react';
-import './Home.css';
+import PageHeader from '../../components/PageHeader';
+import './Home.scss';
 
 const Home: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <PageHeader title="Home" />
+
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar>
