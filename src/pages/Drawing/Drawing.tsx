@@ -14,29 +14,23 @@ import DrawingCanvas from '../../components/DrawingCanvas';
 import DeleteButton from '../../components/DeleteButton';
 import UndoButton from '../../components/UndoButton';
 import RedoButton from '../../components/RedoButton';
+import { useParams } from 'react-router';
+
+export interface DrawingRouterParams {
+  drawingID: string;
+}
 
 const Drawing: React.FC = () => {
+  const { drawingID } = useParams<DrawingRouterParams>();
+
   return (
     <IonPage>
-      {/* <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/" />
-          </IonButtons>
-
-          <IonButtons slot="end">
-            <UndoButton />
-            <RedoButton />
-          </IonButtons>
-
-          <NetworkIndicator badgeProps={{ slot: 'end' }} />
-        </IonToolbar>
-      </IonHeader> */}
-
-      <PageHeader title="Drawing">
+      <PageHeader title={`ID: ${drawingID}`}>
         <IonButtons slot="end">
           <UndoButton />
           <RedoButton />
+
+          {/* <NetworkIndicator badgeProps={{ slot: 'end' }} /> */}
         </IonButtons>
       </PageHeader>
 
