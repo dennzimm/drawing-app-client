@@ -10,7 +10,6 @@ import {
 } from '@ionic/react';
 import {
   brushOutline,
-  homeOutline,
   logInOutline,
   logOutOutline,
   personAddOutline,
@@ -23,7 +22,6 @@ import './Menu.scss';
 
 const routes = {
   appPages: [
-    { title: 'Start', path: '/', icon: homeOutline },
     { title: 'Etwas Zeichnen!', path: '/drawings', icon: brushOutline },
   ],
   loggedInPages: [
