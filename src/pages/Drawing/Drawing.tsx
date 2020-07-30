@@ -34,7 +34,12 @@ const Drawing: React.FC = () => {
         </IonButtons>
       </PageHeader>
 
-      <IonContent fullscreen>
+      <IonContent
+        fullscreen
+        forceOverscroll={false}
+        scrollX={false}
+        scrollY={false}
+      >
         <DrawingCanvas />
       </IonContent>
 
