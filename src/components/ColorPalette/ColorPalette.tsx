@@ -1,20 +1,17 @@
-import styled from '@emotion/styled';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import React from 'react';
 import { useStoreState } from '../../store/hooks';
 
-const ColorsWrapper = styled.div`
+const wrapperStyles = css`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   max-height: 50vh;
 `;
 
-interface ColorProps {
-  color: string;
-}
-
-const Color = styled.div<ColorProps>`
-  background-color: ${({ color }) => color};
+const colorPotStyles = (color: string) => css`
+  background-color: ${color};
   border-radius: 100%;
   height: 2.25rem;
   width: 2.25rem;
@@ -33,11 +30,15 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   const colors = useStoreState((state) => state.drawing.allColors);
 
   return (
-    <ColorsWrapper className={className}>
+    <div css={wrapperStyles}>
       {colors.map((color) => (
-        <Color key={color} onClick={() => onColorSelect(color)} color={color} />
+        <div
+          key={color}
+          onClick={() => onColorSelect(color)}
+          css={colorPotStyles(color)}
+        />
       ))}
-    </ColorsWrapper>
+    </div>
   );
 };
 

@@ -11,7 +11,6 @@ import {
 import {
   brushOutline,
   homeOutline,
-  libraryOutline,
   logInOutline,
   logOutOutline,
   personAddOutline,
@@ -81,19 +80,6 @@ const Menu: React.FC<MenuProps> = () => {
           {isAuthenticated
             ? renderListItems(routes.loggedInPages)
             : renderListItems(routes.loggedOutPages)}
-        </IonList>
-
-        <IonList lines="none">
-          <IonListHeader>Tutorial</IonListHeader>
-          <IonItem
-            button
-            onClick={() => {
-              history.push('/tutorial');
-            }}
-          >
-            <IonIcon slot="start" icon={libraryOutline} />
-            Tutorial zeigen
-          </IonItem>
         </IonList>
       </IonContent>
     </IonMenu>

@@ -1,15 +1,12 @@
-import styled from '@emotion/styled';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { IonPopover, IonRange } from '@ionic/react';
 import { discOutline } from 'ionicons/icons';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useStoreActions, useStoreState } from '../../store/hooks';
 import IconButton from '../IconButton';
 
-interface SizePreviewProps {
-  size: number;
-}
-
-const SizePreviewWrapper = styled.div<SizePreviewProps>`
+const sizePreviewWrapperStyles = css`
   height: 2.5rem;
   width: 2.5rem;
   border-radius: 100%;
@@ -21,16 +18,16 @@ const SizePreviewWrapper = styled.div<SizePreviewProps>`
   margin-right: auto;
 `;
 
-const SizePreview = styled.div<SizePreviewProps>`
-  height: ${({ size }) => size}px;
-  width: ${({ size }) => size}px;
+const sizePreviewStyles = (size: number) => css`
+  height: ${size}px;
+  width: ${size}px;
   background-color: var(--ion-color-dark);
   border-radius: 100%;
 `;
 
 export interface SizeSelectButtonProps {}
 
-const SizeSelectButton: React.FC<SizeSelectButtonProps> = (props) => {
+const SizeSelectButton: React.FC<SizeSelectButtonProps> = () => {
   const currentSize = useStoreState((state) => state.drawing.currentToolSize);
   const setSize = useStoreActions(
     (actions) => actions.drawing.setCurrentToolSize
@@ -51,11 +48,11 @@ const SizeSelectButton: React.FC<SizeSelectButtonProps> = (props) => {
   }
 
   return (
-    <>
+    <Fragment>
       <IonPopover isOpen={showSizeSelect} onDidDismiss={onDidDismiss}>
-        <SizePreviewWrapper size={currentSize} className="ion-margin-top">
-          <SizePreview size={currentSize} />
-        </SizePreviewWrapper>
+        <div className="ion-margin-top" css={sizePreviewWrapperStyles}>
+          <div css={sizePreviewStyles(currentSize)} />
+        </div>
 
         <IonRange
           value={currentSize}
@@ -70,7 +67,7 @@ const SizeSelectButton: React.FC<SizeSelectButtonProps> = (props) => {
         buttonProps={{ onClick: onSizeSelectClick }}
         iconProps={{ icon: discOutline, color: 'dark' }}
       />
-    </>
+    </Fragment>
   );
 };
 

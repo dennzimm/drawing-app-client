@@ -1,25 +1,22 @@
-import styled from '@emotion/styled';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { IonButton, IonIcon, IonPopover } from '@ionic/react';
 import { radioButtonOn } from 'ionicons/icons';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useStoreActions, useStoreState } from '../../store/hooks';
 import ColorPalette from '../ColorPalette';
 
-interface ColorSelectIconProps {
-  currentColor: string;
-}
-
-const ColorSelectIcon = styled(IonIcon)<ColorSelectIconProps>`
-  fill: ${({ currentColor }) => currentColor ?? 'var(--primary)'};
-  color: var(--ion-color-dark);
-`;
-
-const IconWrapper = styled.div`
+const iconWrapperStyles = css`
   border-radius: 100%;
   background-color: var(--paper-background-primary);
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const iconStyles = (currentColor: string) => css`
+  fill: ${currentColor ?? 'var(--primary)'};
+  color: var(--ion-color-dark);
 `;
 
 export interface ColorButtonProps {}
@@ -46,21 +43,21 @@ const ColorButton: React.FC<ColorButtonProps> = () => {
   }
 
   return (
-    <>
+    <Fragment>
       <IonPopover isOpen={showColorSelect} onDidDismiss={onDidDismiss}>
         <ColorPalette onColorSelect={onColorSelect} />
       </IonPopover>
 
       <IonButton onClick={onColorClick}>
-        <IconWrapper>
-          <ColorSelectIcon
+        <div css={iconWrapperStyles}>
+          <IonIcon
             slot="icon-only"
             icon={radioButtonOn}
-            currentColor={currentColor}
+            css={iconStyles(currentColor)}
           />
-        </IconWrapper>
+        </div>
       </IonButton>
-    </>
+    </Fragment>
   );
 };
 
