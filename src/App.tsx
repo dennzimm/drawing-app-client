@@ -16,7 +16,6 @@ import { AppApolloProvider } from './apollo';
 import Menu from './components/Menu';
 import Drawing from './pages/Drawing';
 import Drawings from './pages/Drawings';
-import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup';
 import { AppStoreProvider } from './store';
@@ -52,7 +51,7 @@ const IonicApp: React.FC<IonicAppProps> = () => {
         <Menu />
 
         <IonRouterOutlet id="main">
-          {/* <Route path="/tutorial" component={Tutorial} /> */}
+          <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route
             path="/logout"
@@ -62,13 +61,11 @@ const IonicApp: React.FC<IonicAppProps> = () => {
               return <Redirect to="/tabs" />;
             }}
           />
-          <Route path="/signup" component={Signup} />
 
           <Route path="/drawings/:drawingID" component={Drawing} exact />
           <Route path="/drawings" component={Drawings} exact />
 
-          <Route path="/" component={Home} exact />
-          <Redirect to="/" />
+          <Redirect to="/drawings" />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
