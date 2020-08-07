@@ -1,6 +1,6 @@
 import { IonButton, IonIcon, IonPopover } from "@ionic/react";
 import { colorPalette } from "ionicons/icons";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useCallback, useState } from "react";
 import styled from "styled-components";
 import { useStoreActions, useStoreState } from "../../store/hooks";
 import { ColorPalette } from "../ColorPalette";
@@ -18,18 +18,21 @@ const ColorButton: React.FC = () => {
 
   const [showColorSelect, setShowColorSelect] = useState(false);
 
-  function onColorClick() {
+  const onColorClick = () => {
     setShowColorSelect(true);
-  }
+  };
 
-  function onColorSelect(color: string) {
-    setColor(color);
+  const onDidDismiss = () => {
     setShowColorSelect(false);
-  }
+  };
 
-  function onDidDismiss() {
-    setShowColorSelect(false);
-  }
+  const onColorSelect = useCallback(
+    (color: string) => {
+      setColor(color);
+      setShowColorSelect(false);
+    },
+    [setColor]
+  );
 
   return (
     <Fragment>

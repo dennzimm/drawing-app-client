@@ -1,6 +1,6 @@
 import { IonPopover, IonRange } from "@ionic/react";
 import { discOutline } from "ionicons/icons";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useCallback } from "react";
 import styled from "styled-components";
 import { useStoreActions, useStoreState } from "../../store/hooks";
 import { IconButton } from "../IconButton";
@@ -24,9 +24,7 @@ const SizePreview = styled.div<Record<"size", number>>`
   border-radius: 100%;
 `;
 
-export interface SizeSelectButtonProps {}
-
-const SizeSelectButton: React.FC<SizeSelectButtonProps> = () => {
+const SizeSelectButton: React.FC = () => {
   const currentSize = useStoreState((state) => state.drawing.currentToolSize);
   const setSize = useStoreActions(
     (actions) => actions.drawing.setCurrentToolSize
@@ -34,17 +32,20 @@ const SizeSelectButton: React.FC<SizeSelectButtonProps> = () => {
 
   const [showSizeSelect, setShowSizeSelect] = useState(false);
 
-  function onSizeSelectClick() {
+  const onSizeSelectClick = () => {
     setShowSizeSelect(true);
-  }
+  };
 
-  function onSizeChange(value: number) {
-    setSize(value);
-  }
-
-  function onDidDismiss() {
+  const onDidDismiss = () => {
     setShowSizeSelect(false);
-  }
+  };
+
+  const onSizeChange = useCallback(
+    (value: number) => {
+      setSize(value);
+    },
+    [setSize]
+  );
 
   return (
     <Fragment>

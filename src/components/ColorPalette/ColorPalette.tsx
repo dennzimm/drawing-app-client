@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useStoreState } from "../../store/hooks";
+import { colors } from "../../config";
 
 const ColorsWrapper = styled.div`
   display: flex;
@@ -17,17 +17,11 @@ const ColorPot = styled.div<Record<"color", string>>`
   margin: 0.35rem;
 `;
 
-export interface ColorPaletteProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface ColorPaletteProps {
   onColorSelect: (color: string) => void;
 }
 
-const ColorPalette: React.FC<ColorPaletteProps> = ({
-  onColorSelect,
-  className,
-}) => {
-  const colors = useStoreState((state) => state.drawing.allColors);
-
+const ColorPalette: React.FC<ColorPaletteProps> = ({ onColorSelect }) => {
   return (
     <ColorsWrapper>
       {colors.map((color) => (
@@ -41,4 +35,4 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
   );
 };
 
-export default ColorPalette;
+export default React.memo(ColorPalette);
