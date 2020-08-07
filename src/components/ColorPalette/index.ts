@@ -1,3 +1,1 @@
-export { default } from './ColorPalette';
-
-export * from './ColorPalette';
+export { default as ColorPalette } from "./ColorPalette";

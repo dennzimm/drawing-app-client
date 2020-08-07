@@ -1,6 +1,6 @@
-import { ToolName } from '../../../providers/tool.provider';
-import { colors } from './config/colors.config';
-import actions, { DrawingActions } from './drawing.actions';
+import { colors } from "../../../paper/config";
+import { ToolName } from "../../../paper/providers";
+import actions, { DrawingActions } from "./drawing.actions";
 
 export interface DrawingState {
   allColors: typeof colors;
@@ -14,7 +14,7 @@ export type DrawingModel = DrawingState & DrawingActions;
 const initialState: DrawingState = {
   allColors: colors,
   currentToolColor: colors[Math.floor(Math.random() * colors.length)],
-  currentToolName: 'pencil',
+  currentToolName: "pencil",
   currentToolSize: 2,
 };
 

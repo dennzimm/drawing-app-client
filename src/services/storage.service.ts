@@ -1,11 +1,11 @@
-import { Plugins } from '@capacitor/core';
+import { Plugins } from "@capacitor/core";
 
 const { Storage } = Plugins;
 
 enum StorageKeys {
-  HAS_LOGGED_IN = 'hasLoggedIn',
-  HAS_SEEN_TUTORIAL = 'hasSeenTutorial',
-  USERNAME = 'username',
+  HAS_LOGGED_IN = "hasLoggedIn",
+  HAS_SEEN_TUTORIAL = "hasSeenTutorial",
+  USERNAME = "username",
 }
 
 export const getUserData = async () => {
@@ -15,8 +15,8 @@ export const getUserData = async () => {
     Storage.get({ key: StorageKeys.USERNAME }),
   ]);
 
-  const isLoggedin = (await response[0].value) === 'true';
-  const hasSeenTutorial = (await response[1].value) === 'true';
+  const isLoggedin = (await response[0].value) === "true";
+  const hasSeenTutorial = (await response[1].value) === "true";
   const username = (await response[2].value) || undefined;
 
   const data = {

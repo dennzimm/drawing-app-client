@@ -1,3 +1,1 @@
-export { default } from './UndoButton';
-
-export * from './UndoButton';
+export { default as UndoButton } from "./UndoButton";

@@ -1,12 +1,11 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { IonPopover, IonRange } from '@ionic/react';
-import { discOutline } from 'ionicons/icons';
-import React, { Fragment, useState } from 'react';
-import { useStoreActions, useStoreState } from '../../store/hooks';
-import IconButton from '../IconButton';
+import { IonPopover, IonRange } from "@ionic/react";
+import { discOutline } from "ionicons/icons";
+import React, { Fragment, useState } from "react";
+import styled from "styled-components";
+import { useStoreActions, useStoreState } from "../../store/hooks";
+import { IconButton } from "../IconButton";
 
-const sizePreviewWrapperStyles = css`
+const SizePreviewWrapper = styled.div`
   height: 2.5rem;
   width: 2.5rem;
   border-radius: 100%;
@@ -18,9 +17,9 @@ const sizePreviewWrapperStyles = css`
   margin-right: auto;
 `;
 
-const sizePreviewStyles = (size: number) => css`
-  height: ${size}px;
-  width: ${size}px;
+const SizePreview = styled.div<Record<"size", number>>`
+  height: ${({ size }) => size}px;
+  width: ${({ size }) => size}px;
   background-color: var(--ion-color-dark);
   border-radius: 100%;
 `;
@@ -50,9 +49,9 @@ const SizeSelectButton: React.FC<SizeSelectButtonProps> = () => {
   return (
     <Fragment>
       <IonPopover isOpen={showSizeSelect} onDidDismiss={onDidDismiss}>
-        <div className="ion-margin-top" css={sizePreviewWrapperStyles}>
-          <div css={sizePreviewStyles(currentSize)} />
-        </div>
+        <SizePreviewWrapper className="ion-margin-top">
+          <SizePreview size={currentSize} />
+        </SizePreviewWrapper>
 
         <IonRange
           value={currentSize}
@@ -65,7 +64,7 @@ const SizeSelectButton: React.FC<SizeSelectButtonProps> = () => {
 
       <IconButton
         buttonProps={{ onClick: onSizeSelectClick }}
-        iconProps={{ icon: discOutline, color: 'dark' }}
+        iconProps={{ icon: discOutline, color: "dark" }}
       />
     </Fragment>
   );

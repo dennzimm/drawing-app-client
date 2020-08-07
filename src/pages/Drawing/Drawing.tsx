@@ -4,33 +4,27 @@ import {
   IonFooter,
   IonPage,
   IonToolbar,
-} from '@ionic/react';
-import React from 'react';
-import ColorButton from '../../components/ColorButton';
-import PageHeader from '../../components/PageHeader';
-import SizeSelectButton from '../../components/SizeSelectButton';
-import './Drawing.scss';
-import DrawingCanvas from '../../components/DrawingCanvas';
-import DeleteButton from '../../components/DeleteButton';
-import UndoButton from '../../components/UndoButton';
-import RedoButton from '../../components/RedoButton';
-import { useParams } from 'react-router';
-
-export interface DrawingRouterParams {
-  drawingID: string;
-}
+} from "@ionic/react";
+import React from "react";
+import {
+  ColorButton,
+  DeleteButton,
+  DrawingCanvas,
+  PageHeader,
+  RedoButton,
+  ServerStatus,
+  SizeSelectButton,
+  UndoButton,
+} from "../../components";
 
 const Drawing: React.FC = () => {
-  const { drawingID } = useParams<DrawingRouterParams>();
-
   return (
     <IonPage>
-      <PageHeader title={`ID: ${drawingID}`}>
+      <PageHeader>
         <IonButtons slot="end">
           <UndoButton />
           <RedoButton />
-
-          {/* <NetworkIndicator badgeProps={{ slot: 'end' }} /> */}
+          <ServerStatus class="ion-margin-horizontal" />
         </IonButtons>
       </PageHeader>
 
@@ -55,8 +49,6 @@ const Drawing: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonFooter>
-
-      {/* <NetworkInfo /> */}
     </IonPage>
   );
 };

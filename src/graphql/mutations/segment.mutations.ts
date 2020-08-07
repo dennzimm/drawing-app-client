@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const PUBLISH_NEW_SEGMENT = gql`
   mutation PublishNewSegment($newSegmentData: NewSegmentInput!) {

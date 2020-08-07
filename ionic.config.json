@@ -1,5 +1,5 @@
 {
-  "name": "drawing-app-client",
+  "name": "ionic-react-conference-app",
   "integrations": {
     "capacitor": {}
   },

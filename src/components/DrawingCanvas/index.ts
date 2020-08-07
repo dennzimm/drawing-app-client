@@ -1,3 +1,1 @@
-export { default } from './DrawingCanvas';
-
-export * from './DrawingCanvas';
+export { default as DrawingCanvas } from "./DrawingCanvas";

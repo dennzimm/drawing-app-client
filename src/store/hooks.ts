@@ -1,6 +1,6 @@
-import { createTypedHooks } from 'easy-peasy';
+import { createTypedHooks } from "easy-peasy";
 
-import { StoreModel } from './models/store/store.model';
+import { StoreModel } from "./models/store/store.model";
 
 const typedHooks = createTypedHooks<StoreModel>();
 

@@ -1,7 +1,7 @@
-import appModel, { AppModel } from '../app/app.model';
-import drawingModel, { DrawingModel } from '../drawing/drawing.model';
-import historyModel, { HistoryModel } from '../history/history.model';
-import userModel, { UserModel } from '../user/user.model';
+import drawingModel, { DrawingModel } from "../drawing/drawing.model";
+import appModel, { AppModel } from "../app/app.model";
+import historyModel, { HistoryModel } from "../history/history.model";
+import userModel, { UserModel } from "../user/user.model";
 
 export interface StoreState {}
 

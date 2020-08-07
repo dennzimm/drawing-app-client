@@ -1,3 +1,1 @@
-export { default } from './ColorButton';
-
-export * from './ColorButton';
+export { default as ColorButton } from "./ColorButton";

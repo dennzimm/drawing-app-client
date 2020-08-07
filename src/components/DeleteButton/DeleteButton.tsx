@@ -1,8 +1,8 @@
-import { IonAlert } from '@ionic/react';
-import { trash } from 'ionicons/icons';
+import { IonAlert } from "@ionic/react";
+import { trash } from "ionicons/icons";
 // import paper from 'paper';
-import React, { useState } from 'react';
-import IconButton from '../IconButton';
+import React, { useState } from "react";
+import { IconButton } from "../IconButton";
 // import paperProvider from '../providers/paper.provider';
 // import { useStoreActions } from '../store/hooks';
 
@@ -30,17 +30,17 @@ const DeleteButton: React.FC<DeleteButtonProps> = (props) => {
     setIsAlertVisible(false);
   }
 
-  const headerText = 'Eigene Zeichnung löschen?';
+  const headerText = "Eigene Zeichnung löschen?";
   const messageText =
-    'Willst du wirklich deine Zeichnung löschen? Alle anderen Zeichnungen werden nicht gelöscht.';
+    "Willst du wirklich deine Zeichnung löschen? Alle anderen Zeichnungen werden nicht gelöscht.";
 
   const alertButtons = [
     {
-      text: 'Abbrechen',
-      role: 'cancel',
+      text: "Abbrechen",
+      role: "cancel",
     },
     {
-      text: 'Ja',
+      text: "Ja",
       handler: handleDelete,
     },
   ];
@@ -57,7 +57,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = (props) => {
 
       <IconButton
         buttonProps={{ onClick: onDeleteClick }}
-        iconProps={{ icon: trash, color: 'danger' }}
+        iconProps={{ icon: trash, color: "danger" }}
       />
     </>
   );

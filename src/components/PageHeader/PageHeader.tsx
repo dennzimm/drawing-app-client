@@ -4,8 +4,8 @@ import {
   IonMenuButton,
   IonTitle,
   IonToolbar,
-} from '@ionic/react';
-import React from 'react';
+} from "@ionic/react";
+import React from "react";
 
 export interface PageHeaderProps {
   title?: string;

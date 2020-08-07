@@ -1,6 +1,6 @@
-import { arrowUndoCircleOutline } from 'ionicons/icons';
-import React from 'react';
-import IconButton from '../IconButton';
+import { arrowUndoCircleOutline } from "ionicons/icons";
+import React from "react";
+import { IconButton } from "../IconButton";
 
 export interface UndoButtonProps {}
 

@@ -1,3 +1,1 @@
-export { default } from './SizeSelectButton';
-
-export * from './SizeSelectButton';
+export { default as SizeSelectButton } from "./SizeSelectButton";

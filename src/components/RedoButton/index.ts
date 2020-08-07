@@ -1,3 +1,1 @@
-export { default } from './RedoButton';
-
-export * from './RedoButton';
+export { default as RedoButton } from "./RedoButton";

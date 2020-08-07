@@ -1,3 +1,1 @@
-export { default } from './Drawings';
-
-export * from './Drawings';
+export { default as Drawings } from "./Drawings";

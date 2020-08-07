@@ -1,27 +1,16 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { IonButton, IonIcon, IonPopover } from '@ionic/react';
-import { radioButtonOn } from 'ionicons/icons';
-import React, { Fragment, useState } from 'react';
-import { useStoreActions, useStoreState } from '../../store/hooks';
-import ColorPalette from '../ColorPalette';
+import { IonButton, IonIcon, IonPopover } from "@ionic/react";
+import { colorPalette } from "ionicons/icons";
+import React, { Fragment, useState } from "react";
+import styled from "styled-components";
+import { useStoreActions, useStoreState } from "../../store/hooks";
+import { ColorPalette } from "../ColorPalette";
 
-const iconWrapperStyles = css`
-  border-radius: 100%;
-  background-color: var(--paper-background-primary);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const StyledIcon = styled(IonIcon)<Record<"currentColor", string>>`
+  fill: ${({ currentColor }) => currentColor};
+  stroke-width: 1.5rem;
 `;
 
-const iconStyles = (currentColor: string) => css`
-  fill: ${currentColor ?? 'var(--primary)'};
-  color: var(--ion-color-dark);
-`;
-
-export interface ColorButtonProps {}
-
-const ColorButton: React.FC<ColorButtonProps> = () => {
+const ColorButton: React.FC = () => {
   const currentColor = useStoreState((state) => state.drawing.currentToolColor);
   const setColor = useStoreActions(
     (actions) => actions.drawing.setCurrentToolColor
@@ -49,13 +38,11 @@ const ColorButton: React.FC<ColorButtonProps> = () => {
       </IonPopover>
 
       <IonButton onClick={onColorClick}>
-        <div css={iconWrapperStyles}>
-          <IonIcon
-            slot="icon-only"
-            icon={radioButtonOn}
-            css={iconStyles(currentColor)}
-          />
-        </div>
+        <StyledIcon
+          slot="icon-only"
+          icon={colorPalette}
+          currentColor={currentColor}
+        />
       </IonButton>
     </Fragment>
   );

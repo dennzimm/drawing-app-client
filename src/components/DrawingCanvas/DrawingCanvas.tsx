@@ -1,40 +1,28 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import React, { HTMLAttributes } from 'react';
-import { useParams } from 'react-router';
-// import { useItemsSubscription } from '../../hooks/useItemsSubscription.hook';
-import { usePaper } from '../../hooks/usePaper.hook';
-// import { useViewEvents } from '../../hooks/useViewEvents.hook';
-import { useStoreState } from '../../store/hooks';
+import { nanoid } from "nanoid";
+import React from "react";
+import styled from "styled-components";
+import { usePaper } from "../../paper/hooks";
+import { useStoreState } from "../../store/hooks";
+import { useDrawingCanvasEvents, useDrawingCanvasSubscriptions } from "./hooks";
 
-export interface DrawingCanvasRouterParams {
-  drawingID: string;
-}
-
-export interface DrawingCanvasProps extends HTMLAttributes<HTMLCanvasElement> {}
-
-const canvasStyles = css`
-  width: 100%;
+const StyledCanvas = styled.canvas`
+  width: 100vw;
   height: 100vh;
   background: var(--ion-color-paper-background-primary);
 `;
 
-const DrawingCanvas: React.FC<DrawingCanvasProps> = (props) => {
-  const { drawingID } = useParams<DrawingCanvasRouterParams>();
+const canvasID = nanoid();
+
+const DrawingCanvas: React.FC = () => {
   const userID = useStoreState((state) => state.user.userID);
 
-  const { isReady } = usePaper(drawingID);
-  // useViewEvents({ drawingID, userID, isReady });
-  // useItemsSubscription({ drawingID, userID, isReady });
+  const { isReady } = usePaper({ id: canvasID, injectGlobal: true });
+  // useViewEvents({ canvasID, userID, isReady });
+  // useItemsSubscription({ canvasID, userID, isReady });
+  useDrawingCanvasEvents(isReady);
+  useDrawingCanvasSubscriptions();
 
-  return (
-    <canvas
-      id={drawingID}
-      data-paper-resize="true"
-      css={canvasStyles}
-      {...props}
-    />
-  );
+  return <StyledCanvas id={canvasID} data-paper-resize="true" />;
 };
 
 export default DrawingCanvas;
