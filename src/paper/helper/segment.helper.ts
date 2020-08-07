@@ -28,7 +28,7 @@ export function handleSegmentAdded(segmentAddedData: SegmentAddedEvent) {
     groupID,
     itemID,
     segmentData: { x, y },
-    ...rest
+    ...options
   } = segmentAddedData;
 
   let layer = paperProvider.project.getItem({
@@ -62,7 +62,7 @@ export function handleSegmentAdded(segmentAddedData: SegmentAddedEvent) {
     path = createPath({
       name: itemID || undefined,
       options: {
-        ...rest,
+        ...options,
       },
     });
 
@@ -76,25 +76,4 @@ export function handleSegmentAdded(segmentAddedData: SegmentAddedEvent) {
   ]);
 
   paperProvider.project.addLayer(layer);
-
-  // const item = paperProvider.activeLayer.getItem({
-  //   name: itemID,
-  // }) as paper.Path;
-
-  // if (item) {
-  //   item.addSegments([
-  //     new paperProvider.scope.Segment({
-  //       point: [x, y],
-  //     }),
-  //   ]);
-  // } else {
-  //   paperProvider.activeLayer.addChild(
-  //     createPath({
-  //       options: {
-  //         name: itemID,
-  //         ...rest,
-  //       },
-  //     })
-  //   );
-  // }
 }
