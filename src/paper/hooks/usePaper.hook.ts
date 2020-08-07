@@ -6,9 +6,7 @@ interface UsePaperProps {
   injectGlobal?: boolean;
 }
 
-export function usePaper(props: UsePaperProps) {
-  const { id, injectGlobal = false } = props;
-
+export function usePaper({ id, injectGlobal = false }: UsePaperProps) {
   const [isReady, setIsReady] = useState(false);
 
   const updateFullViewSize = useCallback(() => {
