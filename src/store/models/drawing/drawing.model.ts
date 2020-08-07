@@ -1,9 +1,9 @@
-import { colors } from "../../../paper/config";
+import { colors } from "../../../config";
 import { ToolName } from "../../../paper/providers";
 import actions, { DrawingActions } from "./drawing.actions";
 
 export interface DrawingState {
-  allColors: typeof colors;
+  ready: boolean;
   currentToolColor: string;
   currentToolName: ToolName;
   currentToolSize: number;
@@ -12,7 +12,7 @@ export interface DrawingState {
 export type DrawingModel = DrawingState & DrawingActions;
 
 const initialState: DrawingState = {
-  allColors: colors,
+  ready: false,
   currentToolColor: colors[Math.floor(Math.random() * colors.length)],
   currentToolName: "pencil",
   currentToolSize: 2,
