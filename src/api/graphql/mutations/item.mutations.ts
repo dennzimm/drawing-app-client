@@ -7,3 +7,11 @@ export const CREATE_ITEM = gql`
     }
   }
 `;
+
+export const DELETE_ITEM = gql`
+  mutation DeleteItem($userID: ID!, $drawingID: ID!, $itemID: ID!) {
+    deleteItem(userID: $userID, drawingID: $drawingID, itemID: $itemID) {
+      id
+    }
+  }
+`;

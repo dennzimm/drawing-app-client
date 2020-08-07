@@ -4,6 +4,26 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateDrawing
+// ====================================================
+
+export interface CreateDrawing_createDrawing {
+  id: string;
+}
+
+export interface CreateDrawing {
+  createDrawing: CreateDrawing_createDrawing;
+}
+
+export interface CreateDrawingVariables {
+  createDrawingData: CreateDrawingInput;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CreateItem
 // ====================================================
 
@@ -17,6 +37,28 @@ export interface CreateItem {
 
 export interface CreateItemVariables {
   createItemData: CreateItemInput;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: DeleteItem
+// ====================================================
+
+export interface DeleteItem_deleteItem {
+  id: string;
+}
+
+export interface DeleteItem {
+  deleteItem: DeleteItem_deleteItem;
+}
+
+export interface DeleteItemVariables {
+  userID: string;
+  drawingID: string;
+  itemID: string;
 }
 
 
@@ -49,6 +91,53 @@ export interface PublishNewSegmentVariables {
 
 export interface IsServerOnline {
   isOnline: boolean;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetDrawing
+// ====================================================
+
+export interface GetDrawing_drawing_items {
+  data: string;
+}
+
+export interface GetDrawing_drawing {
+  items: GetDrawing_drawing_items[];
+}
+
+export interface GetDrawing {
+  drawing: GetDrawing_drawing;
+}
+
+export interface GetDrawingVariables {
+  id: string;
+  userID: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetDrawings
+// ====================================================
+
+export interface GetDrawings_drawings_items {
+  id: string;
+  data: string;
+}
+
+export interface GetDrawings_drawings {
+  id: string;
+  items: GetDrawings_drawings_items[];
+}
+
+export interface GetDrawings {
+  drawings: GetDrawings_drawings[];
 }
 
 
@@ -153,6 +242,12 @@ export enum MutationType {
   CREATED = "CREATED",
   DELETED = "DELETED",
   UPDATED = "UPDATED",
+}
+
+// null
+export interface CreateDrawingInput {
+  userID: string;
+  id: string;
 }
 
 // null
