@@ -56,6 +56,33 @@ export interface IsServerOnline {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL subscription operation: ItemMutated
+// ====================================================
+
+export interface ItemMutated_itemMutated_node {
+  id: string;
+  data: string;
+}
+
+export interface ItemMutated_itemMutated {
+  mutation: MutationType;
+  node: ItemMutated_itemMutated_node;
+}
+
+export interface ItemMutated {
+  itemMutated: ItemMutated_itemMutated;
+}
+
+export interface ItemMutatedVariables {
+  userID: string;
+  drawingID: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL subscription operation: DrawingDataPublished
 // ====================================================
 
@@ -88,12 +115,45 @@ export interface DrawingDataPublishedVariables {
   drawingID: string;
 }
 
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: NewSegmentData
+// ====================================================
+
+export interface NewSegmentData_node_segmentData {
+  x: number;
+  y: number;
+}
+
+export interface NewSegmentData_node {
+  layerID: string | null;
+  groupID: string;
+  itemID: string;
+  strokeColor: string | null;
+  fillColor: string | null;
+  strokeWidth: number | null;
+  segmentData: NewSegmentData_node_segmentData;
+}
+
+export interface NewSegmentData {
+  node: NewSegmentData_node;
+}
+
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export enum MutationType {
+  CREATED = "CREATED",
+  DELETED = "DELETED",
+  UPDATED = "UPDATED",
+}
 
 // null
 export interface CreateItemInput {
