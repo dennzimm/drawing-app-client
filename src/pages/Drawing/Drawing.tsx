@@ -4,6 +4,7 @@ import {
   IonFooter,
   IonPage,
   IonToolbar,
+  IonLoading,
 } from "@ionic/react";
 import React from "react";
 import {
@@ -16,8 +17,11 @@ import {
   SizeSelectButton,
   UndoButton,
 } from "../../components";
+import { useStoreState } from "../../store/hooks";
 
 const Drawing: React.FC = () => {
+  const ready = useStoreState((state) => state.drawing.ready);
+
   return (
     <IonPage>
       <PageHeader>
@@ -35,6 +39,8 @@ const Drawing: React.FC = () => {
         scrollY={false}
       >
         <DrawingCanvas />
+
+        <IonLoading isOpen={!ready} message={"Bitte warten..."} />
       </IonContent>
 
       <IonFooter>
