@@ -1004,14 +1004,14 @@
           "possibleTypes": [
             {
               "kind": "OBJECT",
-              "name": "NewSegmentPayload",
+              "name": "NewSegment",
               "ofType": null
             }
           ]
         },
         {
           "kind": "OBJECT",
-          "name": "NewSegmentPayload",
+          "name": "NewSegment",
           "description": null,
           "fields": [
             {

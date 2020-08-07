@@ -75,7 +75,7 @@ export interface DrawingDataPublished_drawingDataPublished_node {
 }
 
 export interface DrawingDataPublished_drawingDataPublished {
-  __typename: "NewSegmentPayload";
+  __typename: "NewSegment";
   node: DrawingDataPublished_drawingDataPublished_node;
 }
 
