@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useCallback, useEffect, useState } from "react";
-import { IsServerOnline } from "../../../graphql/@types/gql-operations.types";
-import { IS_SERVER_ONLINE } from "../../../graphql/queries";
+import { IsServerOnline } from "../../../api/@types/gql-operations.types";
+import { IS_SERVER_ONLINE } from "../../../api/graphql/queries";
 import { useStoreActions, useStoreState } from "../../../store/hooks";
 import { NetworkStatusType } from "../../../store/models/app/app.model";
 
