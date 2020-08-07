@@ -61,38 +61,6 @@ class PaperProvider {
     this.paperScope.project.addLayer(layer);
     layer.activate();
   }
-
-  // clearProject() {
-  //   this._scope.project.clear();
-  // }
-
-  // getChildById(id: string): paper.Item {
-  //   return get(this.activeLayer.children, [id]);
-  // }
-
-  // getLayerById(id: string): paper.Layer {
-  //   return get(this.project.layers, [id]);
-  // }
-
-  // get scope() {
-  //   return this._scope;
-  // }
-
-  // get project() {
-  //   return this.scope.project;
-  // }
-
-  // get activeLayer() {
-  //   return this.project.activeLayer;
-  // }
-
-  // get childsCount() {
-  //   return this.activeLayer.children.length;
-  // }
-
-  // get lastChild() {
-  //   return this.activeLayer.children[this.childsCount - 1];
-  // }
 }
 
 export const paperProvider = new PaperProvider();
