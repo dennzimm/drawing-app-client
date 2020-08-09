@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "ionic-react-conference-app",
+  "appName": "drawing-app",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
   "webDir": "build",
