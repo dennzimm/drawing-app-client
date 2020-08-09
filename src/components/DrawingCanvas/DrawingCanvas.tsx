@@ -1,8 +1,7 @@
 import { nanoid } from "nanoid";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { usePaper } from "../../paper/hooks";
-import { useStoreActions } from "../../store/hooks";
 import { useDrawingCanvasEvents, useDrawingCanvasSubscriptions } from "./hooks";
 
 const StyledCanvas = styled.canvas`
@@ -11,21 +10,17 @@ const StyledCanvas = styled.canvas`
   background: var(--ion-color-paper-background-primary);
 `;
 
-const DrawingCanvas: React.FC = () => {
-  const setDrawingReady = useStoreActions(
-    (actions) => actions.drawing.setDrawingReady
-  );
+interface DrawingCanvasProps {
+  drawingID: string;
+}
 
+const DrawingCanvas: React.FC<DrawingCanvasProps> = ({ drawingID }) => {
   const [canvasID] = useState(nanoid());
 
-  const { isReady } = usePaper({ id: canvasID, injectGlobal: true });
+  usePaper({ id: canvasID, injectGlobal: true });
 
-  useEffect(() => {
-    setDrawingReady(isReady);
-  }, [isReady, setDrawingReady]);
-
+  useDrawingCanvasSubscriptions(drawingID);
   useDrawingCanvasEvents();
-  useDrawingCanvasSubscriptions();
 
   return <StyledCanvas id={canvasID} data-paper-resize="true" />;
 };

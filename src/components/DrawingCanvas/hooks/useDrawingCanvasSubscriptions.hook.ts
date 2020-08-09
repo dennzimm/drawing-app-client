@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useDrawingDataPublished } from "../../../api/hooks";
 import { PaperDataHandlerFactory } from "../../../paper/factories";
 
-export function useDrawingCanvasSubscriptions() {
-  const { data } = useDrawingDataPublished();
+export function useDrawingCanvasSubscriptions(drawingID: string) {
+  const { data } = useDrawingDataPublished(drawingID);
 
   useEffect(() => {
     if (data) {
