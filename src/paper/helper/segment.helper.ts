@@ -1,25 +1,12 @@
 import { paperProvider } from "../providers";
-import { createPath, createLayer, createGroup } from "./project.helper";
-
-export enum SegmentEvents {
-  SEGMENT_ADDED = "event::segment-added",
-}
-
-export interface SegmentAddedEvent {
-  layerID?: Nullable<string>;
-  groupID: string;
-  itemID: string;
-  strokeColor?: Nullable<string>;
-  fillColor?: Nullable<string>;
-  strokeWidth?: Nullable<number>;
-  segmentData: {
-    x: number;
-    y: number;
-  };
-}
+import { SegmentAddedEvent, PaperViewEvents } from "../@types";
+import { createGroup } from "./group.helper";
+import { createPath } from "./path.helper";
 
 export function emitSegmentAdded(event: SegmentAddedEvent) {
-  paperProvider.view.emit(SegmentEvents.SEGMENT_ADDED, event);
+  paperProvider.view.emit(PaperViewEvents.SEGMENT_ADDED, event);
+
+  console.log(event);
 }
 
 export function handleSegmentAdded(segmentAddedData: SegmentAddedEvent) {
@@ -27,8 +14,8 @@ export function handleSegmentAdded(segmentAddedData: SegmentAddedEvent) {
     layerID,
     groupID,
     itemID,
-    segmentData: { x, y },
-    ...options
+    point,
+    path: pathOptions,
   } = segmentAddedData;
 
   let layer = paperProvider.project.getItem({
@@ -44,7 +31,7 @@ export function handleSegmentAdded(segmentAddedData: SegmentAddedEvent) {
   }) as paper.Path;
 
   if (!layer) {
-    layer = createLayer({ name: layerID || undefined });
+    layer = paperProvider.activeLayer;
   }
 
   if (!group) {
@@ -54,15 +41,13 @@ export function handleSegmentAdded(segmentAddedData: SegmentAddedEvent) {
         layer,
       },
     });
-
-    layer.addChild(group);
   }
 
   if (!path) {
     path = createPath({
       name: itemID || undefined,
       options: {
-        ...options,
+        ...pathOptions,
       },
     });
 
@@ -71,7 +56,7 @@ export function handleSegmentAdded(segmentAddedData: SegmentAddedEvent) {
 
   path.addSegments([
     new paperProvider.scope.Segment({
-      point: [x, y],
+      point,
     }),
   ]);
 
