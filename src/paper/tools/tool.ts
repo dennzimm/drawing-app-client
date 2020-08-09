@@ -30,7 +30,7 @@ export abstract class Tool implements ToolStructure {
   }
 
   private setToolDefaults() {
-    this.tool.minDistance = 2;
+    this.tool.minDistance = 1;
   }
 
   private setToolFunctions() {
