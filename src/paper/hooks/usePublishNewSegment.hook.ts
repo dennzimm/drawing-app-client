@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import { fromEvent, Subscription } from "rxjs";
 import {
-  PublishNewSegment,
-  PublishNewSegmentVariables,
+  AddSegment,
+  AddSegmentVariables,
 } from "../../api/@types/gql-operations.types";
-import { PUBLISH_NEW_SEGMENT } from "../../api/graphql/mutations";
+import { ADD_SEGMENT } from "../../api/graphql/mutations";
 import { useStoreState } from "../../store/hooks";
-import { SegmentAddedEvent, SegmentEvents } from "../helper";
 import { paperProvider } from "../providers";
+import { SegmentAddedEvent, PaperViewEvents } from "../@types";
 
 export function usePublishNewSegment() {
   const { id: drawingID } = useParams();
@@ -17,10 +17,9 @@ export function usePublishNewSegment() {
   const ready = useStoreState((state) => state.drawing.ready);
   const userID = useStoreState((state) => state.user.userID);
 
-  const [publishNewSegment] = useMutation<
-    PublishNewSegment,
-    PublishNewSegmentVariables
-  >(PUBLISH_NEW_SEGMENT);
+  const [addSegment] = useMutation<AddSegment, AddSegmentVariables>(
+    ADD_SEGMENT
+  );
 
   useEffect(() => {
     let eventSubscription: Subscription;
@@ -28,11 +27,11 @@ export function usePublishNewSegment() {
     if (ready) {
       eventSubscription = fromEvent<SegmentAddedEvent>(
         paperProvider.view,
-        SegmentEvents.SEGMENT_ADDED
+        PaperViewEvents.SEGMENT_ADDED
       ).subscribe((payload) => {
-        publishNewSegment({
+        addSegment({
           variables: {
-            newSegmentData: {
+            segmentData: {
               drawingID,
               userID,
               ...payload,
@@ -45,5 +44,5 @@ export function usePublishNewSegment() {
     return () => {
       eventSubscription && eventSubscription.unsubscribe();
     };
-  }, [drawingID, publishNewSegment, ready, userID]);
+  }, [addSegment, drawingID, ready, userID]);
 }
