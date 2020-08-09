@@ -8,6 +8,7 @@
 // ====================================================
 
 export interface CreateDrawing_createDrawing {
+  __typename: "Drawing";
   id: string;
 }
 
@@ -28,6 +29,7 @@ export interface CreateDrawingVariables {
 // ====================================================
 
 export interface CreateItem_createItem {
+  __typename: "Item";
   id: string;
 }
 
@@ -48,6 +50,7 @@ export interface CreateItemVariables {
 // ====================================================
 
 export interface DeleteItem_deleteItem {
+  __typename: "Item";
   id: string;
 }
 
@@ -66,19 +69,20 @@ export interface DeleteItemVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: PublishNewSegment
+// GraphQL mutation operation: AddSegment
 // ====================================================
 
-export interface PublishNewSegment_publishNewSegment {
+export interface AddSegment_addSegment {
+  __typename: "Segment";
   itemID: string;
 }
 
-export interface PublishNewSegment {
-  publishNewSegment: PublishNewSegment_publishNewSegment;
+export interface AddSegment {
+  addSegment: AddSegment_addSegment;
 }
 
-export interface PublishNewSegmentVariables {
-  newSegmentData: NewSegmentInput;
+export interface AddSegmentVariables {
+  segmentData: SegmentInput;
 }
 
 
@@ -102,10 +106,12 @@ export interface IsServerOnline {
 // ====================================================
 
 export interface GetDrawing_drawing_items {
+  __typename: "Item";
   data: string;
 }
 
 export interface GetDrawing_drawing {
+  __typename: "Drawing";
   items: GetDrawing_drawing_items[];
 }
 
@@ -127,11 +133,13 @@ export interface GetDrawingVariables {
 // ====================================================
 
 export interface GetDrawings_drawings_items {
+  __typename: "Item";
   id: string;
   data: string;
 }
 
 export interface GetDrawings_drawings {
+  __typename: "Drawing";
   id: string;
   items: GetDrawings_drawings_items[];
 }
@@ -145,15 +153,60 @@ export interface GetDrawings {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL subscription operation: DrawingDataPublished
+// ====================================================
+
+export interface DrawingDataPublished_drawingDataPublished_node_point {
+  __typename: "Point";
+  x: number;
+  y: number;
+}
+
+export interface DrawingDataPublished_drawingDataPublished_node_path {
+  __typename: "Path";
+  strokeWidth: number;
+  strokeColor: string | null;
+}
+
+export interface DrawingDataPublished_drawingDataPublished_node {
+  __typename: "Segment";
+  layerID: string | null;
+  groupID: string | null;
+  itemID: string;
+  point: DrawingDataPublished_drawingDataPublished_node_point;
+  path: DrawingDataPublished_drawingDataPublished_node_path;
+}
+
+export interface DrawingDataPublished_drawingDataPublished {
+  __typename: "SegmentAdded";
+  node: DrawingDataPublished_drawingDataPublished_node;
+}
+
+export interface DrawingDataPublished {
+  drawingDataPublished: DrawingDataPublished_drawingDataPublished;
+}
+
+export interface DrawingDataPublishedVariables {
+  userID: string;
+  drawingID: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL subscription operation: ItemMutated
 // ====================================================
 
 export interface ItemMutated_itemMutated_node {
+  __typename: "Item";
   id: string;
   data: string;
 }
 
 export interface ItemMutated_itemMutated {
+  __typename: "ItemMutation";
   mutation: MutationType;
   node: ItemMutated_itemMutated_node;
 }
@@ -172,63 +225,33 @@ export interface ItemMutatedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL subscription operation: DrawingDataPublished
+// GraphQL fragment: SegmentAddedPayload
 // ====================================================
 
-export interface DrawingDataPublished_drawingDataPublished_node_segmentData {
+export interface SegmentAddedPayload_node_point {
+  __typename: "Point";
   x: number;
   y: number;
 }
 
-export interface DrawingDataPublished_drawingDataPublished_node {
-  layerID: string | null;
-  groupID: string;
-  itemID: string;
+export interface SegmentAddedPayload_node_path {
+  __typename: "Path";
+  strokeWidth: number;
   strokeColor: string | null;
-  fillColor: string | null;
-  strokeWidth: number | null;
-  segmentData: DrawingDataPublished_drawingDataPublished_node_segmentData;
 }
 
-export interface DrawingDataPublished_drawingDataPublished {
-  __typename: "NewSegment";
-  node: DrawingDataPublished_drawingDataPublished_node;
-}
-
-export interface DrawingDataPublished {
-  drawingDataPublished: DrawingDataPublished_drawingDataPublished;
-}
-
-export interface DrawingDataPublishedVariables {
-  userID: string;
-  drawingID: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: NewSegmentData
-// ====================================================
-
-export interface NewSegmentData_node_segmentData {
-  x: number;
-  y: number;
-}
-
-export interface NewSegmentData_node {
+export interface SegmentAddedPayload_node {
+  __typename: "Segment";
   layerID: string | null;
-  groupID: string;
+  groupID: string | null;
   itemID: string;
-  strokeColor: string | null;
-  fillColor: string | null;
-  strokeWidth: number | null;
-  segmentData: NewSegmentData_node_segmentData;
+  point: SegmentAddedPayload_node_point;
+  path: SegmentAddedPayload_node_path;
 }
 
-export interface NewSegmentData {
-  node: NewSegmentData_node;
+export interface SegmentAddedPayload {
+  __typename: "SegmentAdded";
+  node: SegmentAddedPayload_node;
 }
 
 /* tslint:disable */
@@ -259,22 +282,29 @@ export interface CreateItemInput {
 }
 
 // null
-export interface NewSegmentInput {
+export interface SegmentInput {
   userID: string;
   drawingID: string;
   layerID?: string | null;
-  groupID: string;
+  groupID?: string | null;
   itemID: string;
-  segmentData: SegmentDataInput;
-  strokeColor?: string | null;
-  fillColor?: string | null;
-  strokeWidth?: number | null;
+  point: PointInput;
+  path: PathInput;
 }
 
 // null
-export interface SegmentDataInput {
+export interface PointInput {
   x: number;
   y: number;
+}
+
+// null
+export interface PathInput {
+  strokeWidth: number;
+  strokeColor?: string | null;
+  fillColor?: string | null;
+  strokeJoin?: string | null;
+  strokeCap?: string | null;
 }
 
 //==============================================================
