@@ -11,11 +11,10 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 import React from "react";
-import { Route } from "react-router-dom";
-import { AppStoreProvider, Menu } from "./components";
+import { Redirect, Route } from "react-router-dom";
+import { AppStoreProvider, Menu, RedirectToLogin } from "./components";
 import { AppApolloProvider } from "./components/AppApolloProvider";
-import RedirectToLogin from "./components/RedirectToLogin";
-import { Drawing, DrawingsSelect } from "./pages";
+import { Account, Drawing, DrawingsSelect, Login, Signup } from "./pages";
 import { useStoreActions, useStoreState } from "./store/hooks";
 import "./theme/global.css";
 import "./theme/variables.css";
@@ -44,14 +43,13 @@ const IonicApp: React.FC = () => {
         <Menu />
 
         <IonRouterOutlet id="main">
-          {/* <Route path="/tabs" render={() => <MainTabs />} /> */}
-          {/* <Route path="/account" component={Account} />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} /> */}
-          {/* <Route path="/support" component={Support} /> */}
-          {/* <Route path="/tutorial" component={Tutorial} /> */}
-          <Route path="/drawings" render={() => <DrawingsSelect />} />
-          <Route path="/drawings/:id" render={() => <Drawing />} />
+          {/* Redirects */}
+          <Redirect exact path="/" to="/drawings" />
+
+          {/* Account */}
+          <Route path="/account" render={() => <Account />} />
+          <Route path="/signup" render={() => <Signup />} />
+          <Route path="/login" render={() => <Login />} />
           <Route
             path="/logout"
             render={() => {
@@ -63,7 +61,14 @@ const IonicApp: React.FC = () => {
               );
             }}
           />
+
+          {/* Tutorial */}
+          {/* <Route path="/tutorial" component={Tutorial} /> */}
           {/* <Route path="/" component={HomeOrTutorial} exact /> */}
+
+          {/* Drawings */}
+          <Route path="/drawings" render={() => <DrawingsSelect />} />
+          <Route path="/drawings/:id" component={Drawing} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
