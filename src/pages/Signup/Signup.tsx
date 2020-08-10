@@ -49,7 +49,7 @@ const Signup: React.FC = () => {
     if (username && password) {
       await setIsLoggedInAction(true);
       await setUsernameAction(username);
-      history.push("/tabs/schedule", { direction: "none" });
+      history.push("/drawings", { direction: "none" });
     }
   };
 
@@ -65,7 +65,7 @@ const Signup: React.FC = () => {
       </IonHeader>
       <IonContent>
         <div className="login-logo">
-          <img src="assets/img/appicon.svg" alt="Ionic logo" />
+          {/* <img src="assets/img/art_museum.svg" alt="Art Museum" /> */}
         </div>
 
         <form noValidate onSubmit={login}>
