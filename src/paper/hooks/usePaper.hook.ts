@@ -18,8 +18,8 @@ export function usePaper({ id, injectGlobal = false }: UsePaperProps) {
 
   useEffect(() => {
     paperProvider.setup({ id, injectGlobal });
-    updateFullViewSize();
     toolProvider.getTool("pencil").activate();
+    updateFullViewSize();
     setIsReady(true);
 
     return () => {

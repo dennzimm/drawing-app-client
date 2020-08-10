@@ -1,8 +1,8 @@
 import {
   DrawingDataPublished_drawingDataPublished,
   GetDrawing_drawing_items,
-} from "../../api/@types/gql-operations.types";
-import { handleSegmentAdded } from "../helper";
+} from "../../api/@types/generated/gql-operations.types";
+import { paperDataHelper } from "../helper";
 
 export type PaperDataTypes =
   | DrawingDataPublished_drawingDataPublished["__typename"]
@@ -12,7 +12,7 @@ export class PaperDataHandlerFactory {
   public static build(typeName: PaperDataTypes) {
     switch (typeName) {
       case "SegmentAdded":
-        return handleSegmentAdded;
+        return paperDataHelper.handleSegmentAddedData;
 
       default:
         return undefined;

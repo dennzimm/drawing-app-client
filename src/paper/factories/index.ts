@@ -1,1 +1,1 @@
-export * from "./drawing-data-handler.factory";
+export * from "./paper-data-handler.factory";

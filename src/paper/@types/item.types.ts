@@ -17,3 +17,8 @@ export interface Path {
   strokeJoin?: Nullable<string>;
   strokeCap?: Nullable<string>;
 }
+
+export interface Point {
+  x: number;
+  y: number;
+}

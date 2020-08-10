@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import paper from "paper";
+import { paperDataHelper } from "../helper";
 
 interface PaperProviderSetupProps {
   id: string;
@@ -30,6 +31,7 @@ class PaperProvider {
 
   cleanup() {
     console.log("PaperProvider -> cleanup");
+    this.paperScope.projects.forEach((project) => project.remove());
 
     if (window.paper) {
       delete window.paper;
@@ -53,11 +55,12 @@ class PaperProvider {
   }
 
   private setDefaultSettings() {
-    this.paperScope.settings.insertItems = true;
+    this.paperScope.settings.insertItems = false;
   }
 
   private createInitialLayer() {
     const layer = new this.paperScope.Layer({ name: nanoid() });
+    paperDataHelper.addCustomItemData(layer, { immutable: true });
     this.paperScope.project.addLayer(layer);
     layer.activate();
   }
