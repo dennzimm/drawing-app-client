@@ -1,15 +1,17 @@
-import { SubscriptionClient } from "subscriptions-transport-ws";
-import { setServerConnectionStatus } from "../../helper";
-import { NetworkStatusType } from "../../store/models/app/app.model";
 import { WebSocketLink } from "@apollo/client/link/ws";
+import { SubscriptionClient } from "subscriptions-transport-ws";
+import store from "../../store";
+import { NetworkStatusType } from "../../store/models/app/app.model";
 
 const GRAPHQL_WS_ENDPOINT = process.env.REACT_APP_GQL_WS_ENDPOINT as string;
 
 export const subscriptionClient = new SubscriptionClient(GRAPHQL_WS_ENDPOINT, {
   reconnect: true,
   lazy: true,
-  timeout: 3000,
 });
+
+const setServerConnectionStatus = store.getActions().app
+  .setServerConnectionStatus;
 
 subscriptionClient.onConnected(() => {
   setServerConnectionStatus(NetworkStatusType.ready);
