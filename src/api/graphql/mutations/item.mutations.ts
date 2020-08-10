@@ -8,6 +8,14 @@ export const CREATE_ITEM = gql`
   }
 `;
 
+export const UPDATE_ITEM = gql`
+  mutation UpdateItem($updateItemData: UpdateItemInput!) {
+    updateItem(updateItemData: $updateItemData) {
+      id
+    }
+  }
+`;
+
 export const DELETE_ITEM = gql`
   mutation DeleteItem($userID: ID!, $drawingID: ID!, $itemID: ID!) {
     deleteItem(userID: $userID, drawingID: $drawingID, itemID: $itemID) {

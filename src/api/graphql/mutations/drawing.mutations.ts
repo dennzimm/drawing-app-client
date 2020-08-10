@@ -7,3 +7,15 @@ export const CREATE_DRAWING = gql`
     }
   }
 `;
+
+export const CREATE_OR_FIND_DRAWING = gql`
+  mutation CreateOrFindDrawing($createDrawingData: CreateDrawingInput!) {
+    createOrFindDrawing(createDrawingData: $createDrawingData) {
+      id
+      items {
+        id
+        data
+      }
+    }
+  }
+`;
