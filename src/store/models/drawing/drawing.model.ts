@@ -1,4 +1,4 @@
-import { colors } from "../../../config";
+import { colors } from "../../../paper/config";
 import { ToolName } from "../../../paper/providers";
 import actions, { DrawingActions } from "./drawing.actions";
 
