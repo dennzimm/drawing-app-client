@@ -24,22 +24,14 @@ import { useStoreActions, useStoreState } from "../../store/hooks";
 import "./Menu.css";
 
 const routes = {
-  appPages: [
-    // { title: "Schedule", path: "/tabs/schedule", icon: calendarOutline },
-    // { title: "Speakers", path: "/tabs/speakers", icon: peopleOutline },
-    // { title: "Map", path: "/tabs/map", icon: mapOutline },
-    // { title: "About", path: "/tabs/about", icon: informationCircleOutline },
-    { title: "Zeichnen", path: "/drawings", icon: brushOutline },
-  ],
+  appPages: [{ title: "Zeichnen", path: "/drawings", icon: brushOutline }],
   loggedInPages: [
     { title: "Account", path: "/account", icon: person },
-    // { title: "Support", path: "/support", icon: help },
-    { title: "Logout", path: "/logout", icon: logOut },
+    { title: "Abmelden", path: "/logout", icon: logOut },
   ],
   loggedOutPages: [
-    { title: "Login", path: "/login", icon: logIn },
-    // { title: "Support", path: "/support", icon: help },
-    { title: "Signup", path: "/signup", icon: personAdd },
+    { title: "Anmelden", path: "/login", icon: logIn },
+    { title: "Registrieren", path: "/signup", icon: personAdd },
   ],
 };
 
@@ -49,27 +41,8 @@ interface Pages {
   icon: string;
   routerDirection?: string;
 }
-// interface StateProps {
-//   darkMode: boolean;
-//   isAuthenticated: boolean;
-//   menuEnabled: boolean;
-// }
 
-// interface DispatchProps {
-//   setDarkMode: typeof setDarkMode;
-// }
-
-// interface MenuProps extends RouteComponentProps, StateProps, DispatchProps {}
-
-const Menu: React.FC = (
-  {
-    // darkMode,
-    // history,
-    // isAuthenticated,
-    // setDarkMode,
-    // menuEnabled,
-  }
-) => {
+const Menu: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
 
@@ -103,7 +76,7 @@ const Menu: React.FC = (
     <IonMenu type="overlay" disabled={!menuEnabled} contentId="main">
       <IonContent forceOverscroll={false}>
         <IonList lines="none">
-          <IonListHeader>Conference</IonListHeader>
+          <IonListHeader>DrawTogether</IonListHeader>
           {renderlistItems(routes.appPages)}
         </IonList>
         <IonList lines="none">
@@ -138,15 +111,3 @@ const Menu: React.FC = (
 };
 
 export default Menu;
-
-// export default connect<{}, StateProps, {}>({
-//   mapStateToProps: (state) => ({
-//     darkMode: state.user.darkMode,
-//     isAuthenticated: state.user.isLoggedin,
-//     menuEnabled: state.data.menuEnabled,
-//   }),
-//   mapDispatchToProps: {
-//     setDarkMode,
-//   },
-//   component: withRouter(Menu),
-// });

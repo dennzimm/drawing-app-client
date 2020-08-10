@@ -10,3 +10,5 @@ export { ServerStatus } from "./ServerStatus";
 export { SizeSelectButton } from "./SizeSelectButton";
 export { UndoButton } from "./UndoButton";
 export { Menu } from "./Menu";
+export { RedirectToLogin } from "./RedirectToLogin";
+export { ShareSocialFab } from "./ShareSocialFab";

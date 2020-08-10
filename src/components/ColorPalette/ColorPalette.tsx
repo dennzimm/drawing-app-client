@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { colors } from "../../config";
+import { colors } from "../../paper/config";
 
 const ColorsWrapper = styled.div`
   display: flex;
