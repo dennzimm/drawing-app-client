@@ -25,6 +25,34 @@ export interface CreateDrawingVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateOrFindDrawing
+// ====================================================
+
+export interface CreateOrFindDrawing_createOrFindDrawing_items {
+  __typename: "Item";
+  id: string;
+  data: string;
+}
+
+export interface CreateOrFindDrawing_createOrFindDrawing {
+  __typename: "Drawing";
+  id: string;
+  items: CreateOrFindDrawing_createOrFindDrawing_items[];
+}
+
+export interface CreateOrFindDrawing {
+  createOrFindDrawing: CreateOrFindDrawing_createOrFindDrawing;
+}
+
+export interface CreateOrFindDrawingVariables {
+  createDrawingData: CreateDrawingInput;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CreateItem
 // ====================================================
 
@@ -39,6 +67,27 @@ export interface CreateItem {
 
 export interface CreateItemVariables {
   createItemData: CreateItemInput;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: UpdateItem
+// ====================================================
+
+export interface UpdateItem_updateItem {
+  __typename: "Item";
+  id: string;
+}
+
+export interface UpdateItem {
+  updateItem: UpdateItem_updateItem;
+}
+
+export interface UpdateItemVariables {
+  updateItemData: UpdateItemInput;
 }
 
 
@@ -166,11 +215,13 @@ export interface DrawingDataPublished_drawingDataPublished_node_path {
   __typename: "Path";
   strokeWidth: number;
   strokeColor: string | null;
+  strokeJoin: string | null;
+  strokeCap: string | null;
 }
 
 export interface DrawingDataPublished_drawingDataPublished_node {
   __typename: "Segment";
-  layerID: string | null;
+  layerID: string;
   groupID: string | null;
   itemID: string;
   point: DrawingDataPublished_drawingDataPublished_node_point;
@@ -238,11 +289,13 @@ export interface SegmentAddedPayload_node_path {
   __typename: "Path";
   strokeWidth: number;
   strokeColor: string | null;
+  strokeJoin: string | null;
+  strokeCap: string | null;
 }
 
 export interface SegmentAddedPayload_node {
   __typename: "Segment";
-  layerID: string | null;
+  layerID: string;
   groupID: string | null;
   itemID: string;
   point: SegmentAddedPayload_node_point;
@@ -282,10 +335,18 @@ export interface CreateItemInput {
 }
 
 // null
+export interface UpdateItemInput {
+  userID: string;
+  drawingID: string;
+  id: string;
+  data: string;
+}
+
+// null
 export interface SegmentInput {
   userID: string;
   drawingID: string;
-  layerID?: string | null;
+  layerID: string;
   groupID?: string | null;
   itemID: string;
   point: PointInput;
