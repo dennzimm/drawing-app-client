@@ -3,7 +3,7 @@ import { useStoreState } from "../../store/hooks";
 import {
   ItemMutated,
   ItemMutatedVariables,
-} from "../@types/gql-operations.types";
+} from "../@types/generated/gql-operations.types";
 import { ITEM_MUTATED } from "../graphql/subscriptions";
 
 export function useItemMutated(drawingID: string) {
@@ -19,7 +19,5 @@ export function useItemMutated(drawingID: string) {
     },
   });
 
-  return {
-    ...itemMutatedSubscription,
-  };
+  return itemMutatedSubscription;
 }

@@ -3,7 +3,7 @@ import { useStoreState } from "../../store/hooks";
 import {
   DrawingDataPublished,
   DrawingDataPublishedVariables,
-} from "../@types/gql-operations.types";
+} from "../@types/generated/gql-operations.types";
 import { DRAWING_DATA_PUBLISHED } from "../graphql/subscriptions";
 
 export function useDrawingDataPublished(drawingID: string) {
@@ -19,7 +19,5 @@ export function useDrawingDataPublished(drawingID: string) {
     },
   });
 
-  return {
-    ...drawingDataPublishedSubscription,
-  };
+  return drawingDataPublishedSubscription;
 }
