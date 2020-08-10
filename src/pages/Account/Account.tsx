@@ -1,34 +1,26 @@
-import React, { useState } from "react";
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonPage,
-  IonButtons,
-  IonMenuButton,
-  IonList,
-  IonItem,
   IonAlert,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonList,
+  IonMenuButton,
+  IonPage,
+  IonTitle,
+  IonToolbar,
 } from "@ionic/react";
+import React, { useState } from "react";
+import { useStoreActions, useStoreState } from "../../store/hooks";
 import "./Account.scss";
-import { setUsername } from "../data/user/user.actions.ts_";
-import { connect } from "../data/connect.tsx_";
-import { RouteComponentProps } from "react-router";
 
-interface OwnProps extends RouteComponentProps {}
+const Account: React.FC = () => {
+  const username = useStoreState((state) => state.user.username);
 
-interface StateProps {
-  username?: string;
-}
+  const setUsernameAction = useStoreActions(
+    (actions) => actions.user.setUsername
+  );
 
-interface DispatchProps {
-  setUsername: typeof setUsername;
-}
-
-interface AccountProps extends OwnProps, StateProps, DispatchProps {}
-
-const Account: React.FC<AccountProps> = ({ setUsername, username }) => {
   const [showAlert, setShowAlert] = useState(false);
 
   const clicked = (text: string) => {
@@ -81,7 +73,7 @@ const Account: React.FC<AccountProps> = ({ setUsername, username }) => {
           {
             text: "Ok",
             handler: (data) => {
-              setUsername(data.username);
+              setUsernameAction(data.username);
             },
           },
         ]}
@@ -99,12 +91,4 @@ const Account: React.FC<AccountProps> = ({ setUsername, username }) => {
   );
 };
 
-export default connect<OwnProps, StateProps, DispatchProps>({
-  mapStateToProps: (state) => ({
-    username: state.user.username,
-  }),
-  mapDispatchToProps: {
-    setUsername,
-  },
-  component: Account,
-});
+export default Account;

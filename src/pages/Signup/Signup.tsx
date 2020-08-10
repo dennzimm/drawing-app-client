@@ -1,40 +1,35 @@
-import React, { useState } from "react";
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonPage,
-  IonButtons,
-  IonMenuButton,
-  IonRow,
-  IonCol,
   IonButton,
-  IonList,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonHeader,
+  IonInput,
   IonItem,
   IonLabel,
-  IonInput,
+  IonList,
+  IonMenuButton,
+  IonPage,
+  IonRow,
   IonText,
+  IonTitle,
+  IonToolbar,
 } from "@ionic/react";
-import "./Login.scss";
-import { setIsLoggedIn, setUsername } from "../data/user/user.actions.ts_";
-import { connect } from "../data/connect.tsx_";
-import { RouteComponentProps } from "react-router";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { useStoreActions } from "../../store/hooks";
+import "../Login/Login.scss";
 
-interface OwnProps extends RouteComponentProps {}
+const Signup: React.FC = () => {
+  const history = useHistory();
 
-interface DispatchProps {
-  setIsLoggedIn: typeof setIsLoggedIn;
-  setUsername: typeof setUsername;
-}
+  const setIsLoggedInAction = useStoreActions(
+    (actions) => actions.user.setIsLoggedIn
+  );
+  const setUsernameAction = useStoreActions(
+    (actions) => actions.user.setUsername
+  );
 
-interface LoginProps extends OwnProps, DispatchProps {}
-
-const Login: React.FC<LoginProps> = ({
-  setIsLoggedIn,
-  history,
-  setUsername: setUsernameAction,
-}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -52,7 +47,7 @@ const Login: React.FC<LoginProps> = ({
     }
 
     if (username && password) {
-      await setIsLoggedIn(true);
+      await setIsLoggedInAction(true);
       await setUsernameAction(username);
       history.push("/tabs/schedule", { direction: "none" });
     }
@@ -134,10 +129,4 @@ const Login: React.FC<LoginProps> = ({
   );
 };
 
-export default connect<OwnProps, {}, DispatchProps>({
-  mapDispatchToProps: {
-    setIsLoggedIn,
-    setUsername,
-  },
-  component: Login,
-});
+export default Signup;
