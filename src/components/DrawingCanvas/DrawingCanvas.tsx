@@ -1,12 +1,13 @@
 import { nanoid } from "nanoid";
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { usePaper } from "../../paper/hooks";
+import { useStoreState } from "../../store/hooks";
 
-const StyledCanvas = styled.canvas`
+const StyledCanvas = styled.canvas<{ backgroundColor: string }>`
   width: 100vw;
   height: 100vh;
-  background: var(--ion-color-paper-background-primary);
+  background: ${({ backgroundColor }) => backgroundColor};
 `;
 
 interface DrawingCanvasProps {
@@ -14,11 +15,20 @@ interface DrawingCanvasProps {
 }
 
 const DrawingCanvas: React.FC<DrawingCanvasProps> = ({ drawingID }) => {
-  const [canvasID] = useState(nanoid());
+  const canvasID = useRef(nanoid());
+  const backgroundColor = useStoreState(
+    (state) => state.drawing.backgroundColor
+  );
 
-  usePaper({ id: canvasID, injectGlobal: true });
+  usePaper({ id: canvasID.current, injectGlobal: true });
 
-  return <StyledCanvas id={canvasID} data-paper-resize="true" />;
+  return (
+    <StyledCanvas
+      id={canvasID.current}
+      data-paper-resize="true"
+      backgroundColor={backgroundColor}
+    />
+  );
 };
 
 export default DrawingCanvas;
