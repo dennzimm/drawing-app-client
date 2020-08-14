@@ -1,20 +1,19 @@
 import { nanoid } from "nanoid";
 import {
+  CreateCircleProps,
   CreateGroupProps,
   CreateLayerProps,
   CreatePathProps,
   CreateRoundLinecapProps,
-  ItemAddedEvent,
-  LayerAddedEvent,
-  PaperViewEvents,
-  SegmentAddedEvent,
 } from "../@types";
 import { paperProvider } from "../providers";
+import { paperDataHelper } from "./paper-data.helper";
 
 class PaperProjectHelper {
   createLayer(props: CreateLayerProps = {}) {
     const { name = nanoid(), options = {} } = props;
     const layer = new paperProvider.scope.Layer({ name, ...options });
+    paperDataHelper.addDefaultCustomItemData(layer);
 
     return layer;
   }
@@ -22,6 +21,7 @@ class PaperProjectHelper {
   createGroup(props: CreateGroupProps = {}) {
     const { name = nanoid(), options = {} } = props;
     const group = new paperProvider.scope.Group({ name, ...options });
+    paperDataHelper.addDefaultCustomItemData(group);
 
     return group;
   }
@@ -29,8 +29,17 @@ class PaperProjectHelper {
   createPath(props: CreatePathProps = {}) {
     const { name = nanoid(), options = {} } = props;
     const path = new paperProvider.scope.Path({ name, ...options });
+    paperDataHelper.addDefaultCustomItemData(path);
 
     return path;
+  }
+
+  createCircle(props: CreateCircleProps = {}) {
+    const { name = nanoid(), options = {} } = props;
+    const circle = new paperProvider.scope.Path.Circle({ name, ...options });
+    paperDataHelper.addDefaultCustomItemData(circle);
+
+    return circle;
   }
 
   createRoundLinecap = (
@@ -46,20 +55,10 @@ class PaperProjectHelper {
       radius: width / 2,
     });
 
+    paperDataHelper.addDefaultCustomItemData(ellipse);
+
     return ellipse;
   };
-
-  emitLayerAdded(event: LayerAddedEvent) {
-    paperProvider.view.emit(PaperViewEvents.LAYER_ADDED, event);
-  }
-
-  emitItemAdded(event: ItemAddedEvent) {
-    paperProvider.view.emit(PaperViewEvents.ITEM_ADDED, event);
-  }
-
-  emitSegmentAdded(event: SegmentAddedEvent) {
-    paperProvider.view.emit(PaperViewEvents.SEGMENT_ADDED, event);
-  }
 }
 
 export const paperProjectHelper = new PaperProjectHelper();
