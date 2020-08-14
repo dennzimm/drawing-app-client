@@ -28,7 +28,8 @@
     "reselect": "^4.0.0",
     "rxjs": "^6.6.2",
     "styled-components": "^5.1.1",
-    "subscriptions-transport-ws": "^0.9.17"
+    "subscriptions-transport-ws": "^0.9.17",
+    "use-undo": "^1.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

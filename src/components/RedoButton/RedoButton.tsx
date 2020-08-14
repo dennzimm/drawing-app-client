@@ -1,14 +1,15 @@
+import { IonButton } from "@ionic/react";
 import { arrowRedoCircleOutline } from "ionicons/icons";
-import React from "react";
+import React, { ComponentProps } from "react";
 import { IconButton } from "../IconButton";
 
-export interface RedoButtonProps {}
+export interface RedoButtonProps extends ComponentProps<typeof IonButton> {}
 
-const RedoButton: React.FC<RedoButtonProps> = () => {
+const RedoButton: React.FC<RedoButtonProps> = (props) => {
   return (
     <IconButton
-      // buttonProps={{ onClick: redo, disabled: !redoAvailable }}
       iconProps={{ icon: arrowRedoCircleOutline }}
+      buttonProps={props}
     />
   );
 };
