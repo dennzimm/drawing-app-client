@@ -3,6 +3,7 @@ import { ToolName } from "../../../paper/providers";
 import { DrawingModel } from "./drawing.model";
 
 export enum DrawingAction {
+  setDrawingID = "setDrawingID",
   setDrawingReady = "setDrawingReady",
   setCurrentToolColor = "setCurrentToolColor",
   setCurrentToolName = "setCurrentToolName",
@@ -10,6 +11,7 @@ export enum DrawingAction {
 }
 
 export interface DrawingActions {
+  [DrawingAction.setDrawingID]: Action<DrawingModel, string>;
   [DrawingAction.setDrawingReady]: Action<DrawingModel, boolean>;
   [DrawingAction.setCurrentToolColor]: Action<DrawingModel, string>;
   [DrawingAction.setCurrentToolName]: Action<DrawingModel, ToolName>;
@@ -17,6 +19,9 @@ export interface DrawingActions {
 }
 
 const drawingActions: DrawingActions = {
+  [DrawingAction.setDrawingID]: action((state, id) => {
+    state.id = id;
+  }),
   [DrawingAction.setDrawingReady]: action((state, isReady) => {
     state.ready = isReady;
   }),
