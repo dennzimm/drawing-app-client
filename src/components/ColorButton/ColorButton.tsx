@@ -1,13 +1,12 @@
-import { IonButton, IonIcon, IonPopover } from "@ionic/react";
+import { IonFabButton, IonIcon, IonPopover } from "@ionic/react";
 import { colorPalette } from "ionicons/icons";
 import React, { Fragment, useCallback, useState } from "react";
 import styled from "styled-components";
 import { useStoreActions, useStoreState } from "../../store/hooks";
 import { ColorPalette } from "../ColorPalette";
 
-const StyledIcon = styled(IonIcon)<Record<"currentColor", string>>`
-  fill: ${({ currentColor }) => currentColor};
-  stroke-width: 1.5rem;
+const StyledFab = styled(IonFabButton)<Record<"currentColor", string>>`
+  --background: ${({ currentColor }) => currentColor};
 `;
 
 const ColorButton: React.FC = () => {
@@ -40,13 +39,9 @@ const ColorButton: React.FC = () => {
         <ColorPalette onColorSelect={onColorSelect} />
       </IonPopover>
 
-      <IonButton onClick={onColorClick}>
-        <StyledIcon
-          slot="icon-only"
-          icon={colorPalette}
-          currentColor={currentColor}
-        />
-      </IonButton>
+      <StyledFab onClick={onColorClick} currentColor={currentColor}>
+        <IonIcon icon={colorPalette} />
+      </StyledFab>
     </Fragment>
   );
 };

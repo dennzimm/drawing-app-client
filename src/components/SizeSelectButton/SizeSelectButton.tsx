@@ -1,9 +1,8 @@
-import { IonPopover, IonRange } from "@ionic/react";
+import { IonFabButton, IonIcon, IonPopover, IonRange } from "@ionic/react";
 import { discOutline } from "ionicons/icons";
-import React, { Fragment, useState, useCallback } from "react";
+import React, { Fragment, useCallback, useState } from "react";
 import styled from "styled-components";
 import { useStoreActions, useStoreState } from "../../store/hooks";
-import { IconButton } from "../IconButton";
 
 const SizePreviewWrapper = styled.div`
   height: 2.5rem;
@@ -63,10 +62,9 @@ const SizeSelectButton: React.FC = () => {
         />
       </IonPopover>
 
-      <IconButton
-        buttonProps={{ onClick: onSizeSelectClick }}
-        iconProps={{ icon: discOutline, color: "dark" }}
-      />
+      <IonFabButton onClick={onSizeSelectClick}>
+        <IonIcon icon={discOutline} />
+      </IonFabButton>
     </Fragment>
   );
 };
