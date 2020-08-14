@@ -1,12 +1,5 @@
 import { useMutation } from "@apollo/client";
-import {
-  IonButtons,
-  IonContent,
-  IonFooter,
-  IonLoading,
-  IonPage,
-  IonToolbar,
-} from "@ionic/react";
+import { IonButtons, IonContent, IonLoading, IonPage } from "@ionic/react";
 import React, { useEffect } from "react";
 import { RouteComponentProps } from "react-router";
 import {
@@ -15,18 +8,16 @@ import {
 } from "../../api/@types/generated/gql-operations.types";
 import { CREATE_OR_FIND_DRAWING } from "../../api/graphql/mutations";
 import {
-  ColorButton,
-  DeleteButton,
+  ActionBar,
+  DeleteButtonWrapper,
   DrawingCanvas,
   PageHeader,
-  RedoButton,
+  PaperHistory,
   ServerStatus,
-  SizeSelectButton,
-  UndoButton,
 } from "../../components";
-import { useStoreActions, useStoreState } from "../../store/hooks";
-import { paperProvider } from "../../paper/providers";
 import { paperService } from "../../paper/services";
+import { useStoreActions, useStoreState } from "../../store/hooks";
+import { useDrawingEvents, useDrawingSubscriptions } from "./hooks";
 
 interface DrawingProps extends RouteComponentProps<Record<"id", string>> {}
 
@@ -35,6 +26,15 @@ const Drawing: React.FC<DrawingProps> = ({
     params: { id: drawingID },
   },
 }) => {
+  const setDrawingID = useStoreActions(
+    (actions) => actions.drawing.setDrawingID
+  );
+
+  setDrawingID(drawingID);
+
+  useDrawingEvents();
+  useDrawingSubscriptions(drawingID);
+
   const userID = useStoreState((state) => state.user.userID);
   const ready = useStoreState((state) => state.drawing.ready);
   const setDrawingReady = useStoreActions(
@@ -76,8 +76,9 @@ const Drawing: React.FC<DrawingProps> = ({
     <IonPage>
       <PageHeader>
         <IonButtons slot="end">
-          <UndoButton />
-          <RedoButton />
+          {/* <UndoButton />
+          <RedoButton /> */}
+          <PaperHistory />
           <ServerStatus class="ion-margin-horizontal" />
         </IonButtons>
       </PageHeader>
@@ -93,18 +94,9 @@ const Drawing: React.FC<DrawingProps> = ({
         <IonLoading isOpen={!ready} message={"Bitte warten..."} />
       </IonContent>
 
-      <IonFooter>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <DeleteButton />
-          </IonButtons>
+      <ActionBar />
 
-          <IonButtons slot="primary">
-            <SizeSelectButton />
-            <ColorButton />
-          </IonButtons>
-        </IonToolbar>
-      </IonFooter>
+      <DeleteButtonWrapper />
     </IonPage>
   );
 };
