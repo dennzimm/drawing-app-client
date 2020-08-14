@@ -55,7 +55,7 @@ class PaperProvider {
   }
 
   private setDefaultSettings() {
-    this.paperScope.settings.insertItems = false;
+    this.paperScope.settings.insertItems = true;
   }
 
   private createInitialLayer() {
