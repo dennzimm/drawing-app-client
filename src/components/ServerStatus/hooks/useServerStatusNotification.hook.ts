@@ -22,6 +22,7 @@ export function useServerStatusNotification() {
       toast.duration = 5000;
       toast.message = message;
       toast.color = color;
+      toast.onclick = toast.dismiss;
 
       document.body.appendChild(toast);
 
