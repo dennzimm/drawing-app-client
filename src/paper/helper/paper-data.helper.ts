@@ -5,12 +5,15 @@ import store from "../../store";
 
 class PaperDataHelper {
   addCustomItemData = (item: paper.Item, data: CustomItemData = {}) => {
-    this.addDefaultCustomItemData(item);
-
     item.data = {
       ...item.data,
       ...data,
     };
+  };
+
+  addDefaultCustomItemData = (item: paper.Item) => {
+    const userID = store.getState().user.userID;
+    this.addCustomItemData(item, { immutable: false, userID });
   };
 
   handleSegmentAddedData(segmentAddedData: SegmentAddedEvent) {
@@ -66,16 +69,6 @@ class PaperDataHelper {
 
     paperProvider.project.addLayer(layer);
   }
-
-  private addDefaultCustomItemData = (item: paper.Item) => {
-    const userID = store.getState().user.userID;
-
-    item.data = {
-      ...item.data,
-      immutable: false,
-      userID,
-    };
-  };
 }
 
 export const paperDataHelper = new PaperDataHelper();
