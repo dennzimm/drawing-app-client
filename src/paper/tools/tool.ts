@@ -5,6 +5,7 @@ export interface ToolStructure {
   onMouseDown: (event: paper.ToolEvent) => void;
   onMouseDrag: (event: paper.ToolEvent) => void;
   onMouseUp: (event: paper.ToolEvent) => void;
+  onMouseMove?: (event: paper.ToolEvent) => void;
 }
 
 export abstract class Tool implements ToolStructure {
