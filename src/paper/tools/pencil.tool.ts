@@ -1,30 +1,36 @@
 import store from "../../store";
-import { paperDataHelper, paperProjectHelper } from "../helper";
-import { paperProvider } from "../providers";
-import { Tool } from "./tool";
+import { BlendMode } from "../@types";
+import { paperProjectHelper } from "../helper";
+import { paperEventService } from "../services";
+import { Tool, ToolStructure } from "./tool";
 
-class PencilTool extends Tool {
-  // private layer: Nullable<paper.Layer> = null;
-  // private group: Nullable<paper.Group> = null;
-  private path: Nullable<paper.Path> = null;
+export interface PencilToolProps {
+  blendMode?: BlendMode;
+}
 
-  private defaultPathOptions = {
-    strokeColor: store.getState().drawing.currentToolColor,
-    strokeWidth: store.getState().drawing.currentToolSize,
-    strokeCap: "round",
-    strokeJoin: "round",
-  } as const;
+export class PencilTool extends Tool implements ToolStructure {
+  private blendMode: BlendMode = BlendMode.NORMAL;
+  private path?: paper.Path;
+
+  constructor(props: PencilToolProps = {}) {
+    super();
+    this.blendMode = props.blendMode || this.blendMode;
+  }
 
   onMouseDown(event: paper.ToolEvent) {
-    // this.setNewLayer();
-    // this.setNewGroup();
-    // this.addLinecap(event.point);
-    this.setNewPath();
+    this.path = paperProjectHelper.createPath({
+      options: {
+        ...this.getPathOptions(),
+      },
+    });
+
     this.addPoint(event.point);
-    // paperProvider.project.addLayer(this.layer!);
+
+    console.log(this.getPathOptions());
   }
 
   onMouseDrag(event: paper.ToolEvent) {
+    console.log("draw");
     if (this.path) {
       this.addPoint(event.point);
     }
@@ -37,96 +43,39 @@ class PencilTool extends Tool {
         : event.point;
 
       this.addPoint(lastPoint);
-      // this.addLinecap(event.point);
-      this.simplify();
+      this.path.simplify();
       this.deselectAll();
 
-      // addToHistory({ id: this.layer!.name, data: this.layer!.exportJSON() });
-
-      paperProjectHelper.emitItemAdded({
-        id: this.path!.name,
-        data: this.path!.exportJSON(),
-      });
+      paperEventService.emitAddToHistory(this.path);
+      paperEventService.emitItemAdded(this.path);
     }
   }
 
-  // private setNewLayer() {
-  //   this.layer = createLayer();
-  // }
+  private getPathOptions() {
+    const {
+      currentToolColor: strokeColor,
+      currentToolSize: strokeWidth,
+    } = store.getState().drawing;
 
-  // private setNewGroup() {
-  //   this.group = createGroup({
-  //     options: {
-  //       layer: this.layer,
-  //     },
-  //   });
-
-  //   this.layer && this.layer.addChild(this.group!);
-  // }
-
-  private setNewPath() {
-    const drawingState = store.getState().drawing;
-    const strokeColor = drawingState.currentToolColor;
-    const strokeWidth = drawingState.currentToolSize;
-
-    this.path = paperProjectHelper.createPath({
-      options: {
-        ...this.defaultPathOptions,
-        strokeColor,
-        strokeWidth,
-      },
-    });
-
-    paperDataHelper.addCustomItemData(this.path);
-
-    // this.group && this.group.addChild(this.path!);
+    return {
+      blendMode: this.blendMode,
+      strokeCap: "round",
+      strokeJoin: "round",
+      strokeColor,
+      strokeWidth,
+    };
   }
 
   private addPoint(point: paper.Point) {
     if (this.path) {
       this.path.add(point);
+      this.path.smooth();
 
-      const drawingState = store.getState().drawing;
-      const strokeColor = drawingState.currentToolColor;
-      const strokeWidth = drawingState.currentToolSize;
-
-      paperProjectHelper.emitSegmentAdded({
-        layerID: paperProvider.activeLayer.name,
-        // layerID: this.layer!.name,
-        // groupID: this.group!.name,
-        itemID: this.path!.name,
-        point: {
-          x: point.x,
-          y: point.y,
-        },
-        path: {
-          ...this.defaultPathOptions,
-          strokeColor,
-          strokeWidth,
-        },
-      });
-    }
-  }
-
-  // private addLinecap(point: paper.Point) {
-  //   const drawingState = store.getState().drawing;
-  //   const color = drawingState.currentToolColor;
-  //   const width = drawingState.currentToolSize;
-
-  //   const linecap = createRoundLinecap({
-  //     point,
-  //     color,
-  //     width,
-  //   });
-
-  //   this.group && this.group.addChild(linecap);
-  // }
-
-  private simplify(props: { tolerance?: number } = {}) {
-    if (this.path) {
-      const { tolerance } = props;
-
-      this.path.simplify(tolerance);
+      // paperEventService.emitSegmentAdded({
+      //   item: this.path,
+      //   point,
+      //   pathOptions: this.getPathOptions(),
+      // });
     }
   }
 }
