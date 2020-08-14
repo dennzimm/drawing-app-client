@@ -12,3 +12,7 @@ export { UndoButton } from "./UndoButton";
 export { Menu } from "./Menu";
 export { RedirectToLogin } from "./RedirectToLogin";
 export { ShareSocialFab } from "./ShareSocialFab";
+export { PaperHistory } from "./PaperHistory";
+export { ToolSelectButton } from "./ToolSelectButton";
+export { ActionBar } from "./ActionBar";
+export { DeleteButtonWrapper } from "./DeleteButtonWrapper";
