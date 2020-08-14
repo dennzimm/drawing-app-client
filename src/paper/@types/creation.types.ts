@@ -6,6 +6,7 @@ export interface CreateHelper<T = Record<string, unknown>> {
 export interface CreateLayerProps extends CreateHelper {}
 export interface CreateGroupProps extends CreateHelper {}
 export interface CreatePathProps extends CreateHelper {}
+export interface CreateCircleProps extends CreateHelper {}
 
 export interface CreateRoundLinecapProps {
   name?: string;
