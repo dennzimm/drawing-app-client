@@ -1,8 +1,10 @@
-import { pencilTool } from "../tools";
+import { pencilTool, brushTool, eraserTool } from "../tools";
 
 class ToolProvider {
   private availableTools = {
     pencil: pencilTool.tool,
+    brush: brushTool.tool,
+    eraser: eraserTool.tool,
   } as const;
 
   getTool(name: ToolName) {
