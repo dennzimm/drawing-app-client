@@ -18,14 +18,19 @@ export function usePaper({ id, injectGlobal = false }: UsePaperProps) {
 
   useEffect(() => {
     paperProvider.setup({ id, injectGlobal });
-    updateFullViewSize();
     setIsReady(true);
 
     return () => {
       paperProvider.cleanup();
       setIsReady(false);
     };
-  }, [id, injectGlobal, updateFullViewSize]);
+  }, [id, injectGlobal]);
+
+  useEffect(() => {
+    if (isReady) {
+      updateFullViewSize();
+    }
+  }, [isReady, updateFullViewSize]);
 
   return {
     updateFullViewSize,

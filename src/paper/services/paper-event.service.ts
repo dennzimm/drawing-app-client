@@ -1,9 +1,13 @@
 import {
   AddToHistoryEvent,
-  EmitSegmentAddedProps,
+  BrushDrawingEvent,
+  CommonDrawingActionEventPayload,
+  DrawingDataActionType,
+  EmitDrawingActionProps,
+  EraseDrawingEvent,
   LayerAddedEvent,
   PaperViewEvents,
-  SegmentAddedEvent,
+  PencilDrawingEvent,
 } from "../@types";
 import { paperProvider } from "../providers";
 
@@ -35,23 +39,64 @@ class PaperEventService {
     paperProvider.view.emit(PaperViewEvents.ITEM_ADDED, event);
   }
 
-  emitSegmentAdded(props: EmitSegmentAddedProps) {
-    const { item, point, pathOptions, group } = props;
+  emitDrawingDataAction(props: EmitDrawingActionProps) {
+    const {
+      action,
+      payload: { item, pathOptions, points, group },
+    } = props;
 
-    const event: SegmentAddedEvent = {
+    const commonEventPayload: CommonDrawingActionEventPayload = {
       layerID: item.layer.name,
       groupID: (group && group.name) || undefined,
       itemID: item.name,
-      point: {
-        x: point.x,
-        y: point.y,
-      },
-      path: {
-        ...pathOptions,
-      },
+      path: pathOptions,
     };
 
-    paperProvider.view.emit(PaperViewEvents.SEGMENT_ADDED, event);
+    switch (action) {
+      case DrawingDataActionType.PENCIL_DRAWING: {
+        paperProvider.view.emit(PaperViewEvents.PENCIL_DRAWING, {
+          ...commonEventPayload,
+          segment: {
+            point: {
+              x: points[0].x,
+              y: points[0].y,
+            },
+          },
+        } as PencilDrawingEvent);
+
+        break;
+      }
+      case DrawingDataActionType.BRUSH_DRAWING: {
+        paperProvider.view.emit(PaperViewEvents.BRUSH_DRAWING, {
+          ...commonEventPayload,
+          segments: points.reduce(
+            (allPoints, point) => ({
+              ...allPoints,
+              point: { x: point.x, y: point.y },
+            }),
+            []
+          ),
+        } as BrushDrawingEvent);
+
+        break;
+      }
+      case DrawingDataActionType.ERASE_DRAWING: {
+        paperProvider.view.emit(PaperViewEvents.ERASE_DRAWING, {
+          ...commonEventPayload,
+          segment: {
+            point: {
+              x: points[0].x,
+              y: points[0].y,
+            },
+          },
+        } as EraseDrawingEvent);
+
+        break;
+      }
+
+      default:
+        break;
+    }
   }
 }
 
