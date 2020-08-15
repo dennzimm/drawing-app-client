@@ -1,23 +1,21 @@
 import store from "../../store";
-import { BlendMode } from "../@types";
+import { DrawingDataActionType } from "../@types";
 import { paperProjectHelper } from "../helper";
 import { paperEventService } from "../services";
 import { Tool, ToolStructure } from "./tool";
 
-export interface PencilToolProps {
-  blendMode?: BlendMode;
-}
-
 export class PencilTool extends Tool implements ToolStructure {
-  private blendMode: BlendMode = BlendMode.NORMAL;
+  private defaultStrokeCap = "round";
+  private defaultStrokeJoin = "round";
+
+  private size = store.getState().drawing.currentToolSize;
+  private color = store.getState().drawing.currentToolColor;
+
   private path?: paper.Path;
 
-  constructor(props: PencilToolProps = {}) {
-    super();
-    this.blendMode = props.blendMode || this.blendMode;
-  }
-
   onMouseDown(event: paper.ToolEvent) {
+    this.setToolOptions();
+
     this.path = paperProjectHelper.createPath({
       options: {
         ...this.getPathOptions(),
@@ -25,12 +23,9 @@ export class PencilTool extends Tool implements ToolStructure {
     });
 
     this.addPoint(event.point);
-
-    console.log(this.getPathOptions());
   }
 
   onMouseDrag(event: paper.ToolEvent) {
-    console.log("draw");
     if (this.path) {
       this.addPoint(event.point);
     }
@@ -51,18 +46,18 @@ export class PencilTool extends Tool implements ToolStructure {
     }
   }
 
-  private getPathOptions() {
-    const {
-      currentToolColor: strokeColor,
-      currentToolSize: strokeWidth,
-    } = store.getState().drawing;
+  private setToolOptions() {
+    const { currentToolColor, currentToolSize } = store.getState().drawing;
+    this.size = currentToolSize;
+    this.color = currentToolColor;
+  }
 
+  private getPathOptions() {
     return {
-      blendMode: this.blendMode,
-      strokeCap: "round",
-      strokeJoin: "round",
-      strokeColor,
-      strokeWidth,
+      strokeCap: this.defaultStrokeCap,
+      strokeJoin: this.defaultStrokeJoin,
+      strokeColor: this.color,
+      strokeWidth: this.size,
     };
   }
 
@@ -71,11 +66,14 @@ export class PencilTool extends Tool implements ToolStructure {
       this.path.add(point);
       this.path.smooth();
 
-      // paperEventService.emitSegmentAdded({
-      //   item: this.path,
-      //   point,
-      //   pathOptions: this.getPathOptions(),
-      // });
+      paperEventService.emitDrawingDataAction({
+        action: DrawingDataActionType.PENCIL_DRAWING,
+        payload: {
+          item: this.path,
+          points: [point],
+          pathOptions: this.getPathOptions(),
+        },
+      });
     }
   }
 }
