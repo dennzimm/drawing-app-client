@@ -1,4 +1,5 @@
-import { Point, Path } from "./item.types";
+import { Point, Path, Segment } from "./item.types";
+import { DrawingDataActionType } from "./action.types";
 
 export enum PaperViewEvents {
   // History Events
@@ -7,7 +8,11 @@ export enum PaperViewEvents {
   // Item Events
   ITEM_ADDED = "event::item-added",
   LAYER_ADDED = "event::layer-added",
-  SEGMENT_ADDED = "event::segment-added",
+
+  // Drawing Events
+  PENCIL_DRAWING = "event::pencil-drawing",
+  BRUSH_DRAWING = "event::brush-drawing",
+  ERASE_DRAWING = "event::erase-drawing",
 }
 
 export interface ItemAddedEvent {
@@ -19,16 +24,31 @@ export interface LayerAddedEvent extends ItemAddedEvent {}
 
 export interface AddToHistoryEvent extends ItemAddedEvent {}
 
-export interface EmitSegmentAddedProps {
-  item: paper.Item;
-  point: paper.Point;
-  pathOptions: Path;
-  group?: paper.Group;
+export interface EmitDrawingActionProps {
+  action: DrawingDataActionType;
+  payload: {
+    item: paper.Item;
+    points: paper.Point[];
+    pathOptions: Path;
+    group?: paper.Group;
+  };
 }
-export interface SegmentAddedEvent {
+
+export interface CommonDrawingActionEventPayload {
   layerID: string;
   groupID?: Nullable<string>;
   itemID: string;
-  point: Point;
   path: Path;
+}
+
+export interface PencilDrawingEvent extends CommonDrawingActionEventPayload {
+  segment: Segment;
+}
+
+export interface BrushDrawingEvent extends CommonDrawingActionEventPayload {
+  segments: Segment[];
+}
+
+export interface EraseDrawingEvent extends CommonDrawingActionEventPayload {
+  segment: Segment;
 }

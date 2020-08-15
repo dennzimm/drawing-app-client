@@ -52,9 +52,14 @@ export interface Path {
   fillColor?: Nullable<string>;
   strokeJoin?: Nullable<string>;
   strokeCap?: Nullable<string>;
+  blendMode?: Nullable<string>;
 }
 
 export interface Point {
   x: number;
   y: number;
+}
+
+export interface Segment {
+  point: Point;
 }
