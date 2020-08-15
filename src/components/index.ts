@@ -16,3 +16,4 @@ export { PaperHistory } from "./PaperHistory";
 export { ToolSelectButton } from "./ToolSelectButton";
 export { ActionBar } from "./ActionBar";
 export { DeleteButtonWrapper } from "./DeleteButtonWrapper";
+export { ToolBar } from "./ToolBar";

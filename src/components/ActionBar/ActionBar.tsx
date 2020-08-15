@@ -1,12 +1,12 @@
+import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import React from "react";
 import styled from "styled-components";
-import { ToolSelectButton, ColorButton, SizeSelectButton } from "..";
-import { IonGrid, IonRow, IonCol } from "@ionic/react";
+import { DeleteButton, PaperHistory } from "..";
 
 const StyledActionBar = styled(IonGrid)`
   position: absolute;
-  bottom: 70px;
-  right: 10px;
+  left: 10px;
+  bottom: 14px;
 `;
 
 const ActionBar: React.FC = () => {
@@ -14,20 +14,9 @@ const ActionBar: React.FC = () => {
     <StyledActionBar>
       <IonRow>
         <IonCol>
-          <SizeSelectButton />
+          <DeleteButton />
         </IonCol>
-      </IonRow>
-
-      <IonRow>
-        <IonCol>
-          <ColorButton />
-        </IonCol>
-      </IonRow>
-
-      <IonRow>
-        <IonCol>
-          <ToolSelectButton />
-        </IonCol>
+        <PaperHistory />
       </IonRow>
     </StyledActionBar>
   );

@@ -1,16 +1,14 @@
-import { IonButton } from "@ionic/react";
+import { IonFabButton, IonIcon } from "@ionic/react";
 import { arrowUndoCircleOutline } from "ionicons/icons";
 import React, { ComponentProps } from "react";
-import { IconButton } from "../IconButton";
 
-export interface UndoButtonProps extends ComponentProps<typeof IonButton> {}
+export interface UndoButtonProps extends ComponentProps<typeof IonFabButton> {}
 
 const UndoButton: React.FC<UndoButtonProps> = (props) => {
   return (
-    <IconButton
-      iconProps={{ icon: arrowUndoCircleOutline }}
-      buttonProps={props}
-    />
+    <IonFabButton {...props}>
+      <IonIcon icon={arrowUndoCircleOutline} />
+    </IonFabButton>
   );
 };
 
