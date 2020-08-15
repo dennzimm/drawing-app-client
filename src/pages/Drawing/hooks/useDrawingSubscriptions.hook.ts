@@ -8,10 +8,10 @@ export function useDrawingSubscriptions(drawingID: string) {
   useEffect(() => {
     if (data) {
       const {
-        drawingDataPublished: { __typename, node },
+        drawingDataPublished: { action, node },
       } = data;
 
-      const dataHandler = PaperDataHandlerFactory.build(__typename);
+      const dataHandler = PaperDataHandlerFactory.build(action);
       dataHandler && dataHandler(node);
     }
   }, [data]);

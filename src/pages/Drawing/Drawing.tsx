@@ -9,11 +9,10 @@ import {
 import { CREATE_OR_FIND_DRAWING } from "../../api/graphql/mutations";
 import {
   ActionBar,
-  DeleteButtonWrapper,
   DrawingCanvas,
   PageHeader,
-  PaperHistory,
   ServerStatus,
+  ToolBar,
 } from "../../components";
 import { paperService } from "../../paper/services";
 import { useStoreActions, useStoreState } from "../../store/hooks";
@@ -76,9 +75,6 @@ const Drawing: React.FC<DrawingProps> = ({
     <IonPage>
       <PageHeader>
         <IonButtons slot="end">
-          {/* <UndoButton />
-          <RedoButton /> */}
-          <PaperHistory />
           <ServerStatus class="ion-margin-horizontal" />
         </IonButtons>
       </PageHeader>
@@ -95,8 +91,7 @@ const Drawing: React.FC<DrawingProps> = ({
       </IonContent>
 
       <ActionBar />
-
-      <DeleteButtonWrapper />
+      <ToolBar />
     </IonPage>
   );
 };
