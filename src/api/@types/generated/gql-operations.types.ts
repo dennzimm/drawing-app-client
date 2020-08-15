@@ -4,6 +4,54 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: PublishPencilDrawing
+// ====================================================
+
+export interface PublishPencilDrawing {
+  publishPencilDrawing: boolean;
+}
+
+export interface PublishPencilDrawingVariables {
+  pencilDrawingData: PencilDrawingInput;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: PublishBrushDrawing
+// ====================================================
+
+export interface PublishBrushDrawing {
+  publishBrushDrawing: boolean;
+}
+
+export interface PublishBrushDrawingVariables {
+  brushDrawingData: BrushDrawingInput;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: PublishEraseDrawing
+// ====================================================
+
+export interface PublishEraseDrawing {
+  publishEraseDrawing: boolean;
+}
+
+export interface PublishEraseDrawingVariables {
+  eraseDrawingData: EraseDrawingInput;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CreateDrawing
 // ====================================================
 
@@ -118,27 +166,6 @@ export interface DeleteItemVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: AddSegment
-// ====================================================
-
-export interface AddSegment_addSegment {
-  __typename: "Segment";
-  itemID: string;
-}
-
-export interface AddSegment {
-  addSegment: AddSegment_addSegment;
-}
-
-export interface AddSegmentVariables {
-  segmentData: SegmentInput;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: IsServerOnline
 // ====================================================
 
@@ -205,13 +232,18 @@ export interface GetDrawings {
 // GraphQL subscription operation: DrawingDataPublished
 // ====================================================
 
-export interface DrawingDataPublished_drawingDataPublished_node_point {
+export interface DrawingDataPublished_drawingDataPublished_node_PencilDrawing_segment_point {
   __typename: "Point";
   x: number;
   y: number;
 }
 
-export interface DrawingDataPublished_drawingDataPublished_node_path {
+export interface DrawingDataPublished_drawingDataPublished_node_PencilDrawing_segment {
+  __typename: "Segment";
+  point: DrawingDataPublished_drawingDataPublished_node_PencilDrawing_segment_point;
+}
+
+export interface DrawingDataPublished_drawingDataPublished_node_PencilDrawing_path {
   __typename: "Path";
   strokeWidth: number;
   strokeColor: string | null;
@@ -219,17 +251,68 @@ export interface DrawingDataPublished_drawingDataPublished_node_path {
   strokeCap: string | null;
 }
 
-export interface DrawingDataPublished_drawingDataPublished_node {
-  __typename: "Segment";
+export interface DrawingDataPublished_drawingDataPublished_node_PencilDrawing {
+  __typename: "PencilDrawing";
   layerID: string;
-  groupID: string | null;
   itemID: string;
-  point: DrawingDataPublished_drawingDataPublished_node_point;
-  path: DrawingDataPublished_drawingDataPublished_node_path;
+  segment: DrawingDataPublished_drawingDataPublished_node_PencilDrawing_segment;
+  path: DrawingDataPublished_drawingDataPublished_node_PencilDrawing_path;
 }
 
+export interface DrawingDataPublished_drawingDataPublished_node_BrushDrawing_segments_point {
+  __typename: "Point";
+  x: number;
+  y: number;
+}
+
+export interface DrawingDataPublished_drawingDataPublished_node_BrushDrawing_segments {
+  __typename: "Segment";
+  point: DrawingDataPublished_drawingDataPublished_node_BrushDrawing_segments_point;
+}
+
+export interface DrawingDataPublished_drawingDataPublished_node_BrushDrawing_path {
+  __typename: "Path";
+  strokeWidth: number;
+  strokeColor: string | null;
+}
+
+export interface DrawingDataPublished_drawingDataPublished_node_BrushDrawing {
+  __typename: "BrushDrawing";
+  layerID: string;
+  itemID: string;
+  segments: DrawingDataPublished_drawingDataPublished_node_BrushDrawing_segments[];
+  path: DrawingDataPublished_drawingDataPublished_node_BrushDrawing_path;
+}
+
+export interface DrawingDataPublished_drawingDataPublished_node_EraseDrawing_segment_point {
+  __typename: "Point";
+  x: number;
+  y: number;
+}
+
+export interface DrawingDataPublished_drawingDataPublished_node_EraseDrawing_segment {
+  __typename: "Segment";
+  point: DrawingDataPublished_drawingDataPublished_node_EraseDrawing_segment_point;
+}
+
+export interface DrawingDataPublished_drawingDataPublished_node_EraseDrawing_path {
+  __typename: "Path";
+  strokeWidth: number;
+}
+
+export interface DrawingDataPublished_drawingDataPublished_node_EraseDrawing {
+  __typename: "EraseDrawing";
+  layerID: string;
+  itemID: string;
+  segment: DrawingDataPublished_drawingDataPublished_node_EraseDrawing_segment;
+  path: DrawingDataPublished_drawingDataPublished_node_EraseDrawing_path;
+}
+
+export type DrawingDataPublished_drawingDataPublished_node = DrawingDataPublished_drawingDataPublished_node_PencilDrawing | DrawingDataPublished_drawingDataPublished_node_BrushDrawing | DrawingDataPublished_drawingDataPublished_node_EraseDrawing;
+
 export interface DrawingDataPublished_drawingDataPublished {
-  __typename: "SegmentAdded";
+  __typename: "PublishedDrawingData";
+  action: DrawingDataActionType;
   node: DrawingDataPublished_drawingDataPublished_node;
 }
 
@@ -276,16 +359,21 @@ export interface ItemMutatedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: SegmentAddedPayload
+// GraphQL fragment: PencilDrawingPayload
 // ====================================================
 
-export interface SegmentAddedPayload_node_point {
+export interface PencilDrawingPayload_segment_point {
   __typename: "Point";
   x: number;
   y: number;
 }
 
-export interface SegmentAddedPayload_node_path {
+export interface PencilDrawingPayload_segment {
+  __typename: "Segment";
+  point: PencilDrawingPayload_segment_point;
+}
+
+export interface PencilDrawingPayload_path {
   __typename: "Path";
   strokeWidth: number;
   strokeColor: string | null;
@@ -293,18 +381,77 @@ export interface SegmentAddedPayload_node_path {
   strokeCap: string | null;
 }
 
-export interface SegmentAddedPayload_node {
-  __typename: "Segment";
+export interface PencilDrawingPayload {
+  __typename: "PencilDrawing";
   layerID: string;
-  groupID: string | null;
   itemID: string;
-  point: SegmentAddedPayload_node_point;
-  path: SegmentAddedPayload_node_path;
+  segment: PencilDrawingPayload_segment;
+  path: PencilDrawingPayload_path;
 }
 
-export interface SegmentAddedPayload {
-  __typename: "SegmentAdded";
-  node: SegmentAddedPayload_node;
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: BrushDrawingPayload
+// ====================================================
+
+export interface BrushDrawingPayload_segments_point {
+  __typename: "Point";
+  x: number;
+  y: number;
+}
+
+export interface BrushDrawingPayload_segments {
+  __typename: "Segment";
+  point: BrushDrawingPayload_segments_point;
+}
+
+export interface BrushDrawingPayload_path {
+  __typename: "Path";
+  strokeWidth: number;
+  strokeColor: string | null;
+}
+
+export interface BrushDrawingPayload {
+  __typename: "BrushDrawing";
+  layerID: string;
+  itemID: string;
+  segments: BrushDrawingPayload_segments[];
+  path: BrushDrawingPayload_path;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: EraseDrawingPayload
+// ====================================================
+
+export interface EraseDrawingPayload_segment_point {
+  __typename: "Point";
+  x: number;
+  y: number;
+}
+
+export interface EraseDrawingPayload_segment {
+  __typename: "Segment";
+  point: EraseDrawingPayload_segment_point;
+}
+
+export interface EraseDrawingPayload_path {
+  __typename: "Path";
+  strokeWidth: number;
+}
+
+export interface EraseDrawingPayload {
+  __typename: "EraseDrawing";
+  layerID: string;
+  itemID: string;
+  segment: EraseDrawingPayload_segment;
+  path: EraseDrawingPayload_path;
 }
 
 /* tslint:disable */
@@ -314,10 +461,69 @@ export interface SegmentAddedPayload {
 // START Enums and Input Objects
 //==============================================================
 
+export enum DrawingDataActionType {
+  BRUSH_DRAWING = "BRUSH_DRAWING",
+  ERASE_DRAWING = "ERASE_DRAWING",
+  PENCIL_DRAWING = "PENCIL_DRAWING",
+}
+
 export enum MutationType {
   CREATED = "CREATED",
   DELETED = "DELETED",
   UPDATED = "UPDATED",
+}
+
+// null
+export interface PencilDrawingInput {
+  userID: string;
+  drawingID: string;
+  layerID: string;
+  groupID?: string | null;
+  itemID: string;
+  segment: SegmentInput;
+  path: PathInput;
+}
+
+// null
+export interface SegmentInput {
+  point: PointInput;
+}
+
+// null
+export interface PointInput {
+  x: number;
+  y: number;
+}
+
+// null
+export interface PathInput {
+  strokeWidth: number;
+  strokeColor?: string | null;
+  fillColor?: string | null;
+  strokeJoin?: string | null;
+  strokeCap?: string | null;
+  blendMode?: string | null;
+}
+
+// null
+export interface BrushDrawingInput {
+  userID: string;
+  drawingID: string;
+  layerID: string;
+  groupID?: string | null;
+  itemID: string;
+  segments: SegmentInput[];
+  path: PathInput;
+}
+
+// null
+export interface EraseDrawingInput {
+  userID: string;
+  drawingID: string;
+  layerID: string;
+  itemID: string;
+  segment: SegmentInput;
+  path: PathInput;
 }
 
 // null
@@ -340,32 +546,6 @@ export interface UpdateItemInput {
   drawingID: string;
   id: string;
   data: string;
-}
-
-// null
-export interface SegmentInput {
-  userID: string;
-  drawingID: string;
-  layerID: string;
-  groupID?: string | null;
-  itemID: string;
-  point: PointInput;
-  path: PathInput;
-}
-
-// null
-export interface PointInput {
-  x: number;
-  y: number;
-}
-
-// null
-export interface PathInput {
-  strokeWidth: number;
-  strokeColor?: string | null;
-  fillColor?: string | null;
-  strokeJoin?: string | null;
-  strokeCap?: string | null;
 }
 
 //==============================================================

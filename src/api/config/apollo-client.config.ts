@@ -19,8 +19,8 @@ const GRAPHQL_ENDPOINT = process.env.REACT_APP_GQL_ENDPOINT as string;
 
 const httpLink = new BatchHttpLink({
   uri: GRAPHQL_ENDPOINT,
-  batchInterval: 20,
-  batchMax: 25,
+  batchInterval: 50,
+  batchMax: 100,
 });
 
 // * The split function takes three parameters:

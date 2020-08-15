@@ -1,1 +1,1 @@
-export * from "./segment.fragments";
+export * from "./drawing-data.fragments";
