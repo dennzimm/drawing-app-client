@@ -10,7 +10,7 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { AppStoreProvider, Menu, RedirectToLogin } from "./components";
 import { AppApolloProvider } from "./components/AppApolloProvider";
@@ -32,10 +32,17 @@ const App: React.FC = () => {
 const IonicApp: React.FC = () => {
   const darkMode = useStoreState((state) => state.user.darkMode);
 
+  const loadUserData = useStoreActions((actions) => actions.user.loadUserData);
+
   const setIsLoggedIn = useStoreActions(
     (actions) => actions.user.setIsLoggedIn
   );
+
   const setUsername = useStoreActions((actions) => actions.user.setUsername);
+
+  useEffect(() => {
+    loadUserData();
+  }, [loadUserData]);
 
   return (
     <IonApp className={`${darkMode ? "dark-theme" : ""}`}>
