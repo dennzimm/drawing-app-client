@@ -1,5 +1,5 @@
 import { action, Action } from "easy-peasy";
-import { ToolName } from "../../../paper/providers";
+import { ToolName } from "../../../paper/tools";
 import { DrawingModel } from "./drawing.model";
 
 export enum DrawingAction {
