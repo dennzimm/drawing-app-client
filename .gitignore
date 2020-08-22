@@ -56,8 +56,8 @@ typings/
 .yarn-integrity
 
 # env
-*.env*
-!*.env.sample
+*.env
+!example.env
 
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
