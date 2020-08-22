@@ -1,8 +1,8 @@
 import { IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/react";
 import { brush, pencil, closeCircleOutline } from "ionicons/icons";
 import React, { ComponentProps, useCallback, useRef } from "react";
-import { ToolName, toolProvider } from "../../paper/providers";
 import { useStoreActions, useStoreState } from "../../store/hooks";
+import { ToolName, availableTools } from "../../paper/tools";
 
 interface ToolSelectButtonProps extends ComponentProps<typeof IonFab> {}
 const ToolSelectButton: React.FC<ToolSelectButtonProps> = (props) => {
@@ -12,7 +12,7 @@ const ToolSelectButton: React.FC<ToolSelectButtonProps> = (props) => {
     eraser: closeCircleOutline,
   });
 
-  const currentToolName = useStoreState(
+  const currentToolName: ToolName = useStoreState(
     (state) => state.drawing.currentToolName
   );
 
@@ -23,7 +23,7 @@ const ToolSelectButton: React.FC<ToolSelectButtonProps> = (props) => {
   const setTool = useCallback(
     (toolName: ToolName) => {
       setCurrentToolName(toolName);
-      toolProvider.getTool(toolName).activate();
+      availableTools[toolName].activate();
     },
     [setCurrentToolName]
   );
@@ -35,7 +35,7 @@ const ToolSelectButton: React.FC<ToolSelectButtonProps> = (props) => {
       </IonFabButton>
 
       <IonFabList side="start">
-        {Object.keys(toolProvider.tools).map((key) => {
+        {Object.keys(availableTools).map((key) => {
           const toolName = key as ToolName;
 
           return (

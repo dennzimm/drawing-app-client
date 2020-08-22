@@ -1,14 +1,7 @@
-import { useMutation } from "@apollo/client";
 import { IonAlert, IonFabButton, IonIcon } from "@ionic/react";
 import { trash } from "ionicons/icons";
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import {
-  DeleteItem,
-  DeleteItemVariables,
-} from "../../api/@types/generated/gql-operations.types";
-import { DELETE_ITEM } from "../../api/graphql/mutations";
-import { paperService } from "../../paper/services";
 import { useStoreState } from "../../store/hooks";
 
 const DeleteButton: React.FC = () => {
@@ -16,24 +9,24 @@ const DeleteButton: React.FC = () => {
 
   const userID = useStoreState((state) => state.user.userID);
 
-  const [deleteItem] = useMutation<DeleteItem, DeleteItemVariables>(
-    DELETE_ITEM
-  );
+  // const [deleteItem] = useMutation<DeleteItem, DeleteItemVariables>(
+  //   DELETE_ITEM
+  // );
 
   const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   function handleDelete() {
-    const deletedItems = paperService.deleteOwnedItems();
-    console.log(deletedItems);
-    deletedItems.forEach((itemID) => {
-      deleteItem({
-        variables: {
-          drawingID,
-          userID,
-          itemID,
-        },
-      });
-    });
+    // const deletedItems = paperService.deleteOwnedItems();
+    // console.log(deletedItems);
+    // deletedItems.forEach((itemID) => {
+    //   // deleteItem({
+    //   //   variables: {
+    //   //     drawingID,
+    //   //     userID,
+    //   //     itemID,
+    //   //   },
+    //   // });
+    // });
   }
 
   function onDeleteClick() {
