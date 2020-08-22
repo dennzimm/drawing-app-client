@@ -18,7 +18,7 @@ This application is purely a kitchen-sink demo of the Ionic Framework and React.
 - Run `ionic serve` in a terminal from the project root.
 - Profit. :tada:
 
-## App Preview
+## App Preview:
 
 ### [Menu](https://github.com/ionic-team/ionic-conference-app/blob/master/src/app/pages/menu/menu.html)
 
