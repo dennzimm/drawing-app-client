@@ -1,5 +1,0 @@
-export enum DrawingDataActionType {
-  PENCIL_DRAWING = "PENCIL_DRAWING",
-  BRUSH_DRAWING = "BRUSH_DRAWING",
-  ERASE_DRAWING = "ERASE_DRAWING",
-}

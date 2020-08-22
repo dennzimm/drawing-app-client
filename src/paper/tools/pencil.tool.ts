@@ -1,12 +1,21 @@
 import store from "../../store";
-import { DrawingDataActionType } from "../@types";
-import { paperProjectHelper } from "../helper";
-import { paperEventService } from "../services";
+import { createPath, emitAddToHistory } from "../helper";
+import { paperDrawingApiService } from "../shared/api/services";
 import { Tool, ToolStructure } from "./tool";
 
+export interface HandlePencilDrawProps {
+  path: paper.Path;
+  point: paper.Point;
+}
+
+export const handlePencilDraw = ({ path, point }: HandlePencilDrawProps) => {
+  path.add(point);
+  path.smooth();
+};
+
 export class PencilTool extends Tool implements ToolStructure {
-  private defaultStrokeCap = "round";
-  private defaultStrokeJoin = "round";
+  defaultStrokeCap = "round";
+  defaultStrokeJoin = "round";
 
   private size = store.getState().drawing.currentToolSize;
   private color = store.getState().drawing.currentToolColor;
@@ -16,7 +25,7 @@ export class PencilTool extends Tool implements ToolStructure {
   onMouseDown(event: paper.ToolEvent) {
     this.setToolOptions();
 
-    this.path = paperProjectHelper.createPath({
+    this.path = createPath({
       options: {
         ...this.getPathOptions(),
       },
@@ -41,8 +50,8 @@ export class PencilTool extends Tool implements ToolStructure {
       this.path.simplify();
       this.deselectAll();
 
-      paperEventService.emitAddToHistory(this.path);
-      paperEventService.emitItemAdded(this.path);
+      emitAddToHistory(this.path);
+      // paperEventService.emitItemAdded(this.path);
     }
   }
 
@@ -63,15 +72,23 @@ export class PencilTool extends Tool implements ToolStructure {
 
   private addPoint(point: paper.Point) {
     if (this.path) {
-      this.path.add(point);
-      this.path.smooth();
+      handlePencilDraw({ path: this.path, point });
 
-      paperEventService.emitDrawingDataAction({
-        action: DrawingDataActionType.PENCIL_DRAWING,
-        payload: {
-          item: this.path,
-          points: [point],
-          pathOptions: this.getPathOptions(),
+      this.emitPencilDraw(point);
+    }
+  }
+
+  private emitPencilDraw(point: paper.Point) {
+    if (this.path) {
+      paperDrawingApiService.pencilDraw({
+        data: {
+          layerID: this.path.layer.name,
+          itemID: this.path.name,
+          path: this.getPathOptions(),
+          point: {
+            x: point.x,
+            y: point.y,
+          },
         },
       });
     }

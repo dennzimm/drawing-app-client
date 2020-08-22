@@ -1,9 +1,8 @@
 import { compress, decompress } from "lz-string";
+import paper from "paper";
 import { useCallback } from "react";
 import useUndo from "use-undo";
 import { AddToHistoryEvent, PaperViewEvents } from "../@types";
-import { paperProvider } from "../providers";
-import { paperService } from "../services";
 import { usePaperEvent } from "./usePaperEvent.hook";
 
 interface HistoryItemData {
@@ -21,7 +20,7 @@ export function usePaperHistory() {
       const { present } = paperHistory;
 
       if (present) {
-        const item = paperProvider.project.getItem({ name: present.id });
+        const item = paper.project.getItem({ name: present.id });
         item && item.remove();
       }
 
@@ -36,7 +35,8 @@ export function usePaperHistory() {
 
       if (newPresent) {
         const decompressedData = decompress(newPresent.data);
-        decompressedData && paperService.importItem(decompressedData);
+        decompressedData &&
+          paper.project.activeLayer.importJSON(decompressedData);
       }
 
       redo();

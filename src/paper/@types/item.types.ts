@@ -45,21 +45,3 @@ export enum BlendMode {
   COPY = "copy",
   XOR = "xor",
 }
-
-export interface Path {
-  strokeWidth: number;
-  strokeColor?: Nullable<string>;
-  fillColor?: Nullable<string>;
-  strokeJoin?: Nullable<string>;
-  strokeCap?: Nullable<string>;
-  blendMode?: Nullable<string>;
-}
-
-export interface Point {
-  x: number;
-  y: number;
-}
-
-export interface Segment {
-  point: Point;
-}

@@ -1,7 +1,7 @@
+import paper from "paper";
 import { useCallback, useEffect, useRef } from "react";
 import { fromEvent, Subscription } from "rxjs";
 import { PaperViewEvents } from "../@types";
-import { paperProvider } from "../providers";
 import { usePaperReady } from "./usePaperReady.hook";
 
 export function usePaperEvent<P>(
@@ -19,10 +19,9 @@ export function usePaperEvent<P>(
 
   useEffect(() => {
     if (isReady) {
-      eventSubscription.current = fromEvent<P>(
-        paperProvider.view,
-        event
-      ).subscribe(callback);
+      eventSubscription.current = fromEvent<P>(paper.view, event).subscribe(
+        callback
+      );
     }
 
     return unsubscribeEvent;

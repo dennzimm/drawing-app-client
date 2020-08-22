@@ -1,8 +1,18 @@
 import store from "../../store";
-import { BlendMode, DrawingDataActionType } from "../@types";
-import { paperProjectHelper } from "../helper";
-import { paperEventService } from "../services";
+import { BlendMode } from "../@types";
+import { createPath, emitAddToHistory } from "../helper";
+import { paperDrawingApiService } from "../shared/api/services";
 import { Tool, ToolStructure } from "./tool";
+
+export interface HandleEraseProps {
+  path: paper.Path;
+  point: paper.Point;
+}
+
+export const handleErase = ({ path, point }: HandleEraseProps) => {
+  path.add(point);
+  path.smooth();
+};
 
 class EraserTool extends Tool implements ToolStructure {
   private defaultStrokeCap = "round";
@@ -16,7 +26,7 @@ class EraserTool extends Tool implements ToolStructure {
   onMouseDown(event: paper.ToolEvent) {
     this.setToolOptions();
 
-    this.path = paperProjectHelper.createPath({
+    this.path = createPath({
       options: {
         ...this.getPathOptions(),
       },
@@ -41,8 +51,8 @@ class EraserTool extends Tool implements ToolStructure {
       this.path.simplify();
       this.deselectAll();
 
-      paperEventService.emitAddToHistory(this.path);
-      paperEventService.emitItemAdded(this.path);
+      emitAddToHistory(this.path);
+      // paperEventService.emitItemAdded(this.path);
     }
   }
 
@@ -64,14 +74,23 @@ class EraserTool extends Tool implements ToolStructure {
 
   private addPoint(point: paper.Point) {
     if (this.path) {
-      this.path.add(point);
+      handleErase({ path: this.path, point });
 
-      paperEventService.emitDrawingDataAction({
-        action: DrawingDataActionType.ERASE_DRAWING,
-        payload: {
-          item: this.path,
-          points: [point],
-          pathOptions: this.getPathOptions(),
+      this.emitErase(point);
+    }
+  }
+
+  private emitErase(point: paper.Point) {
+    if (this.path) {
+      paperDrawingApiService.erase({
+        data: {
+          layerID: this.path.layer.name,
+          itemID: this.path.name,
+          path: this.getPathOptions(),
+          point: {
+            x: point.x,
+            y: point.y,
+          },
         },
       });
     }

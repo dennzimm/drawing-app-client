@@ -1,8 +1,38 @@
 import store from "../../store";
-import { paperProjectHelper } from "../helper";
+import { createPath } from "../helper";
+import { paperDrawingApiService } from "../shared/api/services";
+import { transformPaperPoint } from "../shared/api/transformer/paper-item.transformer";
 import { Tool, ToolStructure } from "./tool";
-import { paperEventService } from "../services";
-import { DrawingDataActionType } from "../@types";
+
+export interface HandleBrushDrawProps {
+  path: paper.Path;
+  size: number;
+  delta?: paper.Point;
+  middlePoint?: paper.Point;
+  singlePoint?: paper.Point;
+}
+
+export const handleBrushDraw = ({
+  path,
+  middlePoint,
+  delta,
+  size,
+  singlePoint,
+}: HandleBrushDrawProps) => {
+  if (singlePoint) {
+    path.add(singlePoint);
+  } else if (delta && middlePoint) {
+    let step = delta.multiply(size / 5);
+    step.angle += 90;
+
+    const top = middlePoint.add(step);
+    const bottom = middlePoint.subtract(step);
+
+    path.add(top);
+    path.insert(0, bottom);
+    path.smooth();
+  }
+};
 
 export class BrushTool extends Tool implements ToolStructure {
   private defaultMinDistance = 1;
@@ -22,40 +52,46 @@ export class BrushTool extends Tool implements ToolStructure {
   onMouseDown(event: paper.ToolEvent) {
     this.setToolOptions();
 
-    this.path = paperProjectHelper.createPath({
+    this.path = createPath({
       options: {
         ...this.getPathOptions(),
       },
     });
 
-    this.path.add(event.point);
+    handleBrushDraw({
+      path: this.path,
+      singlePoint: event.point,
+      size: this.size,
+    });
 
-    this.emitBrushDrawing([event.point]);
+    this.emitBrushDraw({ event, singlePoint: true });
   }
 
   onMouseDrag(event: paper.ToolEvent) {
     if (this.path) {
-      let step = event.delta.multiply(this.size / 5);
-      step.angle += 90;
+      handleBrushDraw({
+        path: this.path,
+        delta: event.delta,
+        middlePoint: event.middlePoint,
+        size: this.size,
+      });
 
-      const top = event.middlePoint.add(step);
-      const bottom = event.middlePoint.subtract(step);
-
-      this.path.add(top);
-      this.path.insert(0, bottom);
-      this.path.smooth();
-
-      this.emitBrushDrawing([top, bottom]);
+      this.emitBrushDraw({ event });
     }
   }
 
   onMouseUp(event: paper.ToolEvent) {
     if (this.path) {
-      this.path.add(event.point);
+      handleBrushDraw({
+        path: this.path,
+        singlePoint: event.point,
+        size: this.size,
+      });
+
       this.path.closePath();
       this.path.smooth();
 
-      this.emitBrushDrawing([event.point]);
+      this.emitBrushDraw({ event, singlePoint: true, closed: true });
     }
   }
 
@@ -72,14 +108,31 @@ export class BrushTool extends Tool implements ToolStructure {
     };
   }
 
-  private emitBrushDrawing(points: paper.Point[]) {
+  private emitBrushDraw({
+    event,
+    singlePoint,
+    closed,
+  }: {
+    event: paper.ToolEvent;
+    singlePoint?: boolean;
+    closed?: boolean;
+  }) {
     if (this.path) {
-      paperEventService.emitDrawingDataAction({
-        action: DrawingDataActionType.BRUSH_DRAWING,
-        payload: {
-          item: this.path,
-          points,
-          pathOptions: this.getPathOptions(),
+      paperDrawingApiService.brushDraw({
+        data: {
+          layerID: this.path.layer.name,
+          itemID: this.path.name,
+          path: {
+            ...this.getPathOptions(),
+            closed,
+          },
+          ...(!singlePoint && {
+            delta: transformPaperPoint(event.delta),
+            middlePoint: transformPaperPoint(event.middlePoint),
+          }),
+          ...(singlePoint && {
+            singlePoint: transformPaperPoint(event.point),
+          }),
         },
       });
     }

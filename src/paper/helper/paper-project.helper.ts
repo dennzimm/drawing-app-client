@@ -1,64 +1,82 @@
-import { nanoid } from "nanoid";
+import paper from "paper";
+import store from "../../store";
 import {
-  CreateCircleProps,
   CreateGroupProps,
   CreateLayerProps,
   CreatePathProps,
-  CreateRoundLinecapProps,
+  CustomItemData,
 } from "../@types";
-import { paperProvider } from "../providers";
-import { paperDataHelper } from "./paper-data.helper";
+import { createGroup, createPath } from "./paper-item.helper";
 
-class PaperProjectHelper {
-  createLayer(props: CreateLayerProps = {}) {
-    const { name = nanoid(), options = {} } = props;
-    const layer = new paperProvider.scope.Layer({ name, ...options });
-    paperDataHelper.addDefaultCustomItemData(layer);
+export const findLayer = ({ name }: CreateLayerProps) => {
+  let layer = paper.project.getItem({
+    name,
+  }) as paper.Layer;
 
-    return layer;
+  if (!layer) {
+    layer = paper.project.activeLayer;
   }
 
-  createGroup(props: CreateGroupProps = {}) {
-    const { name = nanoid(), options = {} } = props;
-    const group = new paperProvider.scope.Group({ name, ...options });
-    paperDataHelper.addDefaultCustomItemData(group);
+  return layer;
+};
 
-    return group;
-  }
+export const findOrCreateGroup = ({
+  name,
+  layer,
+  options,
+}: CreateGroupProps & { layer?: paper.Layer }) => {
+  let group = paper.project.getItem({
+    name,
+  }) as paper.Group;
 
-  createPath(props: CreatePathProps = {}) {
-    const { name = nanoid(), options = {} } = props;
-    const path = new paperProvider.scope.Path({ name, ...options });
-    paperDataHelper.addDefaultCustomItemData(path);
-
-    return path;
-  }
-
-  createCircle(props: CreateCircleProps = {}) {
-    const { name = nanoid(), options = {} } = props;
-    const circle = new paperProvider.scope.Path.Circle({ name, ...options });
-    paperDataHelper.addDefaultCustomItemData(circle);
-
-    return circle;
-  }
-
-  createRoundLinecap = (
-    props: CreateRoundLinecapProps
-  ): paper.Shape.Ellipse => {
-    const { name = nanoid(), point, color, width } = props;
-
-    const ellipse = new paperProvider.scope.Shape.Ellipse({
+  if (!group) {
+    group = createGroup({
       name,
-      strokeColor: color,
-      fillColor: color,
-      center: point,
-      radius: width / 2,
+      options: {
+        ...options,
+        layer,
+      },
     });
+  }
 
-    paperDataHelper.addDefaultCustomItemData(ellipse);
+  return group;
+};
 
-    return ellipse;
+export const findOrCreatePath = ({ name, options }: CreatePathProps) => {
+  let path = paper.project.getItem({
+    name,
+  }) as paper.Path;
+
+  if (!path) {
+    path = createPath({
+      name,
+    });
+  }
+
+  options && path.set(options);
+
+  return path;
+};
+
+export const deleteOwnedItems = (callback?: Function) => {
+  const userID = store.getState().user.userID;
+  const options: Record<"data", CustomItemData> = {
+    data: {
+      userID,
+      immutable: false,
+    },
   };
-}
 
-export const paperProjectHelper = new PaperProjectHelper();
+  const deletedItems: string[] = [];
+
+  paper.project.getItems(options).forEach((item) => {
+    const id = item.name;
+
+    if (item.remove()) {
+      deletedItems.push(id);
+      callback && callback();
+    }
+  });
+
+  return deletedItems;
+};
