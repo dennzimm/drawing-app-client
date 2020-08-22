@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useCallback, useEffect, useState } from "react";
-import { IsServerOnline } from "../../../api/@types/generated/gql-operations.types";
-import { IS_SERVER_ONLINE } from "../../../api/graphql/queries";
+import { IsOnline } from "../../../api/@types/generated/gql-operations.types";
+import { IS_ONLINE } from "../../../api/graphql/app.graphql";
 import { useStoreActions, useStoreState } from "../../../store/hooks";
 import { NetworkStatusType } from "../../../store/models/app/app.model";
 
@@ -36,7 +36,7 @@ export function useServerStatusCheck() {
     }
   }, [serverConnectionStatus, setServerConnectionStatus]);
 
-  const { error, loading } = useQuery<IsServerOnline>(IS_SERVER_ONLINE, {
+  const { error, loading } = useQuery<IsOnline>(IS_ONLINE, {
     pollInterval: serverStatusCheckOptions.pollInterval,
     notifyOnNetworkStatusChange: true,
   });
