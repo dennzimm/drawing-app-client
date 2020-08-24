@@ -15,6 +15,8 @@ import {
 import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 import { PageHeader } from "../../components";
+import { useHistory } from "react-router";
+import { nanoid } from "nanoid";
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,11 +45,26 @@ const StyledSegment = styled(IonSegment)`
 `;
 
 const DrawingsSelect: React.FC = () => {
-  const [drawingID, setDrawingID] = useState("");
+  const history = useHistory();
+  const [userDrawingName, setUserDrawingName] = useState("");
   const [choice, setChoice] = useState("newDrawing");
 
   const startDrawing = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    switch (choice) {
+      case "joinDrawing": {
+        history.push(`/drawings/${userDrawingName}`);
+        break;
+      }
+      // newDrawing & default | fallthrough
+      case "newDrawing":
+      default: {
+        const randomDrawingID = nanoid();
+        history.push(`/drawings/${randomDrawingID}`);
+        break;
+      }
+    }
   };
 
   return (
@@ -86,10 +103,12 @@ const DrawingsSelect: React.FC = () => {
                           <IonInput
                             name="drawingID"
                             type="text"
-                            value={drawingID}
+                            value={userDrawingName}
                             spellCheck={false}
                             autocapitalize="off"
-                            onIonChange={(e) => setDrawingID(e.detail.value!)}
+                            onIonChange={(e) =>
+                              setUserDrawingName(e.detail.value!)
+                            }
                             required
                           ></IonInput>
                         </IonItem>

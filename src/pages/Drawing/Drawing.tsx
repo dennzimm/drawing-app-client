@@ -27,7 +27,7 @@ const Drawing: React.FC<DrawingProps> = ({
   );
 
   setDrawingID(drawingID);
-  const { getDrawingLoading, createDrawingLoading } = useFetchOrCreateDrawing();
+  const { loading } = useFetchOrCreateDrawing();
   useDrawingActionSubscription();
   useItemMutationSubscription();
 
@@ -47,10 +47,7 @@ const Drawing: React.FC<DrawingProps> = ({
       >
         <DrawingCanvas drawingID={drawingID} />
 
-        <IonLoading
-          isOpen={getDrawingLoading || createDrawingLoading}
-          message={"Bitte warten..."}
-        />
+        <IonLoading isOpen={loading} message={"Bitte warten..."} />
       </IonContent>
 
       <ActionBar />

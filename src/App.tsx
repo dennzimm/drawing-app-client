@@ -86,8 +86,8 @@ const IonicApp: React.FC = () => {
           {/* <Route path="/" component={HomeOrTutorial} exact /> */}
 
           {/* Drawings */}
-          <Route path="/drawings" render={() => <DrawingsSelect />} />
-          <Route path="/drawings/:id" component={Drawing} />
+          <Route exact path="/drawings" render={() => <DrawingsSelect />} />
+          <Route exact path="/drawings/:id" component={Drawing} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
