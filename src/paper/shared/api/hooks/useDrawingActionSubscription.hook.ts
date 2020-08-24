@@ -12,7 +12,7 @@ export function useDrawingActionSubscription() {
   const userId = useStoreState((state) => state.user.userID);
   const drawingName = useStoreState((state) => state.drawing.id);
 
-  const { data, loading, error } = useSubscription<
+  const { data } = useSubscription<
     DrawingActionPublished,
     DrawingActionPublishedVariables
   >(DRAWING_ACTION_PUBLISHED, {
@@ -30,5 +30,5 @@ export function useDrawingActionSubscription() {
 
       paperDrawingApiImportService.importDrawingActionData(action, node);
     }
-  }, [data, error, loading]);
+  }, [data]);
 }
