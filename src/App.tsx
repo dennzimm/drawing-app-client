@@ -14,7 +14,7 @@ import React, { useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { AppStoreProvider, Menu, RedirectToLogin } from "./components";
 import { AppApolloProvider } from "./components/AppApolloProvider";
-import { Account, Drawing, DrawingsSelect, Login, Signup } from "./pages";
+import { Drawing, DrawingsSelect, UnderConstruction } from "./pages";
 import { useStoreActions, useStoreState } from "./store/hooks";
 import "./theme/global.css";
 import "./theme/variables.css";
@@ -54,9 +54,18 @@ const IonicApp: React.FC = () => {
           <Redirect exact path="/" to="/drawings" />
 
           {/* Account */}
-          <Route path="/account" render={() => <Account />} />
-          <Route path="/signup" render={() => <Signup />} />
-          <Route path="/login" render={() => <Login />} />
+          <Route
+            path="/account"
+            render={() => <UnderConstruction title="Account" />}
+          />
+          <Route
+            path="/signup"
+            render={() => <UnderConstruction title="Registrieren" />}
+          />
+          <Route
+            path="/login"
+            render={() => <UnderConstruction title="Anmelden" />}
+          />
           <Route
             path="/logout"
             render={() => {
@@ -70,7 +79,10 @@ const IonicApp: React.FC = () => {
           />
 
           {/* Tutorial */}
-          {/* <Route path="/tutorial" component={Tutorial} /> */}
+          <Route
+            path="/tutorial"
+            render={() => <UnderConstruction title="Tutorial" />}
+          />
           {/* <Route path="/" component={HomeOrTutorial} exact /> */}
 
           {/* Drawings */}
