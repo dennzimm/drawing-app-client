@@ -1,6 +1,12 @@
 import {
   BrushDraw,
   BrushDrawVariables,
+  CreateItem,
+  CreateItemInput,
+  CreateItemVariables,
+  DeleteItem,
+  DeleteItemInput,
+  DeleteItemVariables,
   Erase,
   EraseVariables,
   PencilDraw,
@@ -12,6 +18,7 @@ import {
   ERASE,
   PENCIL_DRAW,
 } from "../../../../api/graphql/drawing-action.graphql";
+import { CREATE_ITEM, DELETE_ITEM } from "../../../../api/graphql/item.graphql";
 import store from "../../../../store";
 
 export interface PencilDrawMutationProps
@@ -75,6 +82,46 @@ class PaperDrawingApiService {
         data,
       },
     });
+  }
+
+  createItem(data: CreateItemInput) {
+    const userId = store.getState().user.userID;
+    const drawingName = store.getState().drawing.id;
+
+    client.mutate<CreateItem, CreateItemVariables>({
+      mutation: CREATE_ITEM,
+      variables: {
+        user: {
+          userId,
+        },
+        drawing: {
+          drawingName,
+        },
+        data,
+      },
+    });
+  }
+
+  deleteItem(data: DeleteItemInput) {
+    const userId = store.getState().user.userID;
+    const drawingName = store.getState().drawing.id;
+
+    client
+      .mutate<DeleteItem, DeleteItemVariables>({
+        mutation: DELETE_ITEM,
+        variables: {
+          user: {
+            userId,
+          },
+          drawing: {
+            drawingName,
+          },
+          data,
+        },
+      })
+      .catch((err) => {
+        // todo: implement error handling
+      });
   }
 }
 

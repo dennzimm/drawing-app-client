@@ -1,10 +1,13 @@
-import paper from "paper";
+import paper, { Layer } from "paper";
 import {
   ActionType,
   DrawingActionPublished_drawingActionPublished_node,
   DrawingActionPublished_drawingActionPublished_node_BrushDraw,
   DrawingActionPublished_drawingActionPublished_node_Erase,
   DrawingActionPublished_drawingActionPublished_node_PencilDraw,
+  Drawing_drawing,
+  ItemData,
+  ItemType,
 } from "../../../../api/@types/generated/gql-operations.types";
 import { BlendMode, StrokeCapType, StrokeJoinType } from "../../../@types";
 import {
@@ -22,6 +25,46 @@ interface CustomOptions {
   customPathOptions?: Record<string, unknown>;
 }
 class PaperDrawingApiImportService {
+  importItems(items: Drawing_drawing["items"]) {
+    items.forEach((item) => item && this.importItemData(item));
+  }
+
+  importItemData(itemData: ItemData) {
+    switch (itemData.type) {
+      case ItemType.PATH: {
+        this.importPathItemData(itemData);
+        break;
+      }
+
+      case ItemType.LAYER: {
+        this.importPathItemData(itemData);
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+  }
+
+  importPathItemData(itemData: ItemData) {
+    const item = paper.project.getItem({ name: itemData.name });
+
+    if (item) {
+      item.importJSON(itemData.data);
+    } else {
+      paper.project.activeLayer.importJSON(itemData.data);
+    }
+  }
+
+  importLayerItemData(itemData: ItemData) {
+    const newLayer = new Layer({ insert: false }).importJSON(
+      itemData.data
+    ) as paper.Layer;
+
+    paper.project.addLayer(newLayer);
+  }
+
   importDrawingActionData(
     action: ActionType,
     data: DrawingActionPublished_drawingActionPublished_node
