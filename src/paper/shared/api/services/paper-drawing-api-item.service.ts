@@ -3,6 +3,7 @@ import {
   MutationType,
 } from "../../../../api/@types/generated/gql-operations.types";
 import { paperDrawingApiImportService } from "./paper-drawing-api-import.service";
+import { deleteItemByName } from "../../../helper/paper-project.helper";
 
 class PaperDrawingApiItemService {
   itemMutation(mutation: MutationType, item: ItemMutated_itemMutated_node) {
@@ -12,7 +13,7 @@ class PaperDrawingApiItemService {
         break;
       }
       case MutationType.DELETED: {
-        // todo:
+        deleteItemByName(item.name);
         break;
       }
       default: {
