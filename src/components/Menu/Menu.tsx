@@ -102,7 +102,7 @@ const Menu: React.FC = () => {
             }}
           >
             <IonIcon slot="start" icon={hammer} />
-            Show Tutorial
+            Tutorial zeigen
           </IonItem>
         </IonList>
       </IonContent>
