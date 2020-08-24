@@ -3,6 +3,7 @@ import { BlendMode } from "../@types";
 import { createPath, emitAddToHistory } from "../helper";
 import { paperDrawingApiService } from "../shared/api/services";
 import { Tool, ToolStructure } from "./tool";
+import { ItemType } from "../../api/@types/generated/gql-operations.types";
 
 export interface HandleEraseProps {
   path: paper.Path;
@@ -52,7 +53,12 @@ class EraserTool extends Tool implements ToolStructure {
       this.deselectAll();
 
       emitAddToHistory(this.path);
-      // paperEventService.emitItemAdded(this.path);
+
+      paperDrawingApiService.createItem({
+        name: this.path.name,
+        type: ItemType.PATH,
+        data: this.path.exportJSON(),
+      });
     }
   }
 

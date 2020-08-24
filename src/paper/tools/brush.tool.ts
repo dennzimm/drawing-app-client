@@ -1,3 +1,4 @@
+import { ItemType } from "../../api/@types/generated/gql-operations.types";
 import store from "../../store";
 import { createPath } from "../helper";
 import { paperDrawingApiService } from "../shared/api/services";
@@ -92,6 +93,12 @@ export class BrushTool extends Tool implements ToolStructure {
       this.path.smooth();
 
       this.emitBrushDraw({ event, singlePoint: true, closed: true });
+
+      paperDrawingApiService.createItem({
+        name: this.path.name,
+        type: ItemType.PATH,
+        data: this.path.exportJSON(),
+      });
     }
   }
 
