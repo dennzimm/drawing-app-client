@@ -58,6 +58,31 @@ export const findOrCreatePath = ({ name, options }: CreatePathProps) => {
   return path;
 };
 
+export const deleteItemByName = (name: string) => {
+  const item = paper.project.getItem({ name });
+  item && item.remove();
+};
+
+export const deleteItemsByName = (names: string[]) => {
+  names.forEach((name) => deleteItemByName(name));
+};
+
+export const deleteAllItems = (callbackFn?: (itemName: string) => void) => {
+  const itemNames: string[] = [];
+
+  paper.project.activeLayer.getItems({}).forEach((item) => {
+    const currentItemName = (item.name || item.id) + "";
+    const itemRemoved = item.remove();
+
+    if (itemRemoved) {
+      itemNames.push(currentItemName);
+      callbackFn && callbackFn(currentItemName);
+    }
+  });
+
+  return itemNames;
+};
+
 export const deleteOwnedItems = (callback?: Function) => {
   const userID = store.getState().user.userID;
   const options: Record<"data", CustomItemData> = {
