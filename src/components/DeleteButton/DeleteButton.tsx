@@ -1,32 +1,19 @@
 import { IonAlert, IonFabButton, IonIcon } from "@ionic/react";
 import { trash } from "ionicons/icons";
 import React, { useState } from "react";
-import { useParams } from "react-router";
-import { useStoreState } from "../../store/hooks";
+import { deleteAllItems } from "../../paper/helper/paper-project.helper";
+import { paperDrawingApiService } from "../../paper/shared/api/services";
 
 const DeleteButton: React.FC = () => {
-  const { id: drawingID } = useParams();
-
-  const userID = useStoreState((state) => state.user.userID);
-
-  // const [deleteItem] = useMutation<DeleteItem, DeleteItemVariables>(
-  //   DELETE_ITEM
-  // );
-
   const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   function handleDelete() {
-    // const deletedItems = paperService.deleteOwnedItems();
-    // console.log(deletedItems);
-    // deletedItems.forEach((itemID) => {
-    //   // deleteItem({
-    //   //   variables: {
-    //   //     drawingID,
-    //   //     userID,
-    //   //     itemID,
-    //   //   },
-    //   // });
-    // });
+    const deletedItems = deleteAllItems((name) =>
+      paperDrawingApiService.deleteItem({
+        name,
+      })
+    );
+    console.log(deletedItems);
   }
 
   function onDeleteClick() {
