@@ -177,6 +177,160 @@ export interface DrawingActionPublishedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: Drawing
+// ====================================================
+
+export interface Drawing_drawing_items {
+  __typename: "Item";
+  name: string;
+  type: ItemType;
+  data: string;
+}
+
+export interface Drawing_drawing {
+  __typename: "Drawing";
+  name: string;
+  items: (Drawing_drawing_items | null)[];
+}
+
+export interface Drawing {
+  drawing: Drawing_drawing | null;
+}
+
+export interface DrawingVariables {
+  drawingName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: Drawings
+// ====================================================
+
+export interface Drawings_drawings_items {
+  __typename: "Item";
+  name: string;
+  type: ItemType;
+  data: string;
+}
+
+export interface Drawings_drawings {
+  __typename: "Drawing";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  items: (Drawings_drawings_items | null)[];
+}
+
+export interface Drawings {
+  drawings: Drawings_drawings[];
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CreateDrawing
+// ====================================================
+
+export interface CreateDrawing_createDrawing {
+  __typename: "Drawing";
+  id: string;
+}
+
+export interface CreateDrawing {
+  createDrawing: CreateDrawing_createDrawing;
+}
+
+export interface CreateDrawingVariables {
+  data: CreateDrawingInput;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CreateItem
+// ====================================================
+
+export interface CreateItem_createItem {
+  __typename: "Item";
+  id: string;
+}
+
+export interface CreateItem {
+  createItem: CreateItem_createItem;
+}
+
+export interface CreateItemVariables {
+  user: UserIdInput;
+  drawing: DrawingNameInput;
+  data: CreateItemInput;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: DeleteItem
+// ====================================================
+
+export interface DeleteItem_deleteItem {
+  __typename: "Item";
+  id: string;
+}
+
+export interface DeleteItem {
+  deleteItem: DeleteItem_deleteItem;
+}
+
+export interface DeleteItemVariables {
+  user: UserIdInput;
+  drawing: DrawingNameInput;
+  data: DeleteItemInput;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL subscription operation: ItemMutated
+// ====================================================
+
+export interface ItemMutated_itemMutated_node {
+  __typename: "Item";
+  name: string;
+  type: ItemType;
+  data: string;
+}
+
+export interface ItemMutated_itemMutated {
+  __typename: "ItemMutation";
+  mutation: MutationType;
+  node: ItemMutated_itemMutated_node;
+}
+
+export interface ItemMutated {
+  itemMutated: ItemMutated_itemMutated;
+}
+
+export interface ItemMutatedVariables {
+  userId: string;
+  drawingName: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: PointCoordinates
 // ====================================================
 
@@ -310,6 +464,69 @@ export interface EraseData {
   path: EraseData_path;
 }
 
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: DrawingModelData
+// ====================================================
+
+export interface DrawingModelData {
+  __typename: "Drawing";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: DrawingData
+// ====================================================
+
+export interface DrawingData {
+  __typename: "Drawing";
+  name: string;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: DrawingItems
+// ====================================================
+
+export interface DrawingItems_items {
+  __typename: "Item";
+  name: string;
+  type: ItemType;
+  data: string;
+}
+
+export interface DrawingItems {
+  __typename: "Drawing";
+  items: (DrawingItems_items | null)[];
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ItemData
+// ====================================================
+
+export interface ItemData {
+  __typename: "Item";
+  name: string;
+  type: ItemType;
+  data: string;
+}
+
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -321,6 +538,19 @@ export enum ActionType {
   BRUSH_DRAW = "BRUSH_DRAW",
   ERASE = "ERASE",
   PENCIL_DRAW = "PENCIL_DRAW",
+}
+
+// Paper Item Type (root level)
+export enum ItemType {
+  GROUP = "GROUP",
+  LAYER = "LAYER",
+  PATH = "PATH",
+}
+
+export enum MutationType {
+  CREATED = "CREATED",
+  DELETED = "DELETED",
+  UPDATED = "UPDATED",
 }
 
 // null
@@ -381,6 +611,23 @@ export interface EraseInput {
   itemID: string;
   path: PathInput;
   point: PointInput;
+}
+
+// null
+export interface CreateDrawingInput {
+  name: string;
+}
+
+// null
+export interface CreateItemInput {
+  name: string;
+  type: ItemType;
+  data: string;
+}
+
+// null
+export interface DeleteItemInput {
+  name: string;
 }
 
 //==============================================================

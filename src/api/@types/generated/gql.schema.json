@@ -830,13 +830,9 @@
                   "kind": "LIST",
                   "name": null,
                   "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "OBJECT",
-                      "name": "Item",
-                      "ofType": null
-                    }
+                    "kind": "OBJECT",
+                    "name": "Item",
+                    "ofType": null
                   }
                 }
               },
@@ -1150,13 +1146,9 @@
                 }
               ],
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Drawing",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "Drawing",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
