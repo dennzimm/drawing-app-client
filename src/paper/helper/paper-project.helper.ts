@@ -8,6 +8,16 @@ import {
 } from "../@types";
 import { createGroup, createPath } from "./paper-item.helper";
 
+export const cleanupPaperProject = () => {
+  paper.projects.forEach((project) => {
+    project.layers.forEach((layer) => {
+      layer.removeChildren();
+    });
+  });
+
+  console.log("PaperProvider -> cleanup");
+};
+
 export const findLayer = ({ name }: CreateLayerProps) => {
   let layer = paper.project.getItem({
     name,
