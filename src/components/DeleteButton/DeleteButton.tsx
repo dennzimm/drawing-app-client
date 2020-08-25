@@ -3,6 +3,8 @@ import { trash } from "ionicons/icons";
 import React, { useState } from "react";
 import { deleteAllItems } from "../../paper/helper/paper-project.helper";
 import { paperDrawingApiService } from "../../paper/shared/api/services";
+import { emitOnView } from "../../paper/helper";
+import { PaperViewEvents } from "../../paper/@types";
 
 const DeleteButton: React.FC = () => {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
@@ -13,6 +15,8 @@ const DeleteButton: React.FC = () => {
         name,
       })
     );
+
+    emitOnView(PaperViewEvents.REVERT_HISTORY, {});
     console.log(deletedItems);
   }
 
