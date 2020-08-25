@@ -41,8 +41,8 @@ const splitLink = split(
 
 const retryLink = new RetryLink({
   delay: {
-    initial: 300,
-    max: Infinity,
+    initial: 50,
+    max: 500,
     jitter: true,
   },
   attempts: {
@@ -59,11 +59,6 @@ const retryLink = new RetryLink({
       return shouldRetry;
     },
   },
-  // attempts: (count, operation, error) => {
-  //   console.log(count);
-  //   const serverUnavailable = count >= 3;
-  //   return serverUnavailable;
-  // },
 });
 
 const graphQLErrorHandler = onError(
