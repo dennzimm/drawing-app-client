@@ -1,4 +1,11 @@
-import { IonButtons, IonContent, IonLoading, IonPage } from "@ionic/react";
+import {
+  IonButtons,
+  IonContent,
+  IonLoading,
+  IonPage,
+  useIonViewDidLeave,
+  useIonViewWillEnter,
+} from "@ionic/react";
 import React from "react";
 import { RouteComponentProps } from "react-router";
 import {
@@ -8,10 +15,12 @@ import {
   ServerStatus,
   ToolBar,
 } from "../../components";
+import { cleanupPaperProject } from "../../paper/helper/paper-project.helper";
 import {
   useDrawingActionSubscription,
   useFetchOrCreateDrawing,
   useItemMutationSubscription,
+  useHistroryApiActions,
 } from "../../paper/shared/api/hooks";
 import { useStoreActions } from "../../store/hooks";
 
@@ -27,9 +36,33 @@ const Drawing: React.FC<DrawingProps> = ({
   );
 
   setDrawingID(drawingID);
-  const { loading } = useFetchOrCreateDrawing();
-  useDrawingActionSubscription();
-  useItemMutationSubscription();
+
+  const { loading, triggerFetchOrCreateDrawing } = useFetchOrCreateDrawing();
+
+  const {
+    subscribe: subscribeDrawingAction,
+    unsubscribe: unsubscribeDrawingAction,
+  } = useDrawingActionSubscription();
+
+  const {
+    subscribe: subscribeItemMutation,
+    unsubscribe: unsubscribeItemMutation,
+  } = useItemMutationSubscription();
+
+  useIonViewWillEnter(() => {
+    triggerFetchOrCreateDrawing();
+    subscribeDrawingAction();
+    subscribeItemMutation();
+  });
+
+  useIonViewDidLeave(() => {
+    unsubscribeDrawingAction();
+    unsubscribeItemMutation();
+    cleanupPaperProject();
+    setDrawingID("");
+  });
+
+  useHistroryApiActions();
 
   return (
     <IonPage>
