@@ -36,7 +36,7 @@ export function useServerStatusCheck() {
     }
   }, [serverConnectionStatus, setServerConnectionStatus]);
 
-  const { error, loading } = useQuery<IsOnline>(IS_ONLINE, {
+  const { error, loading } = useQuery<IsOnline>(IS_ONLINE.mutation, {
     pollInterval: serverStatusCheckOptions.pollInterval,
     notifyOnNetworkStatusChange: true,
   });

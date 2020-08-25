@@ -36,7 +36,7 @@ class PaperDrawingApiService {
 
     client
       .mutate<PencilDraw, PencilDrawVariables>({
-        mutation: PENCIL_DRAW,
+        mutation: PENCIL_DRAW.mutation,
         variables: {
           user: {
             userId,
@@ -58,7 +58,7 @@ class PaperDrawingApiService {
 
     client
       .mutate<BrushDraw, BrushDrawVariables>({
-        mutation: BRUSH_DRAW,
+        mutation: BRUSH_DRAW.mutation,
         variables: {
           user: {
             userId,
@@ -80,7 +80,7 @@ class PaperDrawingApiService {
 
     client
       .mutate<Erase, EraseVariables>({
-        mutation: ERASE,
+        mutation: ERASE.mutation,
         variables: {
           user: {
             userId,
@@ -102,7 +102,7 @@ class PaperDrawingApiService {
 
     client
       .mutate<CreateItem, CreateItemVariables>({
-        mutation: CREATE_ITEM,
+        mutation: CREATE_ITEM.mutation,
         variables: {
           user: {
             userId,
@@ -124,7 +124,7 @@ class PaperDrawingApiService {
 
     client
       .mutate<DeleteItem, DeleteItemVariables>({
-        mutation: DELETE_ITEM,
+        mutation: DELETE_ITEM.mutation,
         variables: {
           user: {
             userId,

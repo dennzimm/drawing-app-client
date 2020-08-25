@@ -22,7 +22,7 @@ export function useDrawingActionSubscription() {
       DrawingActionPublished,
       DrawingActionPublishedVariables
     >({
-      query: DRAWING_ACTION_PUBLISHED,
+      query: DRAWING_ACTION_PUBLISHED.subscription,
       variables: {
         userId,
         drawingName,

@@ -27,7 +27,7 @@ export function useFetchOrCreateDrawing() {
       data: drawingData,
       called: getDrawingCalled,
     },
-  ] = useLazyQuery<DrawingType, DrawingVariablesType>(DRAWING, {
+  ] = useLazyQuery<DrawingType, DrawingVariablesType>(DRAWING.query, {
     variables: {
       drawingName,
     },
@@ -36,7 +36,7 @@ export function useFetchOrCreateDrawing() {
   const [createDrawingMutation] = useMutation<
     CreateDrawing,
     CreateDrawingVariables
-  >(CREATE_DRAWING);
+  >(CREATE_DRAWING.mutation);
 
   const importDrawing = useCallback(
     (items: (Drawing_drawing_items | null)[]) => {

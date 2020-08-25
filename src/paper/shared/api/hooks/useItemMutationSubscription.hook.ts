@@ -19,7 +19,7 @@ export function useItemMutationSubscription() {
 
   const subscribe = useCallback(() => {
     const observer = client.subscribe<ItemMutated, ItemMutatedVariables>({
-      query: ITEM_MUTATED,
+      query: ITEM_MUTATED.subscription,
       variables: {
         userId,
         drawingName,
