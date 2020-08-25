@@ -12,11 +12,12 @@ const StyledActionBar = styled(IonGrid)`
 const ActionBar: React.FC = () => {
   return (
     <StyledActionBar>
+      <PaperHistory />
+
       <IonRow>
         <IonCol>
           <DeleteButton />
         </IonCol>
-        <PaperHistory />
       </IonRow>
     </StyledActionBar>
   );

@@ -1,4 +1,4 @@
-import { IonCol } from "@ionic/react";
+import { IonCol, IonRow } from "@ionic/react";
 import React, { Fragment } from "react";
 import { usePaperHistory } from "../../paper/hooks/usePaperHistory.hook";
 import { RedoButton } from "../RedoButton";
@@ -9,13 +9,17 @@ const PaperHistory: React.FC = () => {
 
   return (
     <Fragment>
-      <IonCol>
-        <UndoButton disabled={!canUndo} onClick={undoAddItem} />
-      </IonCol>
+      <IonRow>
+        <IonCol>
+          <UndoButton disabled={!canUndo} onClick={undoAddItem} />
+        </IonCol>
+      </IonRow>
 
-      <IonCol>
-        <RedoButton disabled={!canRedo} onClick={redoAddItem} />
-      </IonCol>
+      <IonRow>
+        <IonCol>
+          <RedoButton disabled={!canRedo} onClick={redoAddItem} />
+        </IonCol>
+      </IonRow>
     </Fragment>
   );
 };
