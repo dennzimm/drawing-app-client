@@ -1,6 +1,6 @@
 import { ItemType } from "../../api/@types/generated/gql-operations.types";
 import store from "../../store";
-import { createPath } from "../helper";
+import { createPath, emitAddToHistory } from "../helper";
 import { paperDrawingApiService } from "../shared/api/services";
 import { transformPaperPoint } from "../shared/api/transformer/paper-item.transformer";
 import { Tool, ToolStructure } from "./tool";
@@ -91,6 +91,8 @@ export class BrushTool extends Tool implements ToolStructure {
 
       this.path.closePath();
       this.path.smooth();
+
+      emitAddToHistory(this.path);
 
       this.emitBrushDraw({ event, singlePoint: true, closed: true });
 
