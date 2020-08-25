@@ -7,7 +7,7 @@ import {
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import { onError } from "@apollo/client/link/error";
 import { getMainDefinition } from "@apollo/client/utilities";
-// import { RetryLink } from '@apollo/client/link/retry';
+// import { RetryLink } from "@apollo/client/link/retry";
 import { cache } from "./apollo-cache.config";
 import { subscriptionLink } from "./subscription-client.config";
 
@@ -38,18 +38,18 @@ const splitLink = split(
   httpLink
 );
 
-// // const retryLink = new RetryLink({
-// //   delay: {
-// //     initial: 1000,
-// //     max: Infinity,
-// //     jitter: false,
-// //   },
-// //   attempts: (count, operation, error) => {
-// //     console.log(count);
-// //     const serverUnavailable = count >= 3;
-// //     return serverUnavailable;
-// //   },
-// // });
+// const retryLink = new RetryLink({
+//   delay: {
+//     initial: 1000,
+//     max: Infinity,
+//     jitter: false,
+//   },
+//   attempts: (count, operation, error) => {
+//     console.log(count);
+//     const serverUnavailable = count >= 3;
+//     return serverUnavailable;
+//   },
+// });
 
 const graphQLErrorHandler = onError(
   ({ operation, graphQLErrors, networkError }) => {
