@@ -86,7 +86,14 @@ export const deleteAllItems = (callbackFn?: (itemName: string) => void) => {
 
     if (itemRemoved) {
       itemNames.push(currentItemName);
-      callbackFn && callbackFn(currentItemName);
+
+      if (callbackFn) {
+        try {
+          callbackFn(currentItemName);
+        } catch (err) {
+          // todo: implement error handling
+        }
+      }
     }
   });
 

@@ -34,72 +34,88 @@ class PaperDrawingApiService {
     const userId = store.getState().user.userID;
     const drawingName = store.getState().drawing.id;
 
-    client.mutate<PencilDraw, PencilDrawVariables>({
-      mutation: PENCIL_DRAW,
-      variables: {
-        user: {
-          userId,
+    client
+      .mutate<PencilDraw, PencilDrawVariables>({
+        mutation: PENCIL_DRAW,
+        variables: {
+          user: {
+            userId,
+          },
+          drawing: {
+            drawingName,
+          },
+          data,
         },
-        drawing: {
-          drawingName,
-        },
-        data,
-      },
-    });
+      })
+      .catch((err) => {
+        // todo: implement error handling
+      });
   }
 
   brushDraw({ data }: BrushDrawMutationProps) {
     const userId = store.getState().user.userID;
     const drawingName = store.getState().drawing.id;
 
-    client.mutate<BrushDraw, BrushDrawVariables>({
-      mutation: BRUSH_DRAW,
-      variables: {
-        user: {
-          userId,
+    client
+      .mutate<BrushDraw, BrushDrawVariables>({
+        mutation: BRUSH_DRAW,
+        variables: {
+          user: {
+            userId,
+          },
+          drawing: {
+            drawingName,
+          },
+          data,
         },
-        drawing: {
-          drawingName,
-        },
-        data,
-      },
-    });
+      })
+      .catch((err) => {
+        // todo: implement error handling
+      });
   }
 
   erase({ data }: EraseMutationProps) {
     const userId = store.getState().user.userID;
     const drawingName = store.getState().drawing.id;
 
-    client.mutate<Erase, EraseVariables>({
-      mutation: ERASE,
-      variables: {
-        user: {
-          userId,
+    client
+      .mutate<Erase, EraseVariables>({
+        mutation: ERASE,
+        variables: {
+          user: {
+            userId,
+          },
+          drawing: {
+            drawingName,
+          },
+          data,
         },
-        drawing: {
-          drawingName,
-        },
-        data,
-      },
-    });
+      })
+      .catch((err) => {
+        // todo: implement error handling
+      });
   }
 
   createItem(data: CreateItemInput) {
     const userId = store.getState().user.userID;
     const drawingName = store.getState().drawing.id;
 
-    client.mutate<CreateItem, CreateItemVariables>({
-      mutation: CREATE_ITEM,
-      variables: {
-        user: {
-          userId,
+    client
+      .mutate<CreateItem, CreateItemVariables>({
+        mutation: CREATE_ITEM,
+        variables: {
+          user: {
+            userId,
+          },
+          drawing: {
+            drawingName,
+          },
+          data,
         },
-        drawing: {
-          drawingName,
-        },
-        data,
-      },
-    });
+      })
+      .catch((err) => {
+        // todo: implement error handling
+      });
   }
 
   deleteItem(data: DeleteItemInput) {
