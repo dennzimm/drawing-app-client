@@ -1,19 +1,25 @@
 import paper from "paper";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useStoreState } from "../../store/hooks";
 
 export function usePaperReady() {
   const readyState = useStoreState((state) => state.drawing.ready);
 
-  const isReady = useMemo(() => {
+  const [isReady, setIsReady] = useState(false);
+
+  // TODO: Broken. Fix this
+  useEffect(() => {
     const hasScope = !!paper;
-    const hasView = !!paper.view;
+    const hasProject = !!paper.project;
     const hasReadyState = readyState;
+    const isReadyCondition = hasScope && hasProject && hasReadyState;
 
-    const isReady = hasScope && hasView && hasReadyState;
+    if (isReadyCondition !== isReady) {
+      setIsReady(isReadyCondition);
+    }
 
-    return isReady;
-  }, [readyState]);
+    console.log("usePaperReady -> isReady", isReady);
+  }, [isReady, readyState]);
 
   return { isReady };
 }
