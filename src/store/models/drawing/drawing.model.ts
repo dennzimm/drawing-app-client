@@ -1,6 +1,7 @@
 import { colors } from "../../../paper/config";
 import { ToolName } from "../../../paper/tools";
 import actions, { DrawingActions } from "./drawing.actions";
+import computed, { DrawingComputedItems } from "./drawing.computed";
 
 export interface DrawingState {
   id: string;
@@ -11,7 +12,7 @@ export interface DrawingState {
   backgroundColor: string;
 }
 
-export type DrawingModel = DrawingState & DrawingActions;
+export type DrawingModel = DrawingState & DrawingActions & DrawingComputedItems;
 
 const initialState: DrawingState = {
   id: "",
@@ -25,6 +26,7 @@ const initialState: DrawingState = {
 const drawingModel: DrawingModel = {
   ...initialState,
   ...actions,
+  ...computed,
 };
 
 export default drawingModel;
