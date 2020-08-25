@@ -1,6 +1,5 @@
 import {
   IonButtons,
-  IonContent,
   IonLoading,
   IonPage,
   useIonViewDidLeave,
@@ -19,8 +18,8 @@ import { cleanupPaperProject } from "../../paper/helper/paper-project.helper";
 import {
   useDrawingActionSubscription,
   useFetchOrCreateDrawing,
-  useItemMutationSubscription,
   useHistroryApiActions,
+  useItemMutationSubscription,
 } from "../../paper/shared/api/hooks";
 import { useStoreActions } from "../../store/hooks";
 
@@ -72,16 +71,8 @@ const Drawing: React.FC<DrawingProps> = ({
         </IonButtons>
       </PageHeader>
 
-      <IonContent
-        fullscreen
-        forceOverscroll={false}
-        scrollX={false}
-        scrollY={false}
-      >
-        <DrawingCanvas drawingID={drawingID} />
-
-        <IonLoading isOpen={loading} message={"Bitte warten..."} />
-      </IonContent>
+      <DrawingCanvas drawingID={drawingID} />
+      <IonLoading isOpen={loading} message={"Bitte warten..."} />
 
       <ActionBar />
       <ToolBar />
