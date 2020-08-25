@@ -7,9 +7,10 @@ import {
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import { onError } from "@apollo/client/link/error";
 import { getMainDefinition } from "@apollo/client/utilities";
-// import { RetryLink } from "@apollo/client/link/retry";
+import { RetryLink } from "@apollo/client/link/retry";
 import { cache } from "./apollo-cache.config";
 import { subscriptionLink } from "./subscription-client.config";
+import { CREATE_ITEM, DELETE_ITEM } from "../graphql/item.graphql";
 
 const GRAPHQL_ENDPOINT = process.env.REACT_APP_GQL_ENDPOINT as string;
 
@@ -38,18 +39,32 @@ const splitLink = split(
   httpLink
 );
 
-// const retryLink = new RetryLink({
-//   delay: {
-//     initial: 1000,
-//     max: Infinity,
-//     jitter: false,
-//   },
-//   attempts: (count, operation, error) => {
-//     console.log(count);
-//     const serverUnavailable = count >= 3;
-//     return serverUnavailable;
-//   },
-// });
+const retryLink = new RetryLink({
+  delay: {
+    initial: 300,
+    max: Infinity,
+    jitter: true,
+  },
+  attempts: {
+    max: Infinity,
+    retryIf: (error, operation) => {
+      const whitelistedOperations = [CREATE_ITEM.name, DELETE_ITEM.name];
+      const isInWhitelist = whitelistedOperations.some(
+        (operationName) => operationName === operation.operationName
+      );
+      const shouldRetry = !!error && isInWhitelist;
+
+      console.log("shouldRetry", shouldRetry, operation.operationName);
+
+      return shouldRetry;
+    },
+  },
+  // attempts: (count, operation, error) => {
+  //   console.log(count);
+  //   const serverUnavailable = count >= 3;
+  //   return serverUnavailable;
+  // },
+});
 
 const graphQLErrorHandler = onError(
   ({ operation, graphQLErrors, networkError }) => {
@@ -69,9 +84,5 @@ const graphQLErrorHandler = onError(
 export const client = new ApolloClient<NormalizedCacheObject>({
   cache,
   connectToDevTools: true,
-  link: ApolloLink.from([
-    // retryLink,
-    graphQLErrorHandler,
-    splitLink,
-  ]),
+  link: ApolloLink.from([retryLink, graphQLErrorHandler, splitLink]),
 });
