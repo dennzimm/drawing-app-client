@@ -1,5 +1,5 @@
-import { useSubscription } from "@apollo/client";
-import { useEffect } from "react";
+import { useApolloClient } from "@apollo/client";
+import { useCallback, useRef, useState } from "react";
 import {
   DrawingActionPublished,
   DrawingActionPublishedVariables,
@@ -12,23 +12,47 @@ export function useDrawingActionSubscription() {
   const userId = useStoreState((state) => state.user.userID);
   const drawingName = useStoreState((state) => state.drawing.id);
 
-  const { data } = useSubscription<
-    DrawingActionPublished,
-    DrawingActionPublishedVariables
-  >(DRAWING_ACTION_PUBLISHED, {
-    variables: {
-      userId,
-      drawingName,
-    },
-  });
+  const client = useApolloClient();
 
-  useEffect(() => {
-    if (data) {
-      const {
-        drawingActionPublished: { action, node },
-      } = data;
+  const subscription = useRef<ZenObservable.Subscription>();
+  const [data, setData] = useState<DrawingActionPublished>();
 
-      paperDrawingApiImportService.importDrawingActionData(action, node);
-    }
-  }, [data]);
+  const subscribe = useCallback(() => {
+    const observer = client.subscribe<
+      DrawingActionPublished,
+      DrawingActionPublishedVariables
+    >({
+      query: DRAWING_ACTION_PUBLISHED,
+      variables: {
+        userId,
+        drawingName,
+      },
+    });
+
+    subscription.current = observer.subscribe(({ data }) => {
+      console.log("DRAWING_ACTION_PUBLISHED received", data);
+
+      if (data) {
+        const {
+          drawingActionPublished: { action, node },
+        } = data;
+
+        setData(data);
+        paperDrawingApiImportService.importDrawingActionData(action, node);
+      }
+    });
+
+    console.log("subscribed DRAWING_ACTION_PUBLISHED");
+  }, [client, drawingName, userId]);
+
+  const unsubscribe = useCallback(() => {
+    subscription.current && subscription.current.unsubscribe();
+    console.log("unsubscribed DRAWING_ACTION_PUBLISHED");
+  }, []);
+
+  return {
+    data,
+    subscribe,
+    unsubscribe,
+  };
 }

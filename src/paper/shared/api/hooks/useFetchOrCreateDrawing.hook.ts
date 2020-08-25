@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { useCallback, useEffect, useState } from "react";
 import {
   CreateDrawing,
@@ -19,11 +19,15 @@ export function useFetchOrCreateDrawing() {
   const [loading, setLoading] = useState(false);
 
   // Fetch drawing data
-  const {
-    loading: getDrawingLoading,
-    error: getDrawingError,
-    data: drawingData,
-  } = useQuery<DrawingType, DrawingVariablesType>(DRAWING, {
+  const [
+    getDrawing,
+    {
+      loading: getDrawingLoading,
+      error: getDrawingError,
+      data: drawingData,
+      called: getDrawingCalled,
+    },
+  ] = useLazyQuery<DrawingType, DrawingVariablesType>(DRAWING, {
     variables: {
       drawingName,
     },
@@ -45,36 +49,36 @@ export function useFetchOrCreateDrawing() {
     createDrawingMutation({ variables: { data: { name: drawingName } } });
   }, [createDrawingMutation, drawingName]);
 
-  const fetchOrCreateDrawing = useCallback(async () => {
-    if (!drawingData) {
+  useEffect(() => {
+    if (!getDrawingCalled || getDrawingLoading) {
       return;
     }
 
-    if (drawingData.drawing !== null) {
-      // Try to import drawing (items)
-      await importDrawing(drawingData.drawing.items);
+    if (!drawingData || drawingData.drawing === null) {
+      createNewDrawing();
     } else {
-      // Create new drawing if not existing
-      await createNewDrawing();
+      importDrawing(drawingData.drawing.items);
     }
-  }, [createNewDrawing, drawingData, importDrawing]);
+
+    setLoading(false);
+  }, [
+    createNewDrawing,
+    drawingData,
+    getDrawingCalled,
+    getDrawingLoading,
+    importDrawing,
+  ]);
 
   useEffect(() => {
     setLoading(true);
 
-    // Return if drawingData is undefined
-    if (getDrawingError || getDrawingLoading || !drawingData) {
-      return;
-    }
-
-    try {
-      fetchOrCreateDrawing();
-    } finally {
+    if (getDrawingError || drawingData) {
       setLoading(false);
     }
-  }, [drawingData, fetchOrCreateDrawing, getDrawingError, getDrawingLoading]);
+  }, [drawingData, getDrawingError]);
 
   return {
     loading,
+    triggerFetchOrCreateDrawing: getDrawing,
   };
 }
