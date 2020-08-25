@@ -1,8 +1,18 @@
 import { IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/react";
-import { brush, pencil, closeCircleOutline } from "ionicons/icons";
+import { brush, closeCircleOutline, pencil } from "ionicons/icons";
 import React, { ComponentProps, useCallback, useRef } from "react";
+import styled from "styled-components";
+import { availableTools, ToolName } from "../../paper/tools";
 import { useStoreActions, useStoreState } from "../../store/hooks";
-import { ToolName, availableTools } from "../../paper/tools";
+
+const StyledFab = styled(IonFabButton)<Record<"eraserSelected", boolean>>`
+  --color: ${({ eraserSelected }) =>
+    eraserSelected ? "var(--ion-color-danger)" : "var(--ion-color-light)"};
+  --background: ${({ eraserSelected }) =>
+    eraserSelected
+      ? "var(--ion-color-light-tint)"
+      : "var(--ion-color-primary)"};
+`;
 
 interface ToolSelectButtonProps extends ComponentProps<typeof IonFab> {}
 const ToolSelectButton: React.FC<ToolSelectButtonProps> = (props) => {
@@ -28,11 +38,13 @@ const ToolSelectButton: React.FC<ToolSelectButtonProps> = (props) => {
     [setCurrentToolName]
   );
 
+  const eraserSelected = useStoreState((state) => state.drawing.eraserSelected);
+
   return (
     <IonFab {...props}>
-      <IonFabButton>
+      <StyledFab eraserSelected={eraserSelected}>
         <IonIcon icon={toolIcons.current[currentToolName]} />
-      </IonFabButton>
+      </StyledFab>
 
       <IonFabList side="start">
         {Object.keys(availableTools).map((key) => {
