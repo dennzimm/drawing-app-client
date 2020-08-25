@@ -60,8 +60,7 @@ const DrawingsSelect: React.FC = () => {
       // newDrawing & default | fallthrough
       case "newDrawing":
       default: {
-        const randomDrawingID = nanoid();
-        history.push(`/drawings/${randomDrawingID}`);
+        history.push(`/drawings/${nanoid()}`);
         break;
       }
     }
