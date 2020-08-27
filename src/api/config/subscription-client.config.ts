@@ -4,10 +4,10 @@ import {
   Drawing as DrawingType,
   DrawingVariables as DrawingVariablesType,
 } from "../../api/@types/generated/gql-operations.types";
+import { paperDrawingApiImportService } from "../../paper/shared/api/services/paper-drawing-api-import.service";
 import store from "../../store";
 import { DRAWING } from "../graphql/drawing.graphql";
 import { client } from "./apollo-client.config";
-import { paperDrawingApiImportService } from "../../paper/shared/api/services/paper-drawing-api-import.service";
 
 const GRAPHQL_WS_ENDPOINT = process.env.REACT_APP_GQL_WS_ENDPOINT as string;
 
@@ -37,7 +37,7 @@ subscriptionClient.onReconnected(() => {
       }
     })
     .catch((err) => {
-      // todo: implement error handling
+      console.error(err);
     });
 });
 

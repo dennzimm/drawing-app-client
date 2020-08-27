@@ -48,7 +48,7 @@ class PaperDrawingApiService {
         },
       })
       .catch((err) => {
-        // todo: implement error handling
+        console.error(err);
       });
   }
 
@@ -70,7 +70,7 @@ class PaperDrawingApiService {
         },
       })
       .catch((err) => {
-        // todo: implement error handling
+        console.error(err);
       });
   }
 
@@ -92,7 +92,7 @@ class PaperDrawingApiService {
         },
       })
       .catch((err) => {
-        // todo: implement error handling
+        console.error(err);
       });
   }
 
@@ -114,7 +114,7 @@ class PaperDrawingApiService {
         },
       })
       .catch((err) => {
-        // todo: implement error handling
+        console.error(err);
       });
   }
 
@@ -136,7 +136,7 @@ class PaperDrawingApiService {
         },
       })
       .catch((err) => {
-        // todo: implement error handling
+        console.error(err);
       });
   }
 }

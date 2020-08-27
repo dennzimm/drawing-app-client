@@ -14,8 +14,6 @@ export const cleanupPaperProject = () => {
       layer.removeChildren();
     });
   });
-
-  console.log("PaperProvider -> cleanup");
 };
 
 export const findLayer = ({ name }: CreateLayerProps) => {
@@ -91,7 +89,7 @@ export const deleteAllItems = (callbackFn?: (itemName: string) => void) => {
         try {
           callbackFn(currentItemName);
         } catch (err) {
-          // todo: implement error handling
+          console.error(err);
         }
       }
     }
