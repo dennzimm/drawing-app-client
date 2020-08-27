@@ -6,17 +6,13 @@ import {
 } from "@apollo/client";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import { onError } from "@apollo/client/link/error";
-import { getMainDefinition } from "@apollo/client/utilities";
 import { RetryLink } from "@apollo/client/link/retry";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { CREATE_ITEM, DELETE_ITEM } from "../graphql/item.graphql";
 import { cache } from "./apollo-cache.config";
 import { subscriptionLink } from "./subscription-client.config";
-import { CREATE_ITEM, DELETE_ITEM } from "../graphql/item.graphql";
 
 const GRAPHQL_ENDPOINT = process.env.REACT_APP_GQL_ENDPOINT as string;
-
-// const httpLink = new HttpLink({
-//   uri: GRAPHQL_ENDPOINT,
-// });
 
 const httpLink = new BatchHttpLink({
   uri: GRAPHQL_ENDPOINT,

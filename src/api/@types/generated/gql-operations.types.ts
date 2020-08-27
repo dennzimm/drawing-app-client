@@ -264,7 +264,7 @@ export interface CreateItem_createItem {
 }
 
 export interface CreateItem {
-  createItem: CreateItem_createItem;
+  createItem: CreateItem_createItem | null;
 }
 
 export interface CreateItemVariables {
@@ -287,7 +287,7 @@ export interface DeleteItem_deleteItem {
 }
 
 export interface DeleteItem {
-  deleteItem: DeleteItem_deleteItem;
+  deleteItem: DeleteItem_deleteItem | null;
 }
 
 export interface DeleteItemVariables {

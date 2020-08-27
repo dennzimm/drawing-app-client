@@ -1436,13 +1436,9 @@
                 }
               ],
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Item",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "Item",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -1495,13 +1491,9 @@
                 }
               ],
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Item",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "Item",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
