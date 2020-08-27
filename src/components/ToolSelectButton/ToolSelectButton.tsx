@@ -1,7 +1,8 @@
 import { IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/react";
-import { brush, closeCircleOutline, pencil } from "ionicons/icons";
+import { brush, pencil } from "ionicons/icons";
 import React, { ComponentProps, useCallback, useRef } from "react";
 import styled from "styled-components";
+import { eraser } from "../../icons";
 import { availableTools, ToolName } from "../../paper/tools";
 import { useStoreActions, useStoreState } from "../../store/hooks";
 
@@ -19,7 +20,7 @@ const ToolSelectButton: React.FC<ToolSelectButtonProps> = (props) => {
   const toolIcons = useRef<Record<ToolName, string>>({
     pencil,
     brush,
-    eraser: closeCircleOutline,
+    eraser,
   });
 
   const currentToolName: ToolName = useStoreState(
