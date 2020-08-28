@@ -11,10 +11,11 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 import React, { useEffect } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { AppStoreProvider, Menu, RedirectToLogin } from "./components";
 import { AppApolloProvider } from "./components/AppApolloProvider";
-import { Drawing, DrawingsSelect, UnderConstruction } from "./pages";
+import { DrawingsOrTutorial } from "./components/DrawingsOrTutorial";
+import { Drawing, DrawingsSelect, Tutorial, UnderConstruction } from "./pages";
 import { useStoreActions, useStoreState } from "./store/hooks";
 import "./theme/global.css";
 import "./theme/variables.css";
@@ -52,7 +53,7 @@ const IonicApp: React.FC = () => {
         <Switch>
           <IonRouterOutlet id="main">
             {/* Redirects */}
-            <Redirect exact path="/" to="/drawings" />
+            <Route exact path="/" component={DrawingsOrTutorial} />
 
             {/* Account */}
             <Route
@@ -84,11 +85,7 @@ const IonicApp: React.FC = () => {
             />
 
             {/* Tutorial */}
-            <Route
-              path="/tutorial"
-              render={() => <UnderConstruction title="Tutorial" />}
-            />
-            {/* <Route path="/" component={HomeOrTutorial} exact /> */}
+            <Route path="/tutorial" render={() => <Tutorial />} />
 
             {/* Drawings */}
             <Route exact path="/drawings/:id" render={() => <Drawing />} />

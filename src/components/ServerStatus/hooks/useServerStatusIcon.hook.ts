@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { useStoreState } from "../../../store/hooks";
 import { NetworkStatusType } from "../../../store/models/app/app.model";
 
-const serverStatusIcons = {
+export const serverStatusIcons = {
   [NetworkStatusType.loading]: reloadCircleOutline,
   [NetworkStatusType.ready]: wifiOutline,
   [NetworkStatusType.error]: alertCircleOutline,

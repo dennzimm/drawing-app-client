@@ -5,6 +5,7 @@ export { ColorPalette } from "./ColorPalette";
 export { DeleteButton } from "./DeleteButton";
 export { DeleteButtonWrapper } from "./DeleteButtonWrapper";
 export { DrawingCanvas } from "./DrawingCanvas";
+export { DrawingsOrTutorial } from "./DrawingsOrTutorial";
 export { IconButton } from "./IconButton";
 export { Menu } from "./Menu";
 export { PageHeader } from "./PageHeader";

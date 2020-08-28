@@ -1,3 +1,6 @@
-export { default as ServerStatus } from "./ServerStatus";
+export {
+  default as ServerStatus,
+  StyledServerStatusBadge,
+} from "./ServerStatus";
 
 export * from "./hooks";

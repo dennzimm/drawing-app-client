@@ -11,7 +11,7 @@ import {
 } from "@ionic/react";
 import {
   brushOutline,
-  hammer,
+  helpCircleOutline,
   logIn,
   logOut,
   moonOutline,
@@ -101,7 +101,7 @@ const Menu: React.FC = () => {
               history.push("/tutorial");
             }}
           >
-            <IonIcon slot="start" icon={hammer} />
+            <IonIcon slot="start" icon={helpCircleOutline} />
             Tutorial zeigen
           </IonItem>
         </IonList>
