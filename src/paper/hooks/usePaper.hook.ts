@@ -35,7 +35,7 @@ export function usePaper({ id, injectGlobal = false }: UsePaperProps) {
     updateFullViewSize();
 
     if (injectGlobal) {
-      window.paper = paper;
+      (window as any).paper = paper;
     }
 
     setPaperReady(true);
@@ -50,7 +50,7 @@ export function usePaper({ id, injectGlobal = false }: UsePaperProps) {
     deleteAllPaperProjects();
 
     if (window.paper) {
-      delete window.paper;
+      delete (window as any).paper;
     }
 
     DEBUG && console.log("usePaper -> cleanup");
