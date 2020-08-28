@@ -58,10 +58,7 @@ const Tutorial: React.FC = () => {
 
   const [showSkip, setShowSkip] = useState(true);
   const slideRef = useRef<HTMLIonSlidesElement>(null);
-
-  useIonViewWillEnter(() => {
-    setMenuEnabled(false);
-  });
+  const contentRef = useRef<HTMLIonContentElement>(null);
 
   const startApp = async () => {
     await setHasSeenTutorial(true);
@@ -73,13 +70,18 @@ const Tutorial: React.FC = () => {
     slideRef.current!.isEnd().then((isEnd) => setShowSkip(!isEnd));
   };
 
-  const slideNext = () => {
-    slideRef.current!.slideNext();
+  const slideNext = async () => {
+    await slideRef.current!.slideNext();
   };
 
-  const slidePrev = () => {
-    slideRef.current!.slidePrev();
+  const slidePrev = async () => {
+    await slideRef.current!.slidePrev();
   };
+
+  useIonViewWillEnter(() => {
+    setMenuEnabled(false);
+    slideRef.current!.slideTo(0);
+  });
 
   const Controls = () => (
     <div className="controls">
@@ -108,11 +110,11 @@ const Tutorial: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent ref={contentRef}>
         <IonSlides
           ref={slideRef}
           onIonSlideWillChange={handleSlideChangeStart}
-          pager={true}
+          pager={false}
         >
           <IonSlide>
             <img
@@ -192,7 +194,7 @@ const Tutorial: React.FC = () => {
 
             <div className="presentation-grid">
               <div className="presentation-grid__item">
-                <BodyText>
+                <BodyText className="presentation-desc">
                   <b>Strichstärke auswählen</b>
                 </BodyText>
 
@@ -206,28 +208,22 @@ const Tutorial: React.FC = () => {
                   <ColorButton />
                 </PresentationWrapper>
 
-                <BodyText>
+                <BodyText className="presentation-desc">
                   <b>Farbe wechseln</b>
                 </BodyText>
               </div>
 
               <div className="presentation-grid__item">
-                <BodyText>
+                <BodyText className="presentation-desc">
                   <b>Radierer, Pinsel und Stift</b>
                 </BodyText>
 
-                <div className="">
-                  <PresentationWrapper className="presentation-grid__item-wrapper">
-                    <ToolSelectButton className="presentation-fab" />
-                  </PresentationWrapper>
-
-                  <PresentationWrapper className="presentation-grid__item-wrapper">
-                    <ToolSelectButton
-                      className="presentation-fab"
-                      activated={true}
-                    />
-                  </PresentationWrapper>
-                </div>
+                <PresentationWrapper className="presentation-grid__item-wrapper">
+                  <ToolSelectButton
+                    className="presentation-fab"
+                    activated={true}
+                  />
+                </PresentationWrapper>
               </div>
 
               <div className="presentation-grid__item">
@@ -245,7 +241,7 @@ const Tutorial: React.FC = () => {
                   </PresentationWrapper>
                 </div>
 
-                <BodyText>
+                <BodyText className="presentation-desc">
                   <b>Rückgängig machen, wiederholen und löschen</b>
                 </BodyText>
               </div>

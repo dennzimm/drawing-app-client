@@ -11,7 +11,7 @@
 
   .swiper-slide {
     display: block;
-    padding: 2.5rem 1rem 0;
+    padding: 2.5rem 2rem 0;
   }
 
   .slide-title {
@@ -54,8 +54,13 @@
 
   .image-title-grid {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+    }
 
     > * {
       padding: 0 2rem;
@@ -73,13 +78,14 @@
     &__item {
       display: flex;
       align-items: center;
+      flex-direction: column;
+
+      @media screen and (min-width: 768px) {
+        flex-direction: row;
+      }
 
       &:not(:last-child) {
         margin-bottom: 2.5rem;
-      }
-
-      &--end {
-        order: 99;
       }
     }
 
@@ -89,12 +95,26 @@
     }
   }
 
+  .presentation-desc {
+    @media screen and (max-width: 767px) {
+      order: -1;
+    }
+  }
+
   .presentation-fab,
   .presentation-fab * {
     position: relative !important;
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
+
+    .fab-button-close-active {
+      display: none;
+    }
+
+    .fab-list-active {
+      margin: 0;
+    }
   }
 
   .presentation-actions {
