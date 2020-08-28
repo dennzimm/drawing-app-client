@@ -5,7 +5,7 @@ import computed, { DrawingComputedItems } from "./drawing.computed";
 
 export interface DrawingState {
   id: string;
-  ready: boolean;
+  paperReady: boolean;
   currentToolColor: string;
   currentToolName: ToolName;
   currentToolSize: number;
@@ -16,7 +16,7 @@ export type DrawingModel = DrawingState & DrawingActions & DrawingComputedItems;
 
 const initialState: DrawingState = {
   id: "",
-  ready: false,
+  paperReady: false,
   currentToolColor: colors[Math.floor(Math.random() * colors.length)],
   currentToolName: "pencil",
   currentToolSize: 2,
