@@ -11,7 +11,7 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 import React, { useEffect } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { AppStoreProvider, Menu, RedirectToLogin } from "./components";
 import { AppApolloProvider } from "./components/AppApolloProvider";
 import { Drawing, DrawingsSelect, UnderConstruction } from "./pages";
@@ -49,46 +49,52 @@ const IonicApp: React.FC = () => {
       <IonReactRouter>
         <Menu />
 
-        <IonRouterOutlet id="main">
-          {/* Redirects */}
-          <Redirect exact path="/" to="/drawings" />
+        <Switch>
+          <IonRouterOutlet id="main">
+            {/* Redirects */}
+            <Redirect exact path="/" to="/drawings" />
 
-          {/* Account */}
-          <Route
-            path="/account"
-            render={() => <UnderConstruction title="Account" />}
-          />
-          <Route
-            path="/signup"
-            render={() => <UnderConstruction title="Registrieren" />}
-          />
-          <Route
-            path="/login"
-            render={() => <UnderConstruction title="Anmelden" />}
-          />
-          <Route
-            path="/logout"
-            render={() => {
-              return (
-                <RedirectToLogin
-                  setIsLoggedIn={setIsLoggedIn}
-                  setUsername={setUsername}
-                />
-              );
-            }}
-          />
+            {/* Account */}
+            <Route
+              exact
+              path="/account"
+              render={() => <UnderConstruction title="Account" />}
+            />
+            <Route
+              exact
+              path="/signup"
+              render={() => <UnderConstruction title="Registrieren" />}
+            />
+            <Route
+              exact
+              path="/login"
+              render={() => <UnderConstruction title="Anmelden" />}
+            />
+            <Route
+              exact
+              path="/logout"
+              render={() => {
+                return (
+                  <RedirectToLogin
+                    setIsLoggedIn={setIsLoggedIn}
+                    setUsername={setUsername}
+                  />
+                );
+              }}
+            />
 
-          {/* Tutorial */}
-          <Route
-            path="/tutorial"
-            render={() => <UnderConstruction title="Tutorial" />}
-          />
-          {/* <Route path="/" component={HomeOrTutorial} exact /> */}
+            {/* Tutorial */}
+            <Route
+              path="/tutorial"
+              render={() => <UnderConstruction title="Tutorial" />}
+            />
+            {/* <Route path="/" component={HomeOrTutorial} exact /> */}
 
-          {/* Drawings */}
-          <Route exact path="/drawings" render={() => <DrawingsSelect />} />
-          <Route exact path="/drawings/:id" component={Drawing} />
-        </IonRouterOutlet>
+            {/* Drawings */}
+            <Route exact path="/drawings/:id" render={() => <Drawing />} />
+            <Route exact path="/drawings" render={() => <DrawingsSelect />} />
+          </IonRouterOutlet>
+        </Switch>
       </IonReactRouter>
     </IonApp>
   );
