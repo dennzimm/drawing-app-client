@@ -8,6 +8,7 @@ import { BatchHttpLink } from "@apollo/client/link/batch-http";
 import { onError } from "@apollo/client/link/error";
 import { RetryLink } from "@apollo/client/link/retry";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { DEBUG } from "../../constants";
 import { CREATE_ITEM, DELETE_ITEM } from "../graphql/item.graphql";
 import { cache } from "./apollo-cache.config";
 import { subscriptionLink } from "./subscription-client.config";
@@ -50,8 +51,6 @@ const retryLink = new RetryLink({
       );
       const shouldRetry = !!error && isInWhitelist;
 
-      console.log("shouldRetry", shouldRetry, operation.operationName);
-
       return shouldRetry;
     },
   },
@@ -60,14 +59,18 @@ const retryLink = new RetryLink({
 const graphQLErrorHandler = onError(
   ({ operation, graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-      console.error(
-        `[ERROR]: Error trying to execute ${operation.operationName}.`
-      );
-      console.error("Error log:", graphQLErrors);
+      if (DEBUG) {
+        console.error("Error log:", graphQLErrors);
+        console.error(
+          `[ERROR]: Error trying to execute ${operation.operationName}.`
+        );
+      }
     }
 
     if (networkError) {
-      console.error("Network Error:", networkError);
+      if (DEBUG) {
+        console.error("Network Error:", networkError);
+      }
     }
   }
 );

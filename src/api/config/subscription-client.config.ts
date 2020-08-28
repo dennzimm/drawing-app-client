@@ -4,6 +4,7 @@ import {
   Drawing as DrawingType,
   DrawingVariables as DrawingVariablesType,
 } from "../../api/@types/generated/gql-operations.types";
+import { DEBUG } from "../../constants";
 import { paperDrawingApiImportService } from "../../paper/shared/api/services/paper-drawing-api-import.service";
 import store from "../../store";
 import { DRAWING } from "../graphql/drawing.graphql";
@@ -33,7 +34,8 @@ subscriptionClient.onReconnected(() => {
     .then(({ data }) => {
       if (data && data.drawing) {
         paperDrawingApiImportService.importItems(data.drawing.items);
-        console.log("onReconnected");
+
+        DEBUG && console.log("onReconnected");
       }
     })
     .catch((err) => {
