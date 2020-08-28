@@ -10,14 +10,15 @@ const DeleteButton: React.FC = () => {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   function handleDelete() {
-    const deletedItems = deleteAllItems((name) =>
+    const deletedItems = deleteAllItems();
+
+    deletedItems.forEach((name) =>
       paperDrawingApiService.deleteItem({
         name,
       })
     );
 
     emitOnView(PaperViewEvents.REVERT_HISTORY, {});
-    console.log(deletedItems);
   }
 
   function onDeleteClick() {
