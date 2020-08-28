@@ -1,4 +1,5 @@
 import paper from "paper";
+import { DEBUG } from "../../constants";
 import store from "../../store";
 import {
   CreateGroupProps,
@@ -14,6 +15,14 @@ export const cleanupPaperProject = () => {
       layer.removeChildren();
     });
   });
+
+  DEBUG && console.log("cleanupPaperProject");
+};
+
+export const deleteAllPaperProjects = () => {
+  paper.projects.forEach((project) => project.remove());
+
+  DEBUG && console.log("deleteAllPaperProjects");
 };
 
 export const findLayer = ({ name }: CreateLayerProps) => {

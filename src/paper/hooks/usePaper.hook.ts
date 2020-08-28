@@ -1,6 +1,12 @@
 import paper from "paper";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
+import { DEBUG } from "../../constants";
+import { useStoreActions } from "../../store/hooks";
 import { addCustomItemData, createLayer } from "../helper";
+import {
+  cleanupPaperProject,
+  deleteAllPaperProjects,
+} from "../helper/paper-project.helper";
 
 interface UsePaperProps {
   id: string;
@@ -8,7 +14,9 @@ interface UsePaperProps {
 }
 
 export function usePaper({ id, injectGlobal = false }: UsePaperProps) {
-  const [isReady, setIsReady] = useState(false);
+  const setPaperReady = useStoreActions(
+    (actions) => actions.drawing.setPaperReady
+  );
 
   const createInitialLayer = useCallback(() => {
     const layer = createLayer();
@@ -21,37 +29,35 @@ export function usePaper({ id, injectGlobal = false }: UsePaperProps) {
     paper.view.viewSize = new paper.Size(window.innerWidth, window.innerHeight);
   }, []);
 
-  useEffect(() => {
+  const setupPaper = useCallback(() => {
     paper.setup(id);
+    createInitialLayer();
+    updateFullViewSize();
 
     if (injectGlobal) {
       window.paper = paper;
     }
 
-    createInitialLayer();
-    setIsReady(true);
+    setPaperReady(true);
 
-    return () => {
-      paper.projects.forEach((project) => project.remove());
+    DEBUG && console.log("usePaper -> setupPaper");
+  }, [createInitialLayer, id, injectGlobal, setPaperReady, updateFullViewSize]);
 
-      if (window.paper) {
-        delete window.paper;
-      }
+  const cleanupPaper = useCallback(() => {
+    setPaperReady(false);
 
-      setIsReady(false);
+    cleanupPaperProject();
+    deleteAllPaperProjects();
 
-      console.log("PaperProvider -> cleanup");
-    };
-  }, [createInitialLayer, id, injectGlobal]);
-
-  useEffect(() => {
-    if (isReady) {
-      updateFullViewSize();
+    if (window.paper) {
+      delete window.paper;
     }
-  }, [isReady, updateFullViewSize]);
+
+    DEBUG && console.log("usePaper -> cleanup");
+  }, [setPaperReady]);
 
   return {
-    updateFullViewSize,
-    isReady,
+    setupPaper,
+    cleanupPaper,
   };
 }
