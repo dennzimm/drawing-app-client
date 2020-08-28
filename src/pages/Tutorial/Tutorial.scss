@@ -1,0 +1,109 @@
+#tutorial-page {
+  ion-toolbar {
+    --background: transparent;
+    --border-color: transparent;
+  }
+
+  .controls {
+    display: inline-block;
+    margin: 2rem auto 4rem;
+  }
+
+  .swiper-slide {
+    display: block;
+    padding: 2.5rem 1rem 0;
+  }
+
+  .slide-title {
+    margin-top: 2.8rem;
+  }
+
+  .slide-image {
+    max-height: 40vh;
+    max-width: 60%;
+    margin: 36px 0;
+    pointer-events: none;
+
+    &--small {
+      max-height: 15vh;
+    }
+
+    &--medium {
+      max-height: 25vh;
+    }
+  }
+
+  b {
+    font-weight: 500;
+  }
+
+  p {
+    padding: 0 40px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ion-color-step-600, #60646b);
+
+    b {
+      color: var(--ion-text-color, #000000);
+    }
+  }
+
+  .body-text-spacing {
+    margin-top: 2rem;
+  }
+
+  .image-title-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > * {
+      padding: 0 2rem;
+    }
+  }
+
+  .presentation-grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0 2rem;
+    margin-top: 1rem;
+
+    &__item {
+      display: flex;
+      align-items: center;
+
+      &:not(:last-child) {
+        margin-bottom: 2.5rem;
+      }
+
+      &--end {
+        order: 99;
+      }
+    }
+
+    &__item-wrapper {
+      margin-bottom: 1rem;
+      display: flex;
+    }
+  }
+
+  .presentation-fab,
+  .presentation-fab * {
+    position: relative !important;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+  }
+
+  .presentation-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > div:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}
