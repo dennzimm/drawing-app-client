@@ -11,12 +11,13 @@ import {
   IonRow,
   IonSegment,
   IonSegmentButton,
+  IonText,
 } from "@ionic/react";
+import { nanoid } from "nanoid";
 import React, { Fragment, useState } from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import { PageHeader } from "../../components";
-import { useHistory } from "react-router";
-import { nanoid } from "nanoid";
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,23 +48,19 @@ const StyledSegment = styled(IonSegment)`
 const DrawingsSelect: React.FC = () => {
   const history = useHistory();
   const [userDrawingName, setUserDrawingName] = useState("");
+  const [error, setError] = useState("");
   const [choice, setChoice] = useState("newDrawing");
 
   const startDrawing = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    switch (choice) {
-      case "joinDrawing": {
-        history.push(`/drawings/${userDrawingName}`);
-        break;
-      }
-      // newDrawing & default | fallthrough
-      case "newDrawing":
-      default: {
-        history.push(`/drawings/${nanoid()}`);
-        break;
-      }
+    if (choice === "joinDrawing" && !userDrawingName) {
+      return setError("Bitte erst eine ID eingeben");
     }
+
+    let id = choice === "joinDrawing" ? userDrawingName : nanoid();
+
+    history.push(`/drawings/${id}`, { direction: "none" });
   };
 
   return (
@@ -95,7 +92,10 @@ const DrawingsSelect: React.FC = () => {
                     {choice === "joinDrawing" && (
                       <Fragment>
                         <IonItem className="ion-margin-bottom">
-                          <IonLabel position="floating" color="primary">
+                          <IonLabel
+                            position="floating"
+                            color={error ? "danger" : "primary"}
+                          >
                             ID eingeben
                           </IonLabel>
 
@@ -105,12 +105,21 @@ const DrawingsSelect: React.FC = () => {
                             value={userDrawingName}
                             spellCheck={false}
                             autocapitalize="off"
-                            onIonChange={(e) =>
-                              setUserDrawingName(e.detail.value!)
-                            }
+                            onIonChange={(e) => {
+                              if (error) {
+                                setError("");
+                              }
+                              setUserDrawingName(e.detail.value!);
+                            }}
                             required
                           ></IonInput>
                         </IonItem>
+
+                        {error && (
+                          <IonText color="danger" className="ion-margin-bottom">
+                            {error}
+                          </IonText>
+                        )}
                       </Fragment>
                     )}
 

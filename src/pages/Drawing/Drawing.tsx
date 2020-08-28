@@ -5,8 +5,8 @@ import {
   useIonViewDidLeave,
   useIonViewWillEnter,
 } from "@ionic/react";
-import React from "react";
-import { RouteComponentProps } from "react-router";
+import React, { useMemo, useState } from "react";
+import { useParams } from "react-router";
 import {
   ActionBar,
   DrawingCanvas,
@@ -14,29 +14,29 @@ import {
   ServerStatus,
   ToolBar,
 } from "../../components";
-import { cleanupPaperProject } from "../../paper/helper/paper-project.helper";
+import { DEBUG } from "../../constants";
 import {
   useDrawingActionSubscription,
   useFetchOrCreateDrawing,
   useHistroryApiActions,
   useItemMutationSubscription,
 } from "../../paper/shared/api/hooks";
-import { useStoreActions } from "../../store/hooks";
+import { useStoreActions, useStoreState } from "../../store/hooks";
 
-interface DrawingProps extends RouteComponentProps<Record<"id", string>> {}
+const Drawing: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
 
-const Drawing: React.FC<DrawingProps> = ({
-  match: {
-    params: { id: drawingID },
-  },
-}) => {
+  const [inView, setInView] = useState(false);
+
+  const paperReady = useStoreState((state) => state.drawing.paperReady);
   const setDrawingID = useStoreActions(
     (actions) => actions.drawing.setDrawingID
   );
 
-  setDrawingID(drawingID);
-
-  const { loading, triggerFetchOrCreateDrawing } = useFetchOrCreateDrawing();
+  const {
+    loading: fetchOrCreateLoading,
+    triggerFetchOrCreateDrawing,
+  } = useFetchOrCreateDrawing();
 
   const {
     subscribe: subscribeDrawingAction,
@@ -48,18 +48,29 @@ const Drawing: React.FC<DrawingProps> = ({
     unsubscribe: unsubscribeItemMutation,
   } = useItemMutationSubscription();
 
+  const isLoading = useMemo(
+    () => inView && (!paperReady || fetchOrCreateLoading),
+    [fetchOrCreateLoading, inView, paperReady]
+  );
+
   useIonViewWillEnter(() => {
-    triggerFetchOrCreateDrawing();
-    subscribeDrawingAction();
-    subscribeItemMutation();
-  });
+    DEBUG && console.log("drawing::ViewWillEnter -> id", id);
+
+    setInView(true);
+    setDrawingID(id);
+    triggerFetchOrCreateDrawing(id);
+    subscribeDrawingAction(id);
+    subscribeItemMutation(id);
+  }, [id]);
 
   useIonViewDidLeave(() => {
+    setInView(false);
     unsubscribeDrawingAction();
     unsubscribeItemMutation();
-    cleanupPaperProject();
     setDrawingID("");
-  });
+
+    DEBUG && console.log("drawing::ViewDidLeave -> id", id);
+  }, [id]);
 
   useHistroryApiActions();
 
@@ -71,8 +82,8 @@ const Drawing: React.FC<DrawingProps> = ({
         </IonButtons>
       </PageHeader>
 
-      <DrawingCanvas drawingID={drawingID} />
-      <IonLoading isOpen={loading} message={"Bitte warten..."} />
+      <DrawingCanvas />
+      <IonLoading isOpen={isLoading} message={"Bitte warten..."} />
 
       <ActionBar />
       <ToolBar />
