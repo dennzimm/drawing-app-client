@@ -24,6 +24,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding-top: 5rem;
 `;
 
 const StyledImage = styled(IonImg)`
