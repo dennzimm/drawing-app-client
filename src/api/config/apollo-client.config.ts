@@ -39,7 +39,7 @@ const splitLink = split(
 const retryLink = new RetryLink({
   delay: {
     initial: 50,
-    max: 500,
+    max: 1500,
     jitter: true,
   },
   attempts: {
@@ -79,4 +79,16 @@ export const client = new ApolloClient<NormalizedCacheObject>({
   cache,
   connectToDevTools: true,
   link: ApolloLink.from([retryLink, graphQLErrorHandler, splitLink]),
+  queryDeduplication: false,
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: "no-cache",
+    },
+    query: {
+      fetchPolicy: "no-cache",
+    },
+    mutate: {
+      fetchPolicy: "no-cache",
+    },
+  },
 });

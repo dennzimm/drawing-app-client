@@ -4,13 +4,13 @@ import { AppModel, NetworkStatusType } from "./app.model";
 export enum AppAction {
   setMenuEnabled = "setMenuEnabled",
   setServerConnectionStatus = "setServerConnectionStatus",
-  setShouldSync = "setShouldSync",
+  setShouldResync = "setShouldResync",
 }
 
 export interface AppActions {
   [AppAction.setMenuEnabled]: Action<AppModel, boolean>;
   [AppAction.setServerConnectionStatus]: Action<AppModel, NetworkStatusType>;
-  [AppAction.setShouldSync]: Action<AppModel, boolean>;
+  [AppAction.setShouldResync]: Action<AppModel, boolean>;
 }
 
 const appActions: AppActions = {
@@ -22,8 +22,8 @@ const appActions: AppActions = {
       state.serverConnectionStatus = serverConnectionStatus;
     }
   ),
-  [AppAction.setShouldSync]: action((state, shouldSync) => {
-    state.shouldSync = shouldSync;
+  [AppAction.setShouldResync]: action((state, shouldResync) => {
+    state.shouldResync = shouldResync;
   }),
 };
 

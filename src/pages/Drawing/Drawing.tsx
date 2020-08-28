@@ -5,7 +5,7 @@ import {
   useIonViewDidLeave,
   useIonViewWillEnter,
 } from "@ionic/react";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useParams } from "react-router";
 import {
   ActionBar,
@@ -28,6 +28,7 @@ const Drawing: React.FC = () => {
 
   const [inView, setInView] = useState(false);
 
+  const shouldResync = useStoreState((state) => state.app.shouldResync);
   const paperReady = useStoreState((state) => state.drawing.paperReady);
   const setDrawingID = useStoreActions(
     (actions) => actions.drawing.setDrawingID
@@ -49,8 +50,8 @@ const Drawing: React.FC = () => {
   } = useItemMutationSubscription();
 
   const isLoading = useMemo(
-    () => inView && (!paperReady || fetchOrCreateLoading),
-    [fetchOrCreateLoading, inView, paperReady]
+    () => inView && (!paperReady || (fetchOrCreateLoading && !shouldResync)),
+    [fetchOrCreateLoading, inView, paperReady, shouldResync]
   );
 
   useIonViewWillEnter(() => {
@@ -71,6 +72,14 @@ const Drawing: React.FC = () => {
 
     DEBUG && console.log("drawing::ViewDidLeave -> id", id);
   }, [id]);
+
+  useEffect(() => {
+    if (shouldResync) {
+      DEBUG && console.log("drawing::Resync");
+
+      triggerFetchOrCreateDrawing(id);
+    }
+  }, [id, shouldResync, triggerFetchOrCreateDrawing]);
 
   useHistroryApiActions();
 
