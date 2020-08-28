@@ -21,10 +21,7 @@ const userActions: UserActions = {
     state.darkMode = darkMode;
   }),
   [UserAction.setUserData]: action((state, userData) => {
-    state = {
-      ...state,
-      ...userData,
-    };
+    Object.assign(state, { ...state, ...userData });
   }),
 };
 
