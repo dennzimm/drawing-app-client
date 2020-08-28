@@ -8,7 +8,7 @@ import {
   useServerStatusNotification,
 } from "./hooks";
 
-const StyledBadge = styled(IonBadge)`
+export const StyledServerStatusBadge = styled(IonBadge)`
   border-radius: 9999px;
   display: inline-flex;
   justify-content: center;
@@ -25,9 +25,9 @@ const ServerStatus: React.FC<ServerStatusProps> = (props) => {
   const { serverStatusIcon } = useServerStatusIcon();
 
   return (
-    <StyledBadge color={serverStatusColor} {...props}>
+    <StyledServerStatusBadge color={serverStatusColor} {...props}>
       <IonIcon icon={serverStatusIcon} size="small" />
-    </StyledBadge>
+    </StyledServerStatusBadge>
   );
 };
 

@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useStoreState } from "../../../store/hooks";
 import { NetworkStatusType } from "../../../store/models/app/app.model";
 
-const serverStatusColors = {
+export const serverStatusColors = {
   [NetworkStatusType.loading]: "medium",
   [NetworkStatusType.ready]: "success",
   [NetworkStatusType.error]: "danger",
