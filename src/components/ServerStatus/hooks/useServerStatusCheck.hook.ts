@@ -6,7 +6,7 @@ import { useStoreActions, useStoreState } from "../../../store/hooks";
 import { NetworkStatusType } from "../../../store/models/app/app.model";
 
 const serverStatusCheckOptions = {
-  pollInterval: 3000,
+  pollInterval: 5000,
 } as const;
 
 export function useServerStatusCheck() {
