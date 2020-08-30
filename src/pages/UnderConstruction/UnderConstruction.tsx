@@ -9,7 +9,7 @@ import {
 } from "@ionic/react";
 import React from "react";
 import styled from "styled-components";
-import { PageHeader } from "../../components";
+import { PageHeader } from "../../components/PageHeader";
 
 const Wrapper = styled.div`
   display: flex;

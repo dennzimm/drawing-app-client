@@ -1,33 +1,24 @@
 import paper from "paper";
+import { CreateItemInput } from "../../api/@types/generated/gql-operations.types";
+import { PaperViewEvents } from "../@types";
+import { emitOnView } from "../helper";
 
-export interface ToolStructure {
-  tool: paper.Tool;
-  onMouseDown: (event: paper.ToolEvent) => void;
-  onMouseDrag: (event: paper.ToolEvent) => void;
-  onMouseUp: (event: paper.ToolEvent) => void;
-  onMouseMove?: (event: paper.ToolEvent) => void;
-}
+export abstract class Tool {
+  public readonly tool = new paper.Tool();
 
-export abstract class Tool implements ToolStructure {
-  public tool: paper.Tool;
+  protected readonly defaultEventThrottleWait = 85;
 
-  abstract onMouseDown(event: paper.ToolEvent): void;
-  abstract onMouseDrag(event: paper.ToolEvent): void;
-  abstract onMouseUp(event: paper.ToolEvent): void;
+  protected abstract onMouseDown(event: paper.ToolEvent): void;
+  protected abstract onMouseDrag(event: paper.ToolEvent): void;
+  protected abstract onMouseUp(event: paper.ToolEvent): void;
 
   constructor() {
-    this.tool = new paper.Tool();
-
     this.setToolDefaults();
     this.setToolFunctions();
   }
 
-  deselectAll() {
-    try {
-      paper.project.deselectAll();
-    } catch (err) {
-      // nothing todo here
-    }
+  protected emitItemCreated(payload: CreateItemInput) {
+    emitOnView<CreateItemInput>(PaperViewEvents.CREATE_ITEM, payload);
   }
 
   private setToolDefaults() {

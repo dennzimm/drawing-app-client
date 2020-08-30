@@ -1,3 +1,4 @@
+import { ApolloProvider } from "@apollo/client";
 import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import "@ionic/react/css/core.css";
@@ -10,36 +11,32 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
+import { StoreProvider } from "easy-peasy";
 import React, { useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
-import { AppStoreProvider, Menu, RedirectToLogin } from "./components";
-import { AppApolloProvider } from "./components/AppApolloProvider";
-import { DrawingsOrTutorial } from "./components/DrawingsOrTutorial";
-import { Drawing, DrawingsSelect, Tutorial, UnderConstruction } from "./pages";
+import { Route } from "react-router";
+import { client } from "./api/config";
+import { Menu } from "./components/Menu";
+import { Drawing } from "./pages/Drawing";
+import { DrawingsOrTutorial } from "./pages/DrawingsOrTutorial";
+import { DrawingsSelect } from "./pages/DrawingsSelect";
+import { Tutorial } from "./pages/Tutorial";
+import { UnderConstruction } from "./pages/UnderConstruction";
+import store from "./store";
 import { useStoreActions, useStoreState } from "./store/hooks";
 import "./theme/global.css";
 import "./theme/variables.css";
 
-const App: React.FC = () => {
-  return (
-    <AppApolloProvider>
-      <AppStoreProvider>
-        <IonicApp />
-      </AppStoreProvider>
-    </AppApolloProvider>
-  );
-};
+const App: React.FC = () => (
+  <StoreProvider store={store}>
+    <ApolloProvider client={client}>
+      <IonicApp />
+    </ApolloProvider>
+  </StoreProvider>
+);
 
 const IonicApp: React.FC = () => {
-  const darkMode = useStoreState((state) => state.user.darkMode);
-
-  const loadUserData = useStoreActions((actions) => actions.user.loadUserData);
-
-  const setIsLoggedIn = useStoreActions(
-    (actions) => actions.user.setIsLoggedIn
-  );
-
-  const setUsername = useStoreActions((actions) => actions.user.setUsername);
+  const { darkMode } = useStoreState((state) => state.user);
+  const { loadUserData } = useStoreActions((actions) => actions.user);
 
   useEffect(() => {
     loadUserData();
@@ -50,48 +47,29 @@ const IonicApp: React.FC = () => {
       <IonReactRouter>
         <Menu />
 
-        <Switch>
-          <IonRouterOutlet id="main">
-            {/* Redirects */}
-            <Route exact path="/" component={DrawingsOrTutorial} />
+        <IonRouterOutlet id="main">
+          {/* Tutorial */}
+          <Route path="/tutorial" render={() => <Tutorial />} />
 
-            {/* Account */}
-            <Route
-              exact
-              path="/account"
-              render={() => <UnderConstruction title="Account" />}
-            />
-            <Route
-              exact
-              path="/signup"
-              render={() => <UnderConstruction title="Registrieren" />}
-            />
-            <Route
-              exact
-              path="/login"
-              render={() => <UnderConstruction title="Anmelden" />}
-            />
-            <Route
-              exact
-              path="/logout"
-              render={() => {
-                return (
-                  <RedirectToLogin
-                    setIsLoggedIn={setIsLoggedIn}
-                    setUsername={setUsername}
-                  />
-                );
-              }}
-            />
+          {/* User */}
+          <Route
+            exact
+            path="/signup"
+            render={() => <UnderConstruction title="Registrieren" />}
+          />
+          <Route
+            exact
+            path="/login"
+            render={() => <UnderConstruction title="Anmelden" />}
+          />
 
-            {/* Tutorial */}
-            <Route path="/tutorial" render={() => <Tutorial />} />
+          {/* Drawings */}
+          <Route exact path="/drawings/:id" render={() => <Drawing />} />
+          <Route exact path="/drawings" render={() => <DrawingsSelect />} />
 
-            {/* Drawings */}
-            <Route exact path="/drawings/:id" render={() => <Drawing />} />
-            <Route exact path="/drawings" render={() => <DrawingsSelect />} />
-          </IonRouterOutlet>
-        </Switch>
+          {/* Redirects */}
+          <Route exact path="/" render={() => <DrawingsOrTutorial />} />
+        </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
   );

@@ -7,40 +7,37 @@ import {
 import { ITEM_MUTATED } from "../../../../api/graphql/item.graphql";
 import { DEBUG } from "../../../../constants";
 import { useStoreState } from "../../../../store/hooks";
-import { paperDrawingApiItemService } from "../services/paper-drawing-api-item.service";
+import { paperDrawingApiItemService } from "../services";
 
-export function useItemMutationSubscription() {
-  const userId = useStoreState((state) => state.user.userID);
+export function useItemMutationSubscription(drawingName: string) {
+  const { id: userId } = useStoreState((state) => state.user);
 
   const client = useApolloClient();
 
   const subscription = useRef<ZenObservable.Subscription>();
   const [data, setData] = useState<ItemMutated>();
 
-  const subscribe = useCallback(
-    (drawingName: string) => {
-      const observer = client.subscribe<ItemMutated, ItemMutatedVariables>({
-        query: ITEM_MUTATED.subscription,
-        variables: {
-          userId,
-          drawingName,
-        },
-      });
+  const subscribe = useCallback(() => {
+    const observer = client.subscribe<ItemMutated, ItemMutatedVariables>({
+      query: ITEM_MUTATED.subscription,
+      variables: {
+        userId,
+        drawingName,
+      },
+    });
 
-      subscription.current = observer.subscribe(({ data }) => {
-        if (data) {
-          const {
-            itemMutated: { mutation, node },
-          } = data;
-          setData(data);
-          paperDrawingApiItemService.itemMutation(mutation, node);
-        }
-      });
+    subscription.current = observer.subscribe(({ data }) => {
+      if (data) {
+        const {
+          itemMutated: { mutation, node },
+        } = data;
+        setData(data);
+        paperDrawingApiItemService.itemMutation(mutation, node);
+      }
+    });
 
-      DEBUG && console.log("subscribed ITEM_MUTATED");
-    },
-    [client, userId]
-  );
+    DEBUG && console.log("subscribed ITEM_MUTATED -> id", drawingName);
+  }, [client, drawingName, userId]);
 
   const unsubscribe = useCallback(() => {
     subscription.current && subscription.current.unsubscribe();

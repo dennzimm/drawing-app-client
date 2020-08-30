@@ -1,25 +1,23 @@
 import { useMemo } from "react";
 import { useStoreState } from "../../../store/hooks";
-import { NetworkStatusType } from "../../../store/models/app/app.model";
+import { ServerStatusType } from "../../../store/models/app/app.model";
 
 export const serverStatusColors = {
-  [NetworkStatusType.loading]: "medium",
-  [NetworkStatusType.ready]: "success",
-  [NetworkStatusType.error]: "danger",
+  [ServerStatusType.loading]: "medium",
+  [ServerStatusType.ready]: "success",
+  [ServerStatusType.error]: "danger",
 } as const;
 
 export function useServerStatusColor() {
-  const serverConnectionStatus = useStoreState(
-    (state) => state.app.serverConnectionStatus
-  );
+  const { serverConnectionStatus } = useStoreState((state) => state.app);
 
   const serverStatusColor = useMemo(() => {
     switch (serverConnectionStatus) {
-      case NetworkStatusType.loading:
+      case ServerStatusType.loading:
         return serverStatusColors.loading;
-      case NetworkStatusType.ready:
+      case ServerStatusType.ready:
         return serverStatusColors.ready;
-      case NetworkStatusType.error:
+      case ServerStatusType.error:
         return serverStatusColors.error;
     }
   }, [serverConnectionStatus]);

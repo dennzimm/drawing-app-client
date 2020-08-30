@@ -10,9 +10,10 @@ import {
   CREATE_DRAWING,
   DRAWING,
 } from "../../../../api/graphql/drawing.graphql";
+import { DEBUG } from "../../../../constants";
 import { paperDrawingApiImportService } from "../services/paper-drawing-api-import.service";
 
-export function useFetchOrCreateDrawing() {
+export function useFetchOrCreateDrawing(drawingName: string) {
   const [loading, setLoading] = useState(false);
 
   const [createDrawingMutation] = useMutation<
@@ -22,31 +23,28 @@ export function useFetchOrCreateDrawing() {
 
   const client = useApolloClient();
 
-  const triggerFetchOrCreateDrawing = useCallback(
-    async (drawingName: string) => {
-      console.log("triggerFetchOrCreateDrawing");
-      setLoading(true);
+  const triggerFetchOrCreateDrawing = useCallback(async () => {
+    DEBUG && console.log("triggerFetchOrCreateDrawing");
+    setLoading(true);
 
-      try {
-        const { data } = await client.query<DrawingType, DrawingVariablesType>({
-          query: DRAWING.query,
-          variables: {
-            drawingName,
-          },
-        });
+    try {
+      const { data } = await client.query<DrawingType, DrawingVariablesType>({
+        query: DRAWING.query,
+        variables: {
+          drawingName,
+        },
+      });
 
-        if (!data || data.drawing === null) {
-          createDrawingMutation({ variables: { data: { name: drawingName } } });
-        } else {
-          paperDrawingApiImportService.importItems(data.drawing.items);
-        }
-      } catch (err) {
-      } finally {
-        setLoading(false);
+      if (!data || data.drawing === null) {
+        createDrawingMutation({ variables: { data: { name: drawingName } } });
+      } else {
+        paperDrawingApiImportService.importItems(data.drawing.items);
       }
-    },
-    [client, createDrawingMutation]
-  );
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
+  }, [client, createDrawingMutation, drawingName]);
 
   return {
     loading,

@@ -1,24 +1,53 @@
+import { useMutation } from "@apollo/client";
 import { IonAlert, IonFabButton, IonIcon } from "@ionic/react";
 import { trash } from "ionicons/icons";
 import React, { useState } from "react";
+import {
+  DeleteItem,
+  DeleteItemVariables,
+} from "../../api/@types/generated/gql-operations.types";
+import { DELETE_ITEM } from "../../api/graphql/item.graphql";
+import { asyncForEach, waitFor } from "../../helper";
 import { PaperViewEvents } from "../../paper/@types";
 import { emitOnView } from "../../paper/helper";
 import { deleteAllItems } from "../../paper/helper/paper-project.helper";
-import { paperDrawingApiService } from "../../paper/shared/api/services";
+import { useStoreState } from "../../store/hooks";
 
 const DeleteButton: React.FC = () => {
+  const { id: userId } = useStoreState((state) => state.user);
+  const { id: drawingName } = useStoreState((state) => state.drawing);
+
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [canTriggerDelete, setCanTriggerDelete] = useState(true);
 
-  function handleDelete() {
+  const [deleteItemMutation] = useMutation<DeleteItem, DeleteItemVariables>(
+    DELETE_ITEM.mutation
+  );
+
+  async function handleDelete() {
+    setCanTriggerDelete(false);
+
     const deletedItems = deleteAllItems();
-
-    deletedItems.forEach((name) =>
-      paperDrawingApiService.deleteItem({
-        name,
-      })
-    );
-
     emitOnView(PaperViewEvents.REVERT_HISTORY, {});
+
+    await asyncForEach(deletedItems, async (name) => {
+      await waitFor(25);
+      deleteItemMutation({
+        variables: {
+          user: {
+            userId,
+          },
+          drawing: {
+            drawingName,
+          },
+          data: {
+            name,
+          },
+        },
+      });
+    });
+
+    setCanTriggerDelete(true);
   }
 
   function onDeleteClick() {
@@ -53,7 +82,11 @@ const DeleteButton: React.FC = () => {
         buttons={alertButtons}
       />
 
-      <IonFabButton onClick={onDeleteClick} color="danger">
+      <IonFabButton
+        onClick={onDeleteClick}
+        color="danger"
+        disabled={!canTriggerDelete}
+      >
         <IonIcon icon={trash} />
       </IonFabButton>
     </>

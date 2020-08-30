@@ -18,19 +18,17 @@ import {
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import {
-  ColorButton,
-  DeleteButton,
-  RedoButton,
-  SizeSelectButton,
-  ToolSelectButton,
-  UndoButton,
-} from "../../components";
+import { ColorButton } from "../../components/ColorButton";
+import { DeleteButton } from "../../components/DeleteButton";
+import { RedoButton } from "../../components/RedoButton";
 import {
   serverStatusColors,
   serverStatusIcons,
   StyledServerStatusBadge,
 } from "../../components/ServerStatus";
+import { SizeSelectButton } from "../../components/SizeSelectButton";
+import { ToolSelectButton } from "../../components/ToolSelectButton";
+import { UndoButton } from "../../components/UndoButton";
 import { useStoreActions } from "../../store/hooks";
 import "./Tutorial.scss";
 
@@ -66,21 +64,33 @@ const Tutorial: React.FC = () => {
     history.push("/drawings", { direction: "none" });
   };
 
+  const slideContentToTop = async () => {
+    await contentRef.current?.scrollToTop();
+  };
+
   const handleSlideChangeStart = () => {
     slideRef.current!.isEnd().then((isEnd) => setShowSkip(!isEnd));
   };
 
   const slideNext = async () => {
     await slideRef.current!.slideNext();
+    await slideContentToTop();
   };
 
   const slidePrev = async () => {
     await slideRef.current!.slidePrev();
+    await slideContentToTop();
   };
 
-  useIonViewWillEnter(() => {
+  const slideTo = async (index: number) => {
+    await slideRef.current!.slideTo(index);
+    await slideContentToTop();
+  };
+
+  useIonViewWillEnter(async () => {
     setMenuEnabled(false);
-    slideRef.current!.slideTo(0);
+    await slideTo(0);
+    await slideContentToTop();
   });
 
   const Controls = () => (

@@ -1,17 +1,17 @@
 import { IonButton, IonIcon } from "@ionic/react";
 import React from "react";
 
-interface IconButtonProps {
-  buttonProps?: React.ComponentProps<typeof IonButton>;
+export interface IconButtonProps
+  extends React.ComponentProps<typeof IonButton> {
   iconProps?: React.ComponentProps<typeof IonIcon>;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
-  buttonProps = {},
   iconProps = {},
+  ...props
 }) => {
   return (
-    <IonButton {...buttonProps}>
+    <IonButton {...props}>
       <IonIcon slot="icon-only" {...iconProps} />
     </IonButton>
   );

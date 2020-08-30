@@ -2,6 +2,7 @@ import { compress, decompress } from "lz-string";
 import paper from "paper";
 import { useCallback } from "react";
 import useUndo from "use-undo";
+import { DEBUG } from "../../constants";
 import {
   AddToHistoryEvent,
   PaperViewEvents,
@@ -26,37 +27,37 @@ interface HistoryItemData {
   action?: HistoryItemAction;
 }
 
-function importHistoryItem(historyItem: HistoryItemData) {
-  const decompressedData = decompress(historyItem.data);
-
-  if (decompressedData) {
-    const item = paper.project.activeLayer.importJSON(decompressedData);
-
-    if (item) {
-      emitOnView<RedoHistoryEvent>(PaperViewEvents.REDO_HISTORY, {
-        id: item.name,
-        data: decompressedData,
-      });
-    }
-  }
-}
-
-function deleteHistoryItem(historyItem: HistoryItemData) {
-  const item = paper.project.getItem({ name: historyItem.id });
-
-  if (item) {
-    emitOnView<UndoHistoryEvent>(PaperViewEvents.UNDO_HISTORY, {
-      id: item.name,
-    });
-
-    item.remove();
-  }
-}
-
 export function usePaperHistory() {
-  const [paperHistory, { set, undo, redo, canUndo, canRedo }] = useUndo<
+  const [paperHistory, { set, undo, redo, canUndo, canRedo, reset }] = useUndo<
     Nullable<HistoryItemData>
   >(null);
+
+  const importHistoryItem = useCallback((historyItem: HistoryItemData) => {
+    const decompressedData = decompress(historyItem.data);
+
+    if (decompressedData) {
+      const item = paper.project.activeLayer.importJSON(decompressedData);
+
+      if (item) {
+        emitOnView<RedoHistoryEvent>(PaperViewEvents.REDO_HISTORY, {
+          id: item.name,
+          data: decompressedData,
+        });
+      }
+    }
+  }, []);
+
+  const deleteHistoryItem = useCallback((historyItem: HistoryItemData) => {
+    const item = paper.project.getItem({ name: historyItem.id });
+
+    if (item) {
+      emitOnView<UndoHistoryEvent>(PaperViewEvents.UNDO_HISTORY, {
+        id: item.name,
+      });
+
+      item.remove();
+    }
+  }, []);
 
   const performHistoryAction = useCallback(
     (historyItem: HistoryItemData, historyAction: HistoryAction) => {
@@ -76,7 +77,7 @@ export function usePaperHistory() {
         }
       }
     },
-    []
+    [deleteHistoryItem, importHistoryItem]
   );
 
   const undoAddItem = useCallback(() => {
@@ -125,10 +126,16 @@ export function usePaperHistory() {
     undo();
   });
 
+  usePaperEvent(PaperViewEvents.RESET_HISTORY, () => {
+    DEBUG && console.log("usePaperHistory -> RESET_HISTORY");
+    reset(null);
+  });
+
   return {
-    undoAddItem,
-    redoAddItem,
+    undo: undoAddItem,
+    redo: redoAddItem,
     canUndo,
     canRedo,
+    resetHistory: () => reset(null),
   };
 }

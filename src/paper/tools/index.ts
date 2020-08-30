@@ -1,11 +1,6 @@
-import { pencilTool } from "./pencil.tool";
 import { brushTool } from "./brush.tool";
 import { eraserTool } from "./eraser.tool";
-
-export * from "./tool";
-export * from "./pencil.tool";
-export * from "./brush.tool";
-export * from "./eraser.tool";
+import { pencilTool } from "./pencil.tool";
 
 export const availableTools = {
   pencil: pencilTool.tool,

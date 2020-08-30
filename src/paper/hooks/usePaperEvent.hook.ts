@@ -23,12 +23,14 @@ export function usePaperEvent<P>(
       eventSubscription.current = fromEvent<P>(paper.view, event).subscribe(
         callback
       );
-    }
-  }, [callback, event, paperReady, unsubscribeEvent]);
-
-  useEffect(() => {
-    if (!paperReady) {
+    } else {
       unsubscribeEvent();
     }
-  }, [paperReady, unsubscribeEvent]);
+
+    return unsubscribeEvent;
+  }, [callback, event, paperReady, unsubscribeEvent]);
+
+  return {
+    unsubscribeEvent,
+  };
 }

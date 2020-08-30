@@ -3,4 +3,4 @@ export {
   StyledServerStatusBadge,
 } from "./ServerStatus";
 
-export * from "./hooks";
+export { serverStatusColors, serverStatusIcons } from "./hooks";

@@ -1,9 +1,14 @@
-import { ItemType } from "../../api/@types/generated/gql-operations.types";
+import { throttle } from "lodash-es";
+import paper from "paper";
+import {
+  BrushDrawInput,
+  ItemType,
+} from "../../api/@types/generated/gql-operations.types";
 import store from "../../store";
-import { createPath, emitAddToHistory } from "../helper";
-import { paperDrawingApiService } from "../shared/api/services";
+import { PaperViewEvents } from "../@types";
+import { createPath, emitAddToHistory, emitOnView } from "../helper";
 import { transformPaperPoint } from "../shared/api/transformer/paper-item.transformer";
-import { Tool, ToolStructure } from "./tool";
+import { Tool } from "./tool";
 
 export interface HandleBrushDrawProps {
   path: paper.Path;
@@ -13,34 +18,9 @@ export interface HandleBrushDrawProps {
   singlePoint?: paper.Point;
 }
 
-export const handleBrushDraw = ({
-  path,
-  middlePoint,
-  delta,
-  size,
-  singlePoint,
-}: HandleBrushDrawProps) => {
-  if (singlePoint) {
-    path.add(singlePoint);
-  } else if (delta && middlePoint) {
-    let step = delta.multiply(size / 5);
-    step.angle += 90;
-
-    const top = middlePoint.add(step);
-    const bottom = middlePoint.subtract(step);
-
-    path.add(top);
-    path.insert(0, bottom);
-    path.smooth();
-  }
-};
-
-export class BrushTool extends Tool implements ToolStructure {
-  private defaultMinDistance = 1;
-  private defaultMaxDistance = 25;
-
-  private size = store.getState().drawing.currentToolSize;
-  private color = store.getState().drawing.currentToolColor;
+export class BrushTool extends Tool {
+  public readonly defaultMinDistance = 1;
+  public readonly defaultMaxDistance = 15;
 
   private path?: paper.Path;
 
@@ -50,8 +30,38 @@ export class BrushTool extends Tool implements ToolStructure {
     this.tool.maxDistance = this.defaultMaxDistance;
   }
 
-  onMouseDown(event: paper.ToolEvent) {
-    this.setToolOptions();
+  public handleBrushDraw({
+    path,
+    middlePoint,
+    delta,
+    size,
+    singlePoint,
+  }: HandleBrushDrawProps) {
+    console.log({
+      path,
+      middlePoint,
+      delta,
+      size,
+      singlePoint,
+    });
+
+    if (singlePoint) {
+      path.add(singlePoint);
+    } else if (delta && middlePoint) {
+      let step = delta.multiply(size / 5);
+      step.angle += 90;
+
+      const top = middlePoint.add(step);
+      const bottom = middlePoint.subtract(step);
+
+      path.add(top);
+      path.insert(0, bottom);
+      path.smooth();
+    }
+  }
+
+  protected onMouseDown(event: paper.ToolEvent) {
+    const { toolSize } = store.getState().drawing;
 
     this.path = createPath({
       options: {
@@ -59,61 +69,61 @@ export class BrushTool extends Tool implements ToolStructure {
       },
     });
 
-    handleBrushDraw({
+    this.handleBrushDraw({
       path: this.path,
       singlePoint: event.point,
-      size: this.size,
+      size: toolSize,
     });
 
-    this.emitBrushDraw({ event, singlePoint: true });
+    this.throttledEmitBrushDraw({ event, singlePoint: true });
   }
 
-  onMouseDrag(event: paper.ToolEvent) {
+  protected onMouseDrag(event: paper.ToolEvent) {
     if (this.path) {
-      handleBrushDraw({
+      const { toolSize } = store.getState().drawing;
+
+      this.handleBrushDraw({
         path: this.path,
         delta: event.delta,
         middlePoint: event.middlePoint,
-        size: this.size,
+        size: toolSize,
       });
 
-      this.emitBrushDraw({ event });
+      this.throttledEmitBrushDraw({ event });
     }
   }
 
-  onMouseUp(event: paper.ToolEvent) {
+  protected onMouseUp(event: paper.ToolEvent) {
     if (this.path) {
-      handleBrushDraw({
+      const { toolSize } = store.getState().drawing;
+
+      this.handleBrushDraw({
         path: this.path,
         singlePoint: event.point,
-        size: this.size,
+        size: toolSize,
       });
+      this.throttledEmitBrushDraw({ event, singlePoint: true, closed: true });
 
       this.path.closePath();
-      this.path.smooth();
+      this.path.simplify();
+      paper.project.deselectAll();
 
-      emitAddToHistory(this.path);
-
-      this.emitBrushDraw({ event, singlePoint: true, closed: true });
-
-      paperDrawingApiService.createItem({
+      this.emitItemCreated({
         name: this.path.name,
         type: ItemType.PATH,
         data: this.path.exportJSON(),
       });
+
+      emitAddToHistory(this.path);
     }
   }
 
-  private setToolOptions() {
-    const { currentToolColor, currentToolSize } = store.getState().drawing;
-    this.size = currentToolSize;
-    this.color = currentToolColor;
-  }
-
   private getPathOptions() {
+    const { toolSize, toolColor } = store.getState().drawing;
+
     return {
-      strokeWidth: this.size,
-      fillColor: this.color,
+      strokeWidth: toolSize,
+      fillColor: toolColor,
     };
   }
 
@@ -127,25 +137,27 @@ export class BrushTool extends Tool implements ToolStructure {
     closed?: boolean;
   }) {
     if (this.path) {
-      paperDrawingApiService.brushDraw({
-        data: {
-          layerID: this.path.layer.name,
-          itemID: this.path.name,
-          path: {
-            ...this.getPathOptions(),
-            closed,
-          },
-          ...(!singlePoint && {
-            delta: transformPaperPoint(event.delta),
-            middlePoint: transformPaperPoint(event.middlePoint),
-          }),
-          ...(singlePoint && {
-            singlePoint: transformPaperPoint(event.point),
-          }),
+      emitOnView<BrushDrawInput>(PaperViewEvents.BRUSH_DRAW, {
+        layerID: this.path.layer.name,
+        itemID: this.path.name,
+        path: {
+          ...this.getPathOptions(),
+          closed,
         },
+        ...(!singlePoint && {
+          delta: transformPaperPoint(event.delta),
+          middlePoint: transformPaperPoint(event.middlePoint),
+        }),
+        ...(singlePoint && {
+          singlePoint: transformPaperPoint(event.point),
+        }),
       });
     }
   }
+
+  private throttledEmitBrushDraw = throttle(this.emitBrushDraw, 20, {
+    trailing: false,
+  });
 }
 
 export const brushTool = new BrushTool();

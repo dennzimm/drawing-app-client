@@ -10,30 +10,25 @@ const StyledFab = styled(IonFabButton)<Record<"currentColor", string>>`
 `;
 
 const ColorButton: React.FC = () => {
-  const currentColor = useStoreState((state) => state.drawing.currentToolColor);
-
-  const setColor = useStoreActions(
-    (actions) => actions.drawing.setCurrentToolColor
-  );
-
-  const eraserSelected = useStoreState((state) => state.drawing.eraserSelected);
+  const { toolColor, eraserSelected } = useStoreState((state) => state.drawing);
+  const { setToolColor } = useStoreActions((actions) => actions.drawing);
 
   const [showColorSelect, setShowColorSelect] = useState(false);
 
-  const onColorClick = () => {
+  const onColorClick = useCallback(() => {
     setShowColorSelect(true);
-  };
+  }, []);
 
-  const onDidDismiss = () => {
+  const onDidDismiss = useCallback(() => {
     setShowColorSelect(false);
-  };
+  }, []);
 
   const onColorSelect = useCallback(
     (color: string) => {
-      setColor(color);
+      setToolColor(color);
       setShowColorSelect(false);
     },
-    [setColor]
+    [setToolColor]
   );
 
   return (
@@ -44,7 +39,7 @@ const ColorButton: React.FC = () => {
 
       <StyledFab
         onClick={onColorClick}
-        currentColor={currentColor}
+        currentColor={toolColor}
         disabled={eraserSelected}
       >
         <IonIcon icon={colorPalette} />

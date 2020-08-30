@@ -4,9 +4,10 @@ import { DEBUG } from "../../constants";
 import { useStoreActions } from "../../store/hooks";
 import { addCustomItemData, createLayer } from "../helper";
 import {
-  cleanupPaperProject,
+  deleteAllLayers,
   deleteAllPaperProjects,
 } from "../helper/paper-project.helper";
+import { availableTools } from "../tools";
 
 interface UsePaperProps {
   id: string;
@@ -14,9 +15,7 @@ interface UsePaperProps {
 }
 
 export function usePaper({ id, injectGlobal = false }: UsePaperProps) {
-  const setPaperReady = useStoreActions(
-    (actions) => actions.drawing.setPaperReady
-  );
+  const { setPaperReady } = useStoreActions((actions) => actions.drawing);
 
   const createInitialLayer = useCallback(() => {
     const layer = createLayer();
@@ -25,39 +24,67 @@ export function usePaper({ id, injectGlobal = false }: UsePaperProps) {
     layer.activate();
   }, []);
 
-  const updateFullViewSize = useCallback(() => {
-    paper.view.viewSize = new paper.Size(window.innerWidth, window.innerHeight);
+  const setInitialTool = useCallback(() => {
+    const initialTool = availableTools.pencil;
+    initialTool.activate();
   }, []);
 
+  const updateViewSize = useCallback(
+    (
+      width: number = window.innerWidth,
+      height: number = window.innerHeight
+    ) => {
+      paper.view.viewSize = new paper.Size(width, height);
+
+      DEBUG && console.log("usePaper -> updateViewSize");
+    },
+    []
+  );
+
   const setupPaper = useCallback(() => {
+    if (injectGlobal || DEBUG) {
+      try {
+        paper.install(window);
+      } catch (err) {
+        (window as any).paper = paper;
+      }
+    }
+
     paper.setup(id);
     createInitialLayer();
-    updateFullViewSize();
-
-    if (injectGlobal) {
-      (window as any).paper = paper;
-    }
+    setInitialTool();
+    updateViewSize();
 
     setPaperReady(true);
 
     DEBUG && console.log("usePaper -> setupPaper");
-  }, [createInitialLayer, id, injectGlobal, setPaperReady, updateFullViewSize]);
+  }, [
+    createInitialLayer,
+    id,
+    injectGlobal,
+    setInitialTool,
+    setPaperReady,
+    updateViewSize,
+  ]);
 
   const cleanupPaper = useCallback(() => {
-    setPaperReady(false);
+    if (paper && paper.project) {
+      setPaperReady(false);
 
-    cleanupPaperProject();
-    deleteAllPaperProjects();
+      deleteAllLayers();
+      deleteAllPaperProjects();
 
-    if (window.paper) {
-      delete (window as any).paper;
+      if (window.paper) {
+        delete (window as any).paper;
+      }
+
+      DEBUG && console.log("usePaper -> cleanup");
     }
-
-    DEBUG && console.log("usePaper -> cleanup");
   }, [setPaperReady]);
 
   return {
     setupPaper,
     cleanupPaper,
+    updateViewSize,
   };
 }
