@@ -1,6 +1,6 @@
-import drawingModel, { DrawingModel } from "../drawing/drawing.model";
 import appModel, { AppModel } from "../app/app.model";
 import userModel, { UserModel } from "../user/user.model";
+import drawingModel, { DrawingModel } from "../drawing/drawing.model";
 
 export interface StoreState {}
 

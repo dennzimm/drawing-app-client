@@ -1,13 +1,13 @@
-import { nanoid } from "nanoid";
-import paper from "paper";
+import { nanoid } from 'nanoid';
+import paper from 'paper';
 import {
   CreateCircleProps,
   CreateGroupProps,
   CreateLayerProps,
   CreatePathProps,
   CreateRoundLinecapProps,
-} from "../@types";
-import { addDefaultCustomItemData } from "./paper-data.helper";
+} from '../@types';
+import { addDefaultCustomItemData } from './paper-data.helper';
 
 export const createLayer = (props: CreateLayerProps = {}) => {
   const { name = nanoid(), options = {} } = props;

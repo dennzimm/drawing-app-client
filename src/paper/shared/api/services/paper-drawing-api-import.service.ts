@@ -9,17 +9,13 @@ import {
   ItemData,
   ItemType,
 } from "../../../../api/@types/generated/gql-operations.types";
-import { BlendMode, StrokeCapType, StrokeJoinType } from "../../../@types";
 import {
   findLayer,
   findOrCreatePath,
 } from "../../../helper/paper-project.helper";
-import {
-  handleBrushDraw,
-  handleErase,
-  handlePencilDraw,
-  pencilTool,
-} from "../../../tools";
+import { brushTool } from "../../../tools/brush.tool";
+import { eraserTool } from "../../../tools/eraser.tool";
+import { pencilTool } from "../../../tools/pencil.tool";
 
 interface CustomOptions {
   customPathOptions?: Record<string, unknown>;
@@ -107,7 +103,7 @@ class PaperDrawingApiImportService {
       },
     });
 
-    handlePencilDraw({ path, point: new paper.Point(point) });
+    pencilTool.handlePencilDraw({ path, point: new paper.Point(point) });
   }
 
   importBrushDrawData(
@@ -121,7 +117,7 @@ class PaperDrawingApiImportService {
     } = data;
     const { path } = this.getItems(data);
 
-    handleBrushDraw({
+    brushTool.handleBrushDraw({
       path,
       ...(delta && { delta: new paper.Point(delta) }),
       ...(middlePoint && { middlePoint: new paper.Point(middlePoint) }),
@@ -136,14 +132,14 @@ class PaperDrawingApiImportService {
     const { point } = data;
     const { path } = this.getItems(data, {
       customPathOptions: {
-        blendMode: BlendMode.DESTINATION_OUT,
-        strokeColor: "white",
-        strokeCap: StrokeCapType.ROUND,
-        strokeJoin: StrokeJoinType.ROUND,
+        blendMode: eraserTool.defaultBlendMode,
+        strokeColor: eraserTool.defaultStrokeColor,
+        strokeCap: eraserTool.defaultStrokeCap,
+        strokeJoin: eraserTool.defaultStrokeJoin,
       },
     });
 
-    handleErase({ path, point: new paper.Point(point) });
+    eraserTool.handleErase({ path, point: new paper.Point(point) });
   }
 
   private getItems(

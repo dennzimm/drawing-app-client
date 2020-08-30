@@ -24,37 +24,30 @@ const SizePreview = styled.div<Record<"size", number>>`
 `;
 
 const SizeSelectButton: React.FC = () => {
-  const currentSize = useStoreState((state) => state.drawing.currentToolSize);
-  const setSize = useStoreActions(
-    (actions) => actions.drawing.setCurrentToolSize
-  );
+  const { toolSize } = useStoreState((state) => state.drawing);
+  const { setToolSize } = useStoreActions((actions) => actions.drawing);
 
   const [showSizeSelect, setShowSizeSelect] = useState(false);
 
-  const onSizeSelectClick = () => {
-    setShowSizeSelect(true);
-  };
-
-  const onDidDismiss = () => {
-    setShowSizeSelect(false);
-  };
-
   const onSizeChange = useCallback(
     (value: number) => {
-      setSize(value);
+      setToolSize(value);
     },
-    [setSize]
+    [setToolSize]
   );
 
   return (
     <Fragment>
-      <IonPopover isOpen={showSizeSelect} onDidDismiss={onDidDismiss}>
+      <IonPopover
+        isOpen={showSizeSelect}
+        onDidDismiss={() => setShowSizeSelect(false)}
+      >
         <SizePreviewWrapper className="ion-margin-top">
-          <SizePreview size={currentSize} />
+          <SizePreview size={toolSize} />
         </SizePreviewWrapper>
 
         <IonRange
-          value={currentSize}
+          value={toolSize}
           min={2}
           max={40}
           step={2}
@@ -62,7 +55,7 @@ const SizeSelectButton: React.FC = () => {
         />
       </IonPopover>
 
-      <IonFabButton onClick={onSizeSelectClick}>
+      <IonFabButton onClick={() => setShowSizeSelect(true)}>
         <IonIcon icon={discOutline} />
       </IonFabButton>
     </Fragment>

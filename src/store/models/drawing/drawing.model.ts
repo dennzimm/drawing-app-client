@@ -1,26 +1,24 @@
-import { colors } from "../../../paper/config";
-import { ToolName } from "../../../paper/tools";
-import actions, { DrawingActions } from "./drawing.actions";
-import computed, { DrawingComputedItems } from "./drawing.computed";
+import { ToolName } from '../../../paper/tools';
+import actions, { DrawingActions } from './drawing.actions';
+import computed, { DrawingComputedItems } from './drawing.computed';
+import { COLORS } from '../../../constants';
 
 export interface DrawingState {
   id: string;
   paperReady: boolean;
-  currentToolColor: string;
-  currentToolName: ToolName;
-  currentToolSize: number;
-  backgroundColor: string;
+  toolColor: string;
+  toolName: ToolName;
+  toolSize: number;
 }
 
 export type DrawingModel = DrawingState & DrawingActions & DrawingComputedItems;
 
 const initialState: DrawingState = {
-  id: "",
+  id: '',
   paperReady: false,
-  currentToolColor: colors[Math.floor(Math.random() * colors.length)],
-  currentToolName: "pencil",
-  currentToolSize: 2,
-  backgroundColor: "#365959",
+  toolColor: COLORS[Math.floor(Math.random() * COLORS.length)],
+  toolName: 'pencil',
+  toolSize: 2,
 };
 
 const drawingModel: DrawingModel = {

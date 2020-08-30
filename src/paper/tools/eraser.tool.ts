@@ -1,106 +1,110 @@
+import { throttle } from "lodash-es";
+import paper from "paper";
+import {
+  EraseInput,
+  ItemType,
+} from "../../api/@types/generated/gql-operations.types";
 import store from "../../store";
-import { BlendMode } from "../@types";
-import { createPath, emitAddToHistory } from "../helper";
-import { paperDrawingApiService } from "../shared/api/services";
-import { Tool, ToolStructure } from "./tool";
-import { ItemType } from "../../api/@types/generated/gql-operations.types";
+import {
+  BlendMode,
+  PaperViewEvents,
+  StrokeCapType,
+  StrokeJoinType,
+} from "../@types";
+import { createPath, emitAddToHistory, emitOnView } from "../helper";
+import { Tool } from "./tool";
 
 export interface HandleEraseProps {
   path: paper.Path;
   point: paper.Point;
 }
 
-export const handleErase = ({ path, point }: HandleEraseProps) => {
-  path.add(point);
-  path.smooth();
-};
-
-class EraserTool extends Tool implements ToolStructure {
-  private defaultStrokeCap = "round";
-  private defaultStrokeJoin = "round";
-
-  private size = store.getState().drawing.currentToolSize;
-  private color = store.getState().drawing.backgroundColor;
+class EraserTool extends Tool {
+  public readonly defaultBlendMode = BlendMode.DESTINATION_OUT;
+  public readonly defaultStrokeCap = StrokeCapType.ROUND;
+  public readonly defaultStrokeJoin = StrokeJoinType.ROUND;
+  public readonly defaultStrokeColor = "white";
 
   private path?: paper.Path;
 
-  onMouseDown(event: paper.ToolEvent) {
-    this.setToolOptions();
+  public handleErase({ path, point }: HandleEraseProps) {
+    path.add(point);
+    path.smooth();
+  }
 
+  protected onMouseDown(event: paper.ToolEvent) {
     this.path = createPath({
       options: {
         ...this.getPathOptions(),
       },
     });
 
-    this.addPoint(event.point);
+    this.handleErase({ path: this.path, point: event.point });
+    this.throttledEmitErase(event.point);
   }
 
-  onMouseDrag(event: paper.ToolEvent) {
+  protected onMouseDrag(event: paper.ToolEvent) {
     if (this.path) {
-      this.addPoint(event.point);
+      this.handleErase({ path: this.path, point: event.point });
+      this.throttledEmitErase(event.point);
     }
   }
 
-  onMouseUp(event: paper.ToolEvent) {
+  protected onMouseUp(event: paper.ToolEvent) {
     if (this.path) {
       const lastPoint = this.path.lastSegment.point.equals(event.point)
         ? event.point.add(1)
         : event.point;
 
-      this.addPoint(lastPoint);
+      this.handleErase({ path: this.path, point: lastPoint });
+      this.throttledEmitErase(lastPoint);
+
       this.path.simplify();
-      this.deselectAll();
+      paper.project.deselectAll();
 
-      emitAddToHistory(this.path);
-
-      paperDrawingApiService.createItem({
+      this.emitItemCreated({
         name: this.path.name,
         type: ItemType.PATH,
         data: this.path.exportJSON(),
       });
-    }
-  }
 
-  private setToolOptions() {
-    const { currentToolSize, backgroundColor } = store.getState().drawing;
-    this.size = currentToolSize;
-    this.color = backgroundColor;
+      emitAddToHistory(this.path);
+    }
   }
 
   private getPathOptions() {
+    const { toolColor, toolSize } = store.getState().drawing;
+
     return {
-      blendMode: BlendMode.DESTINATION_OUT,
+      blendMode: this.defaultBlendMode,
       strokeCap: this.defaultStrokeCap,
       strokeJoin: this.defaultStrokeJoin,
-      strokeWidth: this.size,
-      strokeColor: this.color,
+      strokeColor: toolColor,
+      strokeWidth: toolSize,
     };
-  }
-
-  private addPoint(point: paper.Point) {
-    if (this.path) {
-      handleErase({ path: this.path, point });
-
-      this.emitErase(point);
-    }
   }
 
   private emitErase(point: paper.Point) {
     if (this.path) {
-      paperDrawingApiService.erase({
-        data: {
-          layerID: this.path.layer.name,
-          itemID: this.path.name,
-          path: this.getPathOptions(),
-          point: {
-            x: point.x,
-            y: point.y,
-          },
+      emitOnView<EraseInput>(PaperViewEvents.ERASE, {
+        layerID: this.path.layer.name,
+        itemID: this.path.name,
+        path: this.getPathOptions(),
+        point: {
+          x: point.x,
+          y: point.y,
         },
       });
     }
   }
+
+  private throttledEmitErase = throttle(
+    this.emitErase,
+    this.defaultEventThrottleWait,
+    {
+      trailing: false,
+    }
+  );
 }
 
 export const eraserTool = new EraserTool();

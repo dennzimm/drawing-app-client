@@ -11,7 +11,7 @@ export const subscriptionClient = new SubscriptionClient(GRAPHQL_WS_ENDPOINT, {
   connectionParams: () => {
     return {
       drawingID: store.getState().drawing.id,
-      userID: store.getState().user.userID,
+      userID: store.getState().user.id,
     };
   },
 });

@@ -11,7 +11,7 @@ export interface DrawingComputedItems {
 
 const drawingComputed: DrawingComputedItems = {
   [DrawingComputedItem.eraserSelected]: computed(
-    (state) => state.currentToolName === "eraser"
+    (state) => state.toolName === "eraser"
   ),
 };
 

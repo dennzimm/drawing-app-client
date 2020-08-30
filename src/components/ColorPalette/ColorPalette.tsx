@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { colors } from "../../paper/config";
+import { COLORS } from "../../constants";
 
 const ColorsWrapper = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ export interface ColorPaletteProps {
 const ColorPalette: React.FC<ColorPaletteProps> = ({ onColorSelect }) => {
   return (
     <ColorsWrapper>
-      {colors.map((color) => (
+      {COLORS.map((color) => (
         <ColorPot
           key={color}
           onClick={() => onColorSelect(color)}

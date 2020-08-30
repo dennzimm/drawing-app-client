@@ -7,44 +7,42 @@ import {
 import { DRAWING_ACTION_PUBLISHED } from "../../../../api/graphql/drawing-action.graphql";
 import { DEBUG } from "../../../../constants";
 import { useStoreState } from "../../../../store/hooks";
-import { paperDrawingApiImportService } from "../services/paper-drawing-api-import.service";
+import { paperDrawingApiImportService } from "../services";
 
-export function useDrawingActionSubscription() {
-  const userId = useStoreState((state) => state.user.userID);
+export function useDrawingActionSubscription(drawingName: string) {
+  const { id: userId } = useStoreState((state) => state.user);
 
   const client = useApolloClient();
 
   const subscription = useRef<ZenObservable.Subscription>();
   const [data, setData] = useState<DrawingActionPublished>();
 
-  const subscribe = useCallback(
-    (drawingName: string) => {
-      const observer = client.subscribe<
-        DrawingActionPublished,
-        DrawingActionPublishedVariables
-      >({
-        query: DRAWING_ACTION_PUBLISHED.subscription,
-        variables: {
-          userId,
-          drawingName,
-        },
-      });
+  const subscribe = useCallback(() => {
+    const observer = client.subscribe<
+      DrawingActionPublished,
+      DrawingActionPublishedVariables
+    >({
+      query: DRAWING_ACTION_PUBLISHED.subscription,
+      variables: {
+        userId,
+        drawingName,
+      },
+    });
 
-      subscription.current = observer.subscribe(({ data }) => {
-        if (data) {
-          const {
-            drawingActionPublished: { action, node },
-          } = data;
+    subscription.current = observer.subscribe(({ data }) => {
+      if (data) {
+        const {
+          drawingActionPublished: { action, node },
+        } = data;
 
-          setData(data);
-          paperDrawingApiImportService.importDrawingActionData(action, node);
-        }
-      });
+        setData(data);
+        paperDrawingApiImportService.importDrawingActionData(action, node);
+      }
+    });
 
-      DEBUG && console.log("subscribed DRAWING_ACTION_PUBLISHED");
-    },
-    [client, userId]
-  );
+    DEBUG &&
+      console.log("subscribed DRAWING_ACTION_PUBLISHED -> id", drawingName);
+  }, [client, drawingName, userId]);
 
   const unsubscribe = useCallback(() => {
     subscription.current && subscription.current.unsubscribe();

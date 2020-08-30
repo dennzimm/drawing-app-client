@@ -1,5 +1,5 @@
-import store from "../../store";
-import { CustomItemData } from "../@types";
+import store from '../../store';
+import { CustomItemData } from '../@types';
 
 export const addCustomItemData = (
   item: paper.Item,
@@ -12,6 +12,6 @@ export const addCustomItemData = (
 };
 
 export const addDefaultCustomItemData = (item: paper.Item) => {
-  const userID = store.getState().user.userID;
+  const userID = store.getState().user.id;
   addCustomItemData(item, { immutable: false, userID });
 };

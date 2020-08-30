@@ -23,28 +23,22 @@ const ToolSelectButton: React.FC<ToolSelectButtonProps> = (props) => {
     eraser,
   });
 
-  const currentToolName: ToolName = useStoreState(
-    (state) => state.drawing.currentToolName
-  );
+  const { toolName, eraserSelected } = useStoreState((state) => state.drawing);
 
-  const setCurrentToolName = useStoreActions(
-    (actions) => actions.drawing.setCurrentToolName
-  );
+  const { setToolName } = useStoreActions((actions) => actions.drawing);
 
   const setTool = useCallback(
     (toolName: ToolName) => {
-      setCurrentToolName(toolName);
+      setToolName(toolName);
       availableTools[toolName].activate();
     },
-    [setCurrentToolName]
+    [setToolName]
   );
-
-  const eraserSelected = useStoreState((state) => state.drawing.eraserSelected);
 
   return (
     <IonFab {...props}>
       <StyledFab eraserSelected={eraserSelected}>
-        <IonIcon icon={toolIcons.current[currentToolName]} />
+        <IonIcon icon={toolIcons.current[toolName]} />
       </StyledFab>
 
       <IonFabList side="start">

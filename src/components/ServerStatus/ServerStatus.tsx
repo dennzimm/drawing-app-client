@@ -1,5 +1,5 @@
 import { IonBadge, IonIcon } from "@ionic/react";
-import React, { ComponentProps } from "react";
+import React, { ComponentProps, useEffect } from "react";
 import styled from "styled-components";
 import {
   useServerStatusCheck,
@@ -18,11 +18,19 @@ export const StyledServerStatusBadge = styled(IonBadge)`
 export interface ServerStatusProps extends ComponentProps<typeof IonBadge> {}
 
 const ServerStatus: React.FC<ServerStatusProps> = (props) => {
-  useServerStatusCheck();
+  const { checkServerStatus, stopServerStatusCheck } = useServerStatusCheck();
   useServerStatusNotification();
 
   const { serverStatusColor } = useServerStatusColor();
   const { serverStatusIcon } = useServerStatusIcon();
+
+  useEffect(() => {
+    checkServerStatus();
+
+    return () => {
+      stopServerStatusCheck && stopServerStatusCheck();
+    };
+  }, [checkServerStatus, stopServerStatusCheck]);
 
   return (
     <StyledServerStatusBadge color={serverStatusColor} {...props}>

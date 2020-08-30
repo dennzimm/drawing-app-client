@@ -15,7 +15,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, children }) => (
   <IonHeader>
     <IonToolbar>
       <IonButtons slot="start">
-        <IonMenuButton></IonMenuButton>
+        <IonMenuButton />
       </IonButtons>
 
       {title && <IonTitle>{title}</IonTitle>}

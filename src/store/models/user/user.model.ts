@@ -1,24 +1,21 @@
-import { nanoid } from "nanoid";
-import actions, { UserActions } from "./user.actions";
-import thunks, { UserThunks } from "./user.thunks";
+import { nanoid } from 'nanoid';
+import actions, { UserActions } from './user.actions';
+import thunks, { UserThunks } from './user.thunks';
 
 export interface UserState {
-  isLoggedin: boolean;
+  id: string;
+  loading: boolean;
   darkMode: boolean;
   hasSeenTutorial: boolean;
-  loading: boolean;
-  username?: string;
-  userID: string;
 }
 
 export type UserModel = UserState & UserActions & UserThunks;
 
 const initialState: UserState = {
-  hasSeenTutorial: false,
-  darkMode: false,
-  isLoggedin: false,
+  id: nanoid(),
   loading: false,
-  userID: nanoid(),
+  darkMode: false,
+  hasSeenTutorial: false,
 };
 
 const useModel: UserModel = {

@@ -5,12 +5,12 @@ import {
 } from "ionicons/icons";
 import { useMemo } from "react";
 import { useStoreState } from "../../../store/hooks";
-import { NetworkStatusType } from "../../../store/models/app/app.model";
+import { ServerStatusType } from "../../../store/models/app/app.model";
 
 export const serverStatusIcons = {
-  [NetworkStatusType.loading]: reloadCircleOutline,
-  [NetworkStatusType.ready]: wifiOutline,
-  [NetworkStatusType.error]: alertCircleOutline,
+  [ServerStatusType.loading]: reloadCircleOutline,
+  [ServerStatusType.ready]: wifiOutline,
+  [ServerStatusType.error]: alertCircleOutline,
 } as const;
 
 export function useServerStatusIcon() {
@@ -20,11 +20,11 @@ export function useServerStatusIcon() {
 
   const serverStatusIcon = useMemo(() => {
     switch (serverConnectionStatus) {
-      case NetworkStatusType.loading:
+      case ServerStatusType.loading:
         return serverStatusIcons.loading;
-      case NetworkStatusType.ready:
+      case ServerStatusType.ready:
         return serverStatusIcons.ready;
-      case NetworkStatusType.error:
+      case ServerStatusType.error:
         return serverStatusIcons.error;
     }
   }, [serverConnectionStatus]);

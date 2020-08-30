@@ -46,9 +46,9 @@ const Menu: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
 
-  const menuEnabled = useStoreState((state) => state.app.menuEnabled);
+  const { menuEnabled } = useStoreState((state) => state.app);
   const darkMode = useStoreState((state) => state.user.darkMode);
-  const isAuthenticated = useStoreState((state) => state.user.isLoggedin);
+  // const isAuthenticated = useRef(false); // todo: implement authenticated
 
   const setDarkMode = useStoreActions((actions) => actions.user.setDarkMode);
 
@@ -81,9 +81,10 @@ const Menu: React.FC = () => {
         </IonList>
         <IonList lines="none">
           <IonListHeader>Account</IonListHeader>
-          {isAuthenticated
+          {/* {isAuthenticated
             ? renderlistItems(routes.loggedInPages)
-            : renderlistItems(routes.loggedOutPages)}
+            : renderlistItems(routes.loggedOutPages)} */}
+          {renderlistItems(routes.loggedOutPages)}
           <IonItem>
             <IonIcon slot="start" icon={moonOutline}></IonIcon>
             <IonLabel>Dark Mode</IonLabel>

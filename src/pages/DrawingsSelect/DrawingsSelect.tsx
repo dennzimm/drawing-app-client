@@ -17,7 +17,7 @@ import { nanoid } from "nanoid";
 import React, { Fragment, useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { PageHeader } from "../../components";
+import { PageHeader } from "../../components/PageHeader";
 
 const Wrapper = styled.div`
   display: flex;
@@ -65,7 +65,7 @@ const DrawingsSelect: React.FC = () => {
   };
 
   return (
-    <IonPage id="drawings-page">
+    <IonPage id="drawings-select-page">
       <PageHeader title="Etwas zeichnen" />
 
       <IonContent>

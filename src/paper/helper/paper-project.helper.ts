@@ -1,23 +1,8 @@
 import paper from "paper";
 import { DEBUG } from "../../constants";
-import store from "../../store";
-import {
-  CreateGroupProps,
-  CreateLayerProps,
-  CreatePathProps,
-  CustomItemData,
-} from "../@types";
+import { CreateGroupProps, CreateLayerProps, CreatePathProps } from "../@types";
 import { createGroup, createPath } from "./paper-item.helper";
-
-export const cleanupPaperProject = () => {
-  paper.projects.forEach((project) => {
-    project.layers.forEach((layer) => {
-      layer.removeChildren();
-    });
-  });
-
-  DEBUG && console.log("cleanupPaperProject");
-};
+import { get } from "lodash-es";
 
 export const deleteAllPaperProjects = () => {
   paper.projects.forEach((project) => project.remove());
@@ -84,48 +69,30 @@ export const deleteItemsByName = (names: string[]) => {
   names.forEach((name) => deleteItemByName(name));
 };
 
-export const deleteAllItems = (callbackFn?: (itemName: string) => void) => {
+export const deleteAllLayers = () => {
+  paper.project.layers.forEach((layer) => {
+    layer.removeChildren();
+  });
+};
+
+export const deleteAllItems = () => {
+  DEBUG && console.log("deleteAllItems");
+
   const itemNames: string[] = [];
 
-  paper.project.activeLayer.getItems({}).forEach((item) => {
+  paper.project.getItems({}).forEach((item) => {
+    const isImmutable = get(item, "data.immutable", false);
+    if (isImmutable) {
+      return;
+    }
+
     const currentItemName = (item.name || item.id) + "";
     const itemRemoved = item.remove();
 
     if (itemRemoved) {
       itemNames.push(currentItemName);
-
-      if (callbackFn) {
-        try {
-          callbackFn(currentItemName);
-        } catch (err) {
-          console.error(err);
-        }
-      }
     }
   });
 
   return itemNames;
-};
-
-export const deleteOwnedItems = (callback?: Function) => {
-  const userID = store.getState().user.userID;
-  const options: Record<"data", CustomItemData> = {
-    data: {
-      userID,
-      immutable: false,
-    },
-  };
-
-  const deletedItems: string[] = [];
-
-  paper.project.getItems(options).forEach((item) => {
-    const id = item.name;
-
-    if (item.remove()) {
-      deletedItems.push(id);
-      callback && callback();
-    }
-  });
-
-  return deletedItems;
 };
