@@ -5,6 +5,11 @@ import store from "../../store";
 
 const GRAPHQL_WS_ENDPOINT = process.env.REACT_APP_GQL_WS_ENDPOINT as string;
 
+/**
+ * SubscriptionClient
+ *
+ * Send GraphQL operations over a WebSocket
+ */
 export const subscriptionClient = new SubscriptionClient(GRAPHQL_WS_ENDPOINT, {
   reconnect: true,
   lazy: true,
