@@ -18,7 +18,7 @@ import { emitOnView } from "../helper";
 export abstract class Tool {
   public readonly tool = new paper.Tool();
 
-  protected readonly defaultEventThrottleWait = 60;
+  protected readonly defaultEventThrottleWait = 50;
 
   protected abstract onMouseDown(event: paper.ToolEvent): void;
   protected abstract onMouseDrag(event: paper.ToolEvent): void;
