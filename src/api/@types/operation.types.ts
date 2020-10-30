@@ -1,4 +1,5 @@
 import { DocumentNode } from "graphql";
+
 export interface OperationType {
   name: string;
 }
