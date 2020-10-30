@@ -9,6 +9,14 @@ const StyledFab = styled(IonFabButton)<Record<"currentColor", string>>`
   --background: ${({ currentColor }) => currentColor};
 `;
 
+/**
+ * ColorButton
+ *
+ * A ColorButton component.
+ * It is used to select a color via a popover.
+ *
+ * @return {React.FC}
+ */
 const ColorButton: React.FC = () => {
   const { toolColor, eraserSelected } = useStoreState((state) => state.drawing);
   const { setToolColor } = useStoreActions((actions) => actions.drawing);

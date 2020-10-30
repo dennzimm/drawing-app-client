@@ -9,6 +9,15 @@ const serverStatusCheckOptions = {
   pollInterval: 5000,
 } as const;
 
+/**
+ * useServerStatusCheck
+ *
+ * This hook provides methods to query the status of the server.
+ * With the help of a lazy query the status is requested in a poll interval.
+ *
+ * @export
+ * @return {checkServerStatus, stopServerStatusCheck}
+ */
 export function useServerStatusCheck() {
   const { serverConnectionStatus } = useStoreState((state) => state.app);
 

@@ -4,6 +4,14 @@ import React, { ComponentProps } from "react";
 
 export interface UndoButtonProps extends ComponentProps<typeof IonFabButton> {}
 
+/**
+ * UndoButton
+ *
+ * This is a button with a undo icon.
+ *
+ * @param {UndoButtonProps} props
+ * @return {React.FC<UndoButtonProps>}
+ */
 const UndoButton: React.FC<UndoButtonProps> = (props) => {
   return (
     <IonFabButton {...props}>

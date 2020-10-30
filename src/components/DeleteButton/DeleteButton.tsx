@@ -13,6 +13,15 @@ import { emitOnView } from "../../paper/helper";
 import { deleteAllItems } from "../../paper/helper/paper-project.helper";
 import { useStoreState } from "../../store/hooks";
 
+/**
+ * DeleteButton
+ *
+ * This Delete button deletes the contents of a drawing.
+ * The deletion process must be confirmed.
+ * It is used in connection with the "DrawingArea".
+ *
+ * @return {React.FC}
+ */
 const DeleteButton: React.FC = () => {
   const { id: userId } = useStoreState((state) => state.user);
   const { id: drawingName } = useStoreState((state) => state.drawing);

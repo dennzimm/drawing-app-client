@@ -21,6 +21,14 @@ export interface ColorPaletteProps {
   onColorSelect: (color: string) => void;
 }
 
+/**
+ * ColorPalette
+ *
+ * This component is used to display a color palette.
+ *
+ * @param {ColorPaletteProps} { onColorSelect }
+ * @return {React.FC<ColorPaletteProps>}
+ */
 const ColorPalette: React.FC<ColorPaletteProps> = ({ onColorSelect }) => {
   return (
     <ColorsWrapper>

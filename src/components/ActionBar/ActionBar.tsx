@@ -1,10 +1,10 @@
 import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import React from "react";
-import { DeleteButton } from "../DeleteButton";
-import { UndoButton } from "../UndoButton";
-import { RedoButton } from "../RedoButton";
 import styled from "styled-components";
 import { usePaperHistory } from "../../paper/hooks";
+import { DeleteButton } from "../DeleteButton";
+import { RedoButton } from "../RedoButton";
+import { UndoButton } from "../UndoButton";
 
 const StyledActionBar = styled(IonGrid)`
   position: absolute;
@@ -13,6 +13,15 @@ const StyledActionBar = styled(IonGrid)`
   z-index: 10;
 `;
 
+/**
+ * ActionBar
+ *
+ * This component serves as wrapper for the "UndoButton",
+ * "RedoButton" and "DeleteButton. It is used in connection
+ * with the "DrawingArea".
+ *
+ * @return {React.FC}
+ */
 const ActionBar: React.FC = () => {
   const { canRedo, canUndo, redo, undo } = usePaperHistory();
 

@@ -23,6 +23,11 @@ import { useHistory, useLocation } from "react-router";
 import { useStoreActions, useStoreState } from "../../store/hooks";
 import "./Menu.css";
 
+/**
+ * Available routes of the menu
+ *
+ *  @type {*}
+ * */
 const routes = {
   appPages: [{ title: "Zeichnen", path: "/drawings", icon: brushOutline }],
   loggedInPages: [
@@ -42,6 +47,15 @@ interface Pages {
   routerDirection?: string;
 }
 
+/**
+ * Menu
+ *
+ * This component is used to display the menu.
+ * The renderlistItems() method is used to render individual menu items.
+ * Furthermore, additional menu items are inserted separately.
+ *
+ * @return {React.FC}
+ */
 const Menu: React.FC = () => {
   const location = useLocation();
   const history = useHistory();

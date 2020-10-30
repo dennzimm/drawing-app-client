@@ -11,6 +11,15 @@ export interface PageHeaderProps {
   title?: string;
 }
 
+/**
+ * PageHeader
+ *
+ * This component represents a page header.
+ * A title, an icon and additional components can be displayed
+ *
+ * @param {PageHeaderProps} { title, children }
+ * @return {React.FC}
+ */
 const PageHeader: React.FC<PageHeaderProps> = ({ title, children }) => (
   <IonHeader>
     <IonToolbar>
