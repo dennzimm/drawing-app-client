@@ -1,5 +1,13 @@
 import { Plugins } from "@capacitor/core";
 
+/**
+ * Storage Service
+ *
+ * In this service file methods are defined to interact
+ * with the Storage Plugin. The storage is used to store data,
+ * for example, whether a user has already seen the tutorial.
+ */
+
 const { Storage } = Plugins;
 
 enum StorageKeys {
