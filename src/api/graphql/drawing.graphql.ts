@@ -4,7 +4,6 @@ import {
   MutationOperationType,
   QueryOperationType,
 } from "../@types/operation.types";
-export default {};
 
 export const DRAWING_MODEL_DATA_FRAGMENT: FragmentType = {
   name: "DrawingModelData",
