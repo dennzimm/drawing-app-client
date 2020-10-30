@@ -44,6 +44,21 @@ const PresentationWrapper = styled.div`
   position: relative;
 `;
 
+/**
+ * Tutorial
+ *
+ * The Tutorial page / view of this application.
+ * This page is used to combine the components needed for
+ * the tutorial.
+ *
+ * The tutorial shows different slides with images and text
+ * to explain the existing functionalities of this application.
+ *
+ * When the tutorial is displayed, the menu is hidden
+ * and a "skip tutorial" button is displayed.
+ *
+ * @return {React.FC}
+ */
 const Tutorial: React.FC = () => {
   const history = useHistory();
 

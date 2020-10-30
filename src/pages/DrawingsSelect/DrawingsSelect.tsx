@@ -46,6 +46,18 @@ const StyledSegment = styled(IonSegment)`
   margin-bottom: 1.75rem;
 `;
 
+/**
+ * DrawingsSelect
+ *
+ * The DrawingsSelect page / view of this application.
+ * This page is used to combine the components needed for
+ * the drawing selection.
+ *
+ * You can choose to create a new drawing or enter an
+ * ID to load an existing drawing.
+ *
+ * @return {React.FC}
+ */
 const DrawingsSelect: React.FC = () => {
   const history = useHistory();
   const [userDrawingName, setUserDrawingName] = useState("");
