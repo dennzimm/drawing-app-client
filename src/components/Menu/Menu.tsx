@@ -51,7 +51,7 @@ interface Pages {
  * Menu
  *
  * This component is used to display the menu.
- * The renderlistItems() method is used to render individual menu items.
+ * The renderlistItems() function is used to render individual menu items.
  * Furthermore, additional menu items are inserted separately.
  *
  * @return {React.FC}

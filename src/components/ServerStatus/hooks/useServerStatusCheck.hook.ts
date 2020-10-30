@@ -12,7 +12,7 @@ const serverStatusCheckOptions = {
 /**
  * useServerStatusCheck
  *
- * This hook provides methods to query the status of the server.
+ * This hook provides functions to query the status of the server.
  * With the help of a lazy query the status is requested in a poll interval.
  *
  * @export

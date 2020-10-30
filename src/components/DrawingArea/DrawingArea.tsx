@@ -18,7 +18,7 @@ const DRAWING_AREA_CONSTANTS = {
  *
  * This component represents a drawing area.
  * After the component is rendered,
- * the setupPaper() method is called to initialize paper.js.
+ * the setupPaper() function is called to initialize paper.js.
  *
  * @return {React.FC}
  */
