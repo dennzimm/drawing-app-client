@@ -13,6 +13,14 @@ export const serverStatusIcons = {
   [ServerStatusType.error]: alertCircleOutline,
 } as const;
 
+/**
+ * useServerStatusIcon
+ *
+ * This hook returns the icon associated with the server status.
+ *
+ * @export
+ * @return {serverStatusIcon}
+ */
 export function useServerStatusIcon() {
   const serverConnectionStatus = useStoreState(
     (state) => state.app.serverConnectionStatus

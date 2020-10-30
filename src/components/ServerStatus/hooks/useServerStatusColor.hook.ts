@@ -8,6 +8,14 @@ export const serverStatusColors = {
   [ServerStatusType.error]: "danger",
 } as const;
 
+/**
+ * useServerStatusColor
+ *
+ * This hook returns the color associated with the server status.
+ *
+ * @export
+ * @return {serverStatusColor}
+ */
 export function useServerStatusColor() {
   const { serverConnectionStatus } = useStoreState((state) => state.app);
 

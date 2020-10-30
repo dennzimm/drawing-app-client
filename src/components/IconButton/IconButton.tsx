@@ -6,6 +6,17 @@ export interface IconButtonProps
   iconProps?: React.ComponentProps<typeof IonIcon>;
 }
 
+/**
+ * IconButton
+ *
+ * This component is used to display a button with an icon.
+ *
+ * @param {IconButtonProps} {
+ *   iconProps = {},
+ *   ...props
+ * }
+ * @return {React.FC<IconButtonProps>}
+ */
 const IconButton: React.FC<IconButtonProps> = ({
   iconProps = {},
   ...props

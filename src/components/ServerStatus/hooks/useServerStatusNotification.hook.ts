@@ -4,6 +4,14 @@ import { ServerStatusType } from "../../../store/models/app/app.model";
 
 let toast: HTMLIonToastElement;
 
+/**
+ * useServerStatusNotification
+ *
+ * This hook is used to initialize so-called "toasts",
+ * which are displayed when the server status changes.
+ *
+ * @export
+ */
 export function useServerStatusNotification() {
   const { serverConnectionStatus } = useStoreState((state) => state.app);
 

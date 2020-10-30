@@ -20,6 +20,25 @@ import { pencilTool } from "../../../tools/pencil.tool";
 interface CustomOptions {
   customPathOptions?: Record<string, unknown>;
 }
+
+/**
+ * PaperDrawingApiImportService
+ *
+ * This service provides various methods to
+ * import paper item data to be rendered on the drawing area.
+ * An ActionType is used to decide which specific method
+ * should be used  in order to import the data.
+ *
+ * For each ActionType there is a tool which has executed
+ * or can execute this action. The methods of the individual
+ * tool classes are reused in this service to import the given data
+ * (handle___Draw()).
+ *
+ * In addition, various helper functions are executed to find
+ * already existing items in order to correctly associate the given data.
+ *
+ * @class PaperDrawingApiImportService
+ */
 class PaperDrawingApiImportService {
   importItems(items: Drawing_drawing["items"]) {
     items.forEach((item) => item && this.importItemData(item));

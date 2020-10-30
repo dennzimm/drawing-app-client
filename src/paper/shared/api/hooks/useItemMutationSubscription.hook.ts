@@ -9,6 +9,23 @@ import { DEBUG } from "../../../../constants";
 import { useStoreState } from "../../../../store/hooks";
 import { paperDrawingApiItemService } from "../services";
 
+/**
+ * useItemMutationSubscription
+ *
+ * This hook provides a subscribe function which executes all
+ * all needed item mutated subscriptions.
+ * Furthermore an unsubscribe function is provided.
+ *
+ * The itemMutation function from the
+ * paperDrawingApiItemService will be called when
+ * new data is arrived.
+ *
+ * The required userId is retrieved from the store.
+ *
+ * @export
+ * @param {string} drawingName
+ * @return {data, subscribed, subscribe, unsubscribe}
+ */
 export function useItemMutationSubscription(drawingName: string) {
   const { id: userId } = useStoreState((state) => state.user);
 

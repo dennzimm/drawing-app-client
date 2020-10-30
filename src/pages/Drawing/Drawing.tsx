@@ -23,6 +23,25 @@ import {
 import { useStoreActions, useStoreState } from "../../store/hooks";
 import { PaperViewEvents } from "../../paper/@types";
 
+/**
+ * Drawing
+ *
+ * The Drawing page / view of this application.
+ * This page is used to combine the components needed for
+ * the drawing area / drawing experience.
+ *
+ * In addition, various defaults are set (also in store)
+ * and functions executed when this view is entered
+ * (e.g. triggerFetchOrCreateDrawing, or subscribeAllSubscriptions).
+ *
+ * Furthermore a cleanup is provided when leaving this view
+ * (useIonViewWillLeave).
+ *
+ * As long as the initial fetch of drawing data is executed (or a refetch),
+ * a loading indicator is displayed.
+ *
+ * @return {React.FC}
+ */
 const Drawing: React.FC = () => {
   const { id: drawingName } = useParams<{ id: string }>();
 

@@ -23,6 +23,14 @@ const SizePreview = styled.div<Record<"size", number>>`
   border-radius: 100%;
 `;
 
+/**
+ * SizeSelectButton
+ *
+ * This component can be used to change the size of a paint tool.
+ * After clicking this button, the size selection is displayed in a popover.
+ *
+ * @return {React.FC}
+ */
 const SizeSelectButton: React.FC = () => {
   const { toolSize } = useStoreState((state) => state.drawing);
   const { setToolSize } = useStoreActions((actions) => actions.drawing);

@@ -18,6 +18,27 @@ export interface HandleBrushDrawProps {
   singlePoint?: paper.Point;
 }
 
+/**
+ * BrushTool
+ *
+ * This class is used to create a BrushTool
+ * and extends the abstract 'Tool' class.
+ *
+ * The following functionalities were named and implemented
+ * in a way that they are self-explanatory.
+ *
+ * With the help of the paper.js package it is possible
+ * to paint with this tool on a paper view.
+ * The painted path is smoothed after lifting the mouse button
+ * or after finishing the touch (onMouseUp).
+ *
+ * The emitting of the draw event on the paper view
+ * is throttled to optimize the performance.
+ *
+ * @export
+ * @class BrushTool
+ * @extends {Tool}
+ */
 export class BrushTool extends Tool {
   public readonly defaultMinDistance = 1;
   public readonly defaultMaxDistance = 15;
@@ -37,14 +58,6 @@ export class BrushTool extends Tool {
     size,
     singlePoint,
   }: HandleBrushDrawProps) {
-    console.log({
-      path,
-      middlePoint,
-      delta,
-      size,
-      singlePoint,
-    });
-
     if (singlePoint) {
       path.add(singlePoint);
     } else if (delta && middlePoint) {

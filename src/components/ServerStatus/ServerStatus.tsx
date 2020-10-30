@@ -17,6 +17,14 @@ export const StyledServerStatusBadge = styled(IonBadge)`
 
 export interface ServerStatusProps extends ComponentProps<typeof IonBadge> {}
 
+/**
+ * ServerStatus
+ *
+ * This component is used to display the server status.
+ *
+ * @param {ServerStatusProps} props
+ * @return {React.FC<ServerStatusProps>}
+ */
 const ServerStatus: React.FC<ServerStatusProps> = (props) => {
   const { checkServerStatus, stopServerStatusCheck } = useServerStatusCheck();
   useServerStatusNotification();

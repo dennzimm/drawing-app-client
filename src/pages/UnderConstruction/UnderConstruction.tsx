@@ -29,6 +29,16 @@ const StyledImage = styled(IonImg)`
 export interface UnderConstructionProps {
   title?: string;
 }
+
+/**
+ * UnderConstruction
+ *
+ * The UnderConstruction page / view of this application.
+ * Used on not ready areas / routes to provide a more beautiful appearance.
+ *
+ * @param {UnderConstructionProps} { title }
+ * @return {React.FC<UnderConstructionProps>}
+ */
 const UnderConstruction: React.FC<UnderConstructionProps> = ({ title }) => {
   return (
     <IonPage id="under-construction-page">

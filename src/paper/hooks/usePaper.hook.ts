@@ -14,6 +14,19 @@ interface UsePaperProps {
   injectGlobal?: boolean;
 }
 
+/**
+ * usePaper
+ *
+ * This hook can be used to initialize paper.js and configure
+ * basic settings (setupPaper()).
+ *
+ * The cleanupPaper() function is used to
+ * reverse and clean up the setup process.
+ *
+ * @export
+ * @param {UsePaperProps} { id, injectGlobal = false }
+ * @return {setupPaper, cleanupPaper, updateViewSize}
+ */
 export function usePaper({ id, injectGlobal = false }: UsePaperProps) {
   const { setPaperReady } = useStoreActions((actions) => actions.drawing);
 

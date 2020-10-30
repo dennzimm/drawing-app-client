@@ -27,6 +27,27 @@ interface HistoryItemData {
   action?: HistoryItemAction;
 }
 
+/**
+ * usePaperHistory
+ *
+ * This hook can be used to enable the history functionality
+ * for drawing actions (undo/redo). When specified PaperViewEvents
+ * are emitted on the paper view, the callback functions
+ * defined here will be executed (see usePaperEvent hook).
+ *
+ * It stores all states we need.
+ * To operate on this state, there are three functions in actions
+ * (set, undo and redo) that dispatch defined types and necessary value.
+ *
+ * To compress the data of a drawing action the package "lz-string"
+ * is used. This should be considered as an optimization.
+ *
+ * The callbacks defined in this hook should be
+ * self-explanatory due to the naming.
+ *
+ * @export
+ * @return {undo, redo, canUndo, canRedo, resetHistory}
+ */
 export function usePaperHistory() {
   const [paperHistory, { set, undo, redo, canUndo, canRedo, reset }] = useUndo<
     Nullable<HistoryItemData>

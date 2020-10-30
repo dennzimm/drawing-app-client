@@ -14,6 +14,27 @@ export interface HandlePencilDrawProps {
   point: paper.Point;
 }
 
+/**
+ * PencilTool
+ *
+ * This class is used to create a PencilTool
+ * and extends the abstract 'Tool' class.
+ *
+ * The following functionalities were named and implemented
+ * in a way that they are self-explanatory.
+ *
+ * With the help of the paper.js package it is possible
+ * to paint with this tool on a paper view.
+ * The painted path is smoothed after lifting the mouse button
+ * or after finishing the touch (onMouseUp).
+ *
+ * The emitting of the draw event on the paper view
+ * is throttled to optimize the performance.
+ *
+ * @export
+ * @class PencilTool
+ * @extends {Tool}
+ */
 export class PencilTool extends Tool {
   public readonly defaultStrokeCap = StrokeCapType.ROUND;
   public readonly defaultStrokeJoin = StrokeJoinType.ROUND;

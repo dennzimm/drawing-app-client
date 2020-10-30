@@ -26,6 +26,21 @@ import { useStoreActions, useStoreState } from "./store/hooks";
 import "./theme/global.css";
 import "./theme/variables.css";
 
+/**
+ * App / IonicApp
+ *
+ * Main entry point of the application.
+ * This is where routes are defined and global components are integrated.
+ *
+ * StoreProvider: Exposes the store to the React application,
+ *                so that the components will be able to consume and
+ *                interact with the store via the hooks.
+ *
+ * ApolloProvider: Wraps the React app and places the client on the context,
+ *                 which enables you to access it from anywhere in your component tree.
+ *
+ * @return {React.FC}
+ */
 const App: React.FC = () => (
   <StoreProvider store={store}>
     <ApolloProvider client={client}>

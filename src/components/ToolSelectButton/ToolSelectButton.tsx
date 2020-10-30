@@ -16,6 +16,16 @@ const StyledFab = styled(IonFabButton)<Record<"eraserSelected", boolean>>`
 `;
 
 interface ToolSelectButtonProps extends ComponentProps<typeof IonFab> {}
+
+/**
+ * ToolSelectButton
+ *
+ * This component is used to select a paint tool.
+ * The available paint tools are defined in the store.
+ *
+ * @param {ToolSelectButtonProps} props
+ * @return {React.FC<ToolSelectButtonProps>}
+ */
 const ToolSelectButton: React.FC<ToolSelectButtonProps> = (props) => {
   const toolIcons = useRef<Record<ToolName, string>>({
     pencil,

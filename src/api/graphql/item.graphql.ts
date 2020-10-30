@@ -5,8 +5,6 @@ import {
   SubscriptionOperationType,
 } from "../@types/operation.types";
 
-export default {};
-
 export const ITEM_DATA_FRAGMENT: FragmentType = {
   name: "ItemData",
   fragment: gql`

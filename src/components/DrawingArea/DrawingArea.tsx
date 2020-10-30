@@ -13,6 +13,18 @@ const DRAWING_AREA_CONSTANTS = {
   id: nanoid(),
 };
 
+/**
+ * DrawingArea
+ *
+ * This component represents a drawing area.
+ * After the component is rendered,
+ * the setupPaper() function from the usePaper hook is called to
+ * initialize paper.js and set default settings.
+ *
+ * Initially the view size should be updated (updateViewSize)
+ *
+ * @return {React.FC}
+ */
 const DrawingArea: React.FC = () => {
   const { setupPaper, cleanupPaper, updateViewSize } = usePaper({
     id: DRAWING_AREA_CONSTANTS.id,

@@ -23,6 +23,26 @@ interface CommonVariables {
   drawing: DrawingNameInput;
 }
 
+/**
+ * usePaperHistoryApiEvents
+ *
+ * This hook uses usePaperEvent to connect the history events
+ * emitted on the paper view with corresponding mutations.
+ * These mutations are always executed when the corresponding
+ * event is emitted on the paper view.
+ *
+ * As soon as this hook is executed, the paper view history events
+ * are linked with the mutations.
+ *
+ * The "unsubscribeAll" function serves as cleanup and removes
+ * the binding of the paper view history events to the mutations.
+ *
+ * The required userId is retrieved from the store.
+ *
+ * @export
+ * @param {string} drawingName
+ * @return {unsubscribeAll}
+ */
 export function usePaperHistoryApiEvents(drawingName: string) {
   const { id: userId } = useStoreState((state) => state.user);
 

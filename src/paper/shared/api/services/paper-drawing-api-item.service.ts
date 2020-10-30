@@ -5,6 +5,21 @@ import {
 import { deleteItemByName } from "../../../helper/paper-project.helper";
 import { paperDrawingApiImportService } from "./paper-drawing-api-import.service";
 
+/**
+ * PaperDrawingApiItemService
+ *
+ * This service provides an itemMutation method
+ * that decides depending on the type of mutation
+ * which operation will be performed next.
+ *
+ * MutationType.CREATED: Performs importItemData from the
+ *                       paperDrawingApiImportService
+ *
+ * MutationType.DELETED: Performs deleteItemByName from the
+ *                       paper project helpers
+ *
+ * @class PaperDrawingApiItemService
+ */
 class PaperDrawingApiItemService {
   itemMutation(mutation: MutationType, item: ItemMutated_itemMutated_node) {
     switch (mutation) {

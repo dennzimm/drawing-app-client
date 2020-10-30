@@ -12,6 +12,14 @@ const StyledToolBar = styled(IonGrid)`
   z-index: 10;
 `;
 
+/**
+ * ToolBar
+ *
+ * This component serves as wrapper for the "SizeSelectButton",
+ * "ColorButton" and "ToolSelectButton"
+ *
+ * @return {React.FC}
+ */
 const ToolBar: React.FC = () => {
   return (
     <StyledToolBar>
