@@ -13,6 +13,22 @@ import {
 import { DEBUG } from "../../../../constants";
 import { paperDrawingApiImportService } from "../services/paper-drawing-api-import.service";
 
+/**
+ * useFetchOrCreateDrawing
+ *
+ * This hook provides a triggerFetchOrCreateDrawing function
+ * which is needed for creating or fetching a drawing.
+ *
+ * First a "drawing" query is executed. If no drawing with
+ * the given name exists, the createDrawingMutation is executed.
+ *
+ * Otherwise the paperDrawingApiImportService will be called to
+ * import the provided items data.
+ *
+ * @export
+ * @param {string} drawingName
+ * @return {loading, triggerFetchOrCreateDrawing}
+ */
 export function useFetchOrCreateDrawing(drawingName: string) {
   const [loading, setLoading] = useState(false);
 

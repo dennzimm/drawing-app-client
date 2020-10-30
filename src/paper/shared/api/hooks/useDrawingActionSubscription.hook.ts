@@ -9,6 +9,23 @@ import { DEBUG } from "../../../../constants";
 import { useStoreState } from "../../../../store/hooks";
 import { paperDrawingApiImportService } from "../services";
 
+/**
+ * useDrawingActionSubscription
+ *
+ * This hook provides a subscribe function which executes all
+ * needed drawing action published subscriptions.
+ * Furthermore an unsubscribe function is provided.
+ *
+ * The importDrawingActionData function from the
+ * paperDrawingApiImportService will be called when
+ * new data is arrived.
+ *
+ * The required userId is retrieved from the store.
+ *
+ * @export
+ * @param {string} drawingName
+ * @return {data, subscribed, subscribe, unsubscribe}
+ */
 export function useDrawingActionSubscription(drawingName: string) {
   const { id: userId } = useStoreState((state) => state.user);
 
