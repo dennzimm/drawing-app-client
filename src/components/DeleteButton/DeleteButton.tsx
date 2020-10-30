@@ -18,7 +18,6 @@ import { useStoreState } from "../../store/hooks";
  *
  * This Delete button deletes the contents of a drawing.
  * The deletion process must be confirmed.
- * It is used in connection with the "DrawingArea".
  *
  * @return {React.FC}
  */

@@ -24,9 +24,7 @@ import { useStoreActions, useStoreState } from "../../store/hooks";
 import "./Menu.css";
 
 /**
- * Available routes of the menu
- *
- *  @type {*}
+ * Available routes for the menu
  * */
 const routes = {
   appPages: [{ title: "Zeichnen", path: "/drawings", icon: brushOutline }],

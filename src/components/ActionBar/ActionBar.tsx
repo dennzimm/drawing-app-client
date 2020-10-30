@@ -17,8 +17,7 @@ const StyledActionBar = styled(IonGrid)`
  * ActionBar
  *
  * This component serves as wrapper for the "UndoButton",
- * "RedoButton" and "DeleteButton. It is used in connection
- * with the "DrawingArea".
+ * "RedoButton" and "DeleteButton.
  *
  * @return {React.FC}
  */
