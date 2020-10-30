@@ -19,6 +19,26 @@ export interface HandleEraseProps {
   point: paper.Point;
 }
 
+/**
+ * EraserTool
+ *
+ * This class is used to create an EraserTool
+ * and extends the abstract 'Tool' class.
+ *
+ * The following functionalities were named and implemented
+ * in a way that they are self-explanatory.
+ *
+ * With the help of the paper.js package it is possible
+ * to paint with this tool on a paper view.
+ * The painted path is smoothed after lifting the mouse button
+ * or after finishing the touch (onMouseUp).
+ *
+ * The emitting of the erase event on the paper view
+ * is throttled to optimize the performance.
+ *
+ * @class EraserTool
+ * @extends {Tool}
+ */
 class EraserTool extends Tool {
   public readonly defaultBlendMode = BlendMode.DESTINATION_OUT;
   public readonly defaultStrokeCap = StrokeCapType.ROUND;
