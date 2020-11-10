@@ -1,13 +1,13 @@
-import { action, Action } from 'easy-peasy';
-import { ToolName } from '../../../paper/tools';
-import { DrawingModel } from './drawing.model';
+import { action, Action } from "easy-peasy";
+import { ToolName } from "../../../paper/tools";
+import { DrawingModel } from "./drawing.model";
 
 export enum DrawingAction {
-  setID = 'setID',
-  setPaperReady = 'setPaperReady',
-  setToolColor = 'setToolColor',
-  setToolName = 'setToolName',
-  setToolSize = 'setToolSize',
+  setID = "setID",
+  setPaperReady = "setPaperReady",
+  setToolColor = "setToolColor",
+  setToolName = "setToolName",
+  setToolSize = "setToolSize",
 }
 
 export interface DrawingActions {
