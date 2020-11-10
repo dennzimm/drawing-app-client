@@ -6,7 +6,7 @@ import { emitOnView } from "../helper";
 /**
  * Tool
  *
- * This abstract class shall be implemented by other tool classes
+ * This abstract class shall be extended by other tool classes
  * and should be seen as a basis for (paper) tools.
  * In addition, various defaults are defined
  * and set here, which are required for working with paper.js.
