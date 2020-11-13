@@ -9,6 +9,7 @@ import {
   ItemData,
   ItemType,
 } from "../../../../api/@types/generated/gql-operations.types";
+import { logTime } from "../../../../helper/logging.helper";
 import {
   findLayer,
   findOrCreatePath,
@@ -70,6 +71,7 @@ class PaperDrawingApiImportService {
     } else {
       paper.project.activeLayer.importJSON(itemData.data);
     }
+    logTime("completed importPathItemData at: ");
   }
 
   importLayerItemData(itemData: ItemData) {
@@ -78,6 +80,7 @@ class PaperDrawingApiImportService {
     ) as paper.Layer;
 
     paper.project.addLayer(newLayer);
+    logTime("completed importLayerItemData at: ");
   }
 
   importDrawingActionData(
@@ -123,6 +126,7 @@ class PaperDrawingApiImportService {
     });
 
     pencilTool.handlePencilDraw({ path, point: new paper.Point(point) });
+    logTime("completed importPencilDrawData at: ");
   }
 
   importBrushDrawData(
@@ -143,6 +147,7 @@ class PaperDrawingApiImportService {
       ...(singlePoint && { singlePoint: new paper.Point(singlePoint) }),
       size: strokeWidth,
     });
+    logTime("completed importBrushDrawData at: ");
   }
 
   importEraseData(
@@ -159,6 +164,7 @@ class PaperDrawingApiImportService {
     });
 
     eraserTool.handleErase({ path, point: new paper.Point(point) });
+    logTime("completed eraserTool at: ");
   }
 
   private getItems(

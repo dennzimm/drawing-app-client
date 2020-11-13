@@ -22,6 +22,7 @@ import {
   PENCIL_DRAW,
 } from "../../../../api/graphql/drawing-action.graphql";
 import { CREATE_ITEM } from "../../../../api/graphql/item.graphql";
+import { logTime } from "../../../../helper/logging.helper";
 import { useStoreState } from "../../../../store/hooks";
 import { PaperViewEvents } from "../../../@types";
 import { usePaperEvent } from "../../../hooks";
@@ -81,6 +82,7 @@ export function usePaperDrawingApiEvents(drawingName: string) {
   const { unsubscribeEvent: unsubscribePencilDrawEvent } = usePaperEvent<
     PencilDrawInput
   >(PaperViewEvents.PENCIL_DRAW, (data) => {
+    logTime("send pencilDrawMutation at: ");
     pencilDrawMutation({
       variables: {
         ...commonVariables,
@@ -92,6 +94,7 @@ export function usePaperDrawingApiEvents(drawingName: string) {
   const { unsubscribeEvent: unsubscribeBrushDrawEvent } = usePaperEvent<
     BrushDrawInput
   >(PaperViewEvents.BRUSH_DRAW, (data) => {
+    logTime("send brushDrawMutation at: ");
     brushDrawMutation({
       variables: {
         ...commonVariables,
@@ -103,6 +106,7 @@ export function usePaperDrawingApiEvents(drawingName: string) {
   const { unsubscribeEvent: unsubscribeEraseEvent } = usePaperEvent<EraseInput>(
     PaperViewEvents.ERASE,
     (data) => {
+      logTime("send eraseMutation at: ");
       eraseMutation({
         variables: {
           ...commonVariables,
@@ -115,6 +119,7 @@ export function usePaperDrawingApiEvents(drawingName: string) {
   const { unsubscribeEvent: unsubscribeCreateItemEvent } = usePaperEvent<
     CreateItemInput
   >(PaperViewEvents.CREATE_ITEM, (data) => {
+    logTime("send createItemMutation at: ");
     createItemMutation({
       variables: {
         ...commonVariables,
