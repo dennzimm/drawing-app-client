@@ -3,6 +3,7 @@ import { DEBUG } from "../../constants";
 import { CreateGroupProps, CreateLayerProps, CreatePathProps } from "../@types";
 import { createGroup, createPath } from "./paper-item.helper";
 import { get } from "lodash-es";
+import { logTime } from "../../helper/logging.helper";
 
 /**
  * deleteAllPaperProjects
@@ -93,6 +94,7 @@ export const findOrCreatePath = ({ name, options }: CreatePathProps) => {
 export const deleteItemByName = (name: string) => {
   const item = paper.project.getItem({ name });
   item && item.remove();
+  logTime("completed deleteItemByName at: ");
 };
 
 /**

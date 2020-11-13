@@ -6,7 +6,7 @@ import { emitOnView } from "../helper";
 /**
  * Tool
  *
- * This abstract class shall be implemented by other tool classes
+ * This abstract class shall be extended by other tool classes
  * and should be seen as a basis for (paper) tools.
  * In addition, various defaults are defined
  * and set here, which are required for working with paper.js.
@@ -18,7 +18,7 @@ import { emitOnView } from "../helper";
 export abstract class Tool {
   public readonly tool = new paper.Tool();
 
-  protected readonly defaultEventThrottleWait = 60;
+  protected readonly defaultEventThrottleWait = 50;
 
   protected abstract onMouseDown(event: paper.ToolEvent): void;
   protected abstract onMouseDrag(event: paper.ToolEvent): void;

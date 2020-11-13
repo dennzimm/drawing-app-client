@@ -1,6 +1,7 @@
 import {
   ApolloClient,
   ApolloLink,
+  DefaultOptions,
   NormalizedCacheObject,
   split,
 } from "@apollo/client";
@@ -125,20 +126,22 @@ const graphQLErrorHandler = onError(
  *
  * https://www.apollographql.com/docs/react/api/core/ApolloClient/
  */
+const defaultClientOptions: DefaultOptions = {
+  watchQuery: {
+    fetchPolicy: "no-cache",
+  },
+  query: {
+    fetchPolicy: "no-cache",
+  },
+  mutate: {
+    fetchPolicy: "no-cache",
+  },
+};
+
 export const client = new ApolloClient<NormalizedCacheObject>({
   cache,
   connectToDevTools: true,
   link: ApolloLink.from([retryLink, graphQLErrorHandler, splitLink]),
   queryDeduplication: false,
-  defaultOptions: {
-    watchQuery: {
-      fetchPolicy: "no-cache",
-    },
-    query: {
-      fetchPolicy: "no-cache",
-    },
-    mutate: {
-      fetchPolicy: "no-cache",
-    },
-  },
+  defaultOptions: defaultClientOptions,
 });

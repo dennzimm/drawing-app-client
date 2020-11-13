@@ -1,7 +1,7 @@
-import { ToolName } from '../../../paper/tools';
-import actions, { DrawingActions } from './drawing.actions';
-import computed, { DrawingComputedItems } from './drawing.computed';
-import { COLORS } from '../../../constants';
+import { ToolName } from "../../../paper/tools";
+import actions, { DrawingActions } from "./drawing.actions";
+import computed, { DrawingComputedItems } from "./drawing.computed";
+import { COLORS } from "../../../constants";
 
 export interface DrawingState {
   id: string;
@@ -14,10 +14,10 @@ export interface DrawingState {
 export type DrawingModel = DrawingState & DrawingActions & DrawingComputedItems;
 
 const initialState: DrawingState = {
-  id: '',
+  id: "",
   paperReady: false,
   toolColor: COLORS[Math.floor(Math.random() * COLORS.length)],
-  toolName: 'pencil',
+  toolName: "pencil",
   toolSize: 2,
 };
 
