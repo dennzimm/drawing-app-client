@@ -29,7 +29,14 @@ run-dev:
 	docker-compose up -d --build --remove-orphans
 
 run-prod:
-	docker-compose -f docker-compose.prod.yml up -d --build --remove-orphans
+	docker-compose -f docker-compose.prod.yml up -d --build
+
+run-prod--remove-orphans:
+	docker-compose -f docker-compose.prod.yml up -d --build
+
+start: run-prod
 
 stop:
 	docker-compose stop
+
+restart: stop start
