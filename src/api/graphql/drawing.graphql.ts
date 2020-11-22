@@ -5,6 +5,11 @@ import {
   QueryOperationType,
 } from "../@types/operation.types";
 
+/**
+ * These are GraphQL operations that are provided by the server's drawings module.
+ * (DrawingResolver)
+ */
+
 export const DRAWING_MODEL_DATA_FRAGMENT: FragmentType = {
   name: "DrawingModelData",
   fragment: gql`

@@ -5,6 +5,11 @@ import {
   SubscriptionOperationType,
 } from "../@types/operation.types";
 
+/**
+ * These are GraphQL operations that are provided by the server's drawings module.
+ * (ItemResolver)
+ */
+
 export const ITEM_DATA_FRAGMENT: FragmentType = {
   name: "ItemData",
   fragment: gql`

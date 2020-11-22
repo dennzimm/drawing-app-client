@@ -5,6 +5,11 @@ import {
   SubscriptionOperationType,
 } from "../@types/operation.types";
 
+/**
+ * These are GraphQL operations that are provided by the server's drawings module.
+ * (DrawingActionResolver)
+ */
+
 export const POINT_COORDINATES_FRAGMENT: FragmentType = {
   name: "PointCoordinates",
   fragment: gql`
