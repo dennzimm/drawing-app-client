@@ -7,6 +7,14 @@ DOCKER_PROD=drawing-app:prod
 include $(variables)
 export $(shell sed 's/=.*//' $(variables))
 
+# Setup
+setup: copy-env
+
+# env
+copy-env:
+	cp example.env .env
+
+# Apollo
 create-generated-gql-folder:
 	mkdir -p $(REACT_APP_GQL_GENERATED_OUTPUT_PATH)
 
