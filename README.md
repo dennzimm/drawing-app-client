@@ -1,3 +1,6 @@
+# Drawing App Client
+---
+
 ## Prerequisite
 
 - [Node.js](https://nodejs.org/en/)
@@ -7,7 +10,7 @@
 ## Preparations
 
 1. **copy** `example.env` to `.env`
-2. **fill** the `.env` with your configuration or leave it as it is (_default configurations_)
+2. **fill** the `.env` with your configuration or leave it as it is (_**default configurations**_)
 
 ## How to run this project (in production mode)
 
