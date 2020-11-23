@@ -25,18 +25,21 @@ build-dev:
 build-prod:
 	docker build -f Dockerfile.prod -t $(DOCKER_PROD) .
 
-run-dev:
+dev:
+	docker-compose up -d --build
+
+dev--ro:
 	docker-compose up -d --build --remove-orphans
 
-run-prod:
+prod:
 	docker-compose -f docker-compose.prod.yml up -d --build
 
-run-prod--remove-orphans:
-	docker-compose -f docker-compose.prod.yml up -d --build
+prod--ro:
+	docker-compose -f docker-compose.prod.yml up -d --build --remove-orphans
 
-start: run-prod
+start: prod--ro
 
 stop:
-	docker-compose stop
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml stop
 
 restart: stop start
