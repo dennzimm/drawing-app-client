@@ -23,7 +23,9 @@ export const subscriptionClient = new SubscriptionClient(GRAPHQL_WS_ENDPOINT, {
 });
 
 /**
- * onReconnected: shouldResync should be set to 'true'.
+ * onReconnected: shouldResync should be set to 'true',
+ * because the drawing area should be synchronized with the server
+ * after a loss of connection.
  */
 subscriptionClient.onReconnected(() => {
   DEBUG && console.log("onReconnected");
@@ -40,6 +42,5 @@ subscriptionClient.onReconnected(() => {
  * or an object with three options, to customize the behavior of the link.
  *
  * Here the subscriptionClient is passed from above.
- *
  */
 export const subscriptionLink = new WebSocketLink(subscriptionClient);
