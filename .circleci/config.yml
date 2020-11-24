@@ -8,6 +8,3 @@ workflows:
           filters:
             branches:
               only: master
-          pre-deploy:
-            commands:
-              - '[[ -e "$(git rev-parse --git-dir)/shallow" ]] || git fetch --unshallow'
