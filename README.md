@@ -1,4 +1,5 @@
 # Drawing App Client
+
 ---
 
 ## Prerequisite
@@ -6,6 +7,8 @@
 - [Node.js](https://nodejs.org/en/)
 - [Docker](https://www.docker.com/get-started)
 - [make](https://www.gnu.org/software/make/)
+
+- [drawing-app-server](https://github.com/dennzimm/drawing-app-server)
 
 ## Preparations
 
@@ -16,7 +19,6 @@
 
 - **copy** `example.env` to `.env` (**project root**)
 - **fill** the `.env` (project root) with your configuration or leave it as it is (_default configurations_)
-
 
 ## How to run this project (in production mode)
 
