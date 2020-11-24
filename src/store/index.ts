@@ -10,7 +10,7 @@ import storeModel from "./models/store/store.model";
  * and providing integration with the extensive eco-system
  * that Redux has to offer.
  *
- * https://easy-peasy.now.sh/docs/introduction/
+ * (see https://easy-peasy.now.sh/docs/introduction/)
  */
 const store = createStore(storeModel);
 

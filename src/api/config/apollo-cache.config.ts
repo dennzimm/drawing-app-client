@@ -9,7 +9,7 @@ import { InMemoryCache, InMemoryCacheConfig } from "@apollo/client";
  * As of Apollo Client 3.0, the InMemoryCache class is provided by the @apollo/client package.
  * No additional libraries are required.
  *
- * (https://www.apollographql.com/docs/react/caching/cache-configuration/)
+ * (see https://www.apollographql.com/docs/react/caching/cache-configuration/)
  */
 const cacheConfig: InMemoryCacheConfig = {};
 
