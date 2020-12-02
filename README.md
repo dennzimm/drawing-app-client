@@ -12,7 +12,7 @@
 
 ## Preparations
 
-- **run** `make setup`
+- **run** `sh setup.sh`
 - **fill** the `.env` (**project root**) with your configuration or leave it as it is (_default configurations_)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**~~ OR ~~**
